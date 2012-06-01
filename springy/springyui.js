@@ -159,12 +159,12 @@ jQuery.fn.springy = function(params) {
 				intersection = s2;
 			}
 
-			var stroke = typeof(edge.data.color) !== 'undefined' ? edge.data.color : '#006600';
+			var stroke = typeof(edge.data.color) !== 'undefined' ? edge.data.color : '#000000';
 
 			var arrowWidth;
 			var arrowLength;
 
-			var weight = typeof(edge.data.weight) !== 'undefined' ? edge.data.weight : 2.0;
+			var weight = typeof(edge.data.weight) !== 'undefined' ? edge.data.weight : 1.0;
 
 			ctx.lineWidth = Math.max(weight *  2, 3);
 			arrowWidth = 1 + ctx.lineWidth;
