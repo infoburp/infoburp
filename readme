@@ -1,0 +1,8 @@
+how to setup a testing server:
+
+1) Install Xampp apache friend from: http://www.apachefriends.org
+2) Copy htdocs from the dropbox to your xampp installation htdocs (e.g. /opt/lampp/htdocs)
+3) Go to localhost/phpmyadmin/ and import infoburp.sql
+4) Go to localhost/index.html
+
+DONE

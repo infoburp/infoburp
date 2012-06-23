@@ -1,0 +1,77 @@
+version 0.3.0 (done) ($295)
+
+Connection to database, add, edit, save nodes. Springy node positioning.
+
+version 0.4.0 ($130)
+1)  -(050%)- Nodes never overlap.
+2)  -(100%)- Lines go to the centre of nodes.
+3)  -(040%)- Nodes can be voted up/down, and are sized by the number of votes, as stored in the mysql database. 
+4)  -(090%)- Complete my code for pan by clicking on the background and dragging (or arrow keys), and zoom by the mouse wheel (or + and - keys). 
+5)  -(050%)- Node outlines are circles, and text/content in a node is as square as possible (text wrap).
+6)  -(010%)- Change the text on the vote buttons to the unicode characters for thumbs up and thumbs down, so that they are smaller and fit more easily on unpopular (small) nodes. 
+
+version 0.5.0 ($100)
+7)  -(000%)- Real-time processing. share.js  - Jennifer ($50)
+8)  -(000%)- Search functionality. search.js - Rohan    ($50)
+
+version 0.5.5 ($281)
+9)  -(000%)- Advert manager. adman.js.	- Joshua	($30)
+10) -(000%)- Bubbles (a node which appears as a round line surrounding 2 or more nodes), and link lines like elastic bands, nodes, links and bubbles can be voted for. Bubbles and links can have labels.	- Joshua	($60)
+11) -(010%)- Upload a file into a node.	- Joshua	($40)
+12) -(000%)- Facebook, twitter, google+ integration and apps, login.	- Joshua	($120)
+13) -(010%)- Audio/video player - jplayer.js.	- Joshua	($30)
+.5) -(000%)- Tooltips for whatever the mouse is currently over.	- Joshua	($1)
+
+version 0.6.0 ($280?)
+14) -(010%)- Enable webcam and microphone nodes for input. (flash only, need to add getusermedia).
+15) -(000%)- Mysql and sparql endpoints. sql2json, sparql2json.
+16) -(000%)- Executable nodes, bubbles as software packages.
+17) -(000%)- The infoburp.com interface as a bubble.
+18) -(000%)- Web crawler. crawler.js. (Add a url as a node, or within a node, and it will be followed and the endpoint fetched and placed into a node).
+
+version 0.7.0 ($380?)
+19) -(000%)- Import from sources like github, multiple data types decoded.
+20) -(000%)- Connector for phone network.
+21) -(000%)- Connector for sneakernet.
+22) -(000%)- Music functionality.
+23) -(000%)- Decentralisation using node.js.
+
+version 0.8.0 ($300?)
+24) -(000%)- Rapid cycling DNS, new users sent to best/nearest available node.
+25) -(000%)- Web scale crawler.
+26) -(000%)- More data import types.
+27) -(000%)- Bittorrent import. check for open license.
+28) -(000%)- Connectors for freenet and tor, content filtering and license checker.
+29) -(000%)- Support for 3d modelling and 2d drawing in browser (nodes for drawing and modelling).
+
+version 0.9.0 ($tbd due to complexity/community development effort)
+30) -(000%)- Games made of nodes.
+31) -(000%)- Open source hardware.
+32) -(000%)- Free world network.
+33) -(000%)- Solar tvpc.
+34) -(000%)- Solar laptop.
+35) -(000%)- Solar phone.
+
+notes-
+
+version 0.5.5 ($281)
+7)  -(000%)- Real-time processing. share.js (new nodes etc added by others are displayed without 
+refresh.)
+8)  -(000%)- Advert manager. adman.js. Advert manager, to ensure that the advertising revenue is
+always > the cost of hosting, by adding and removing advert nodes as
+appropriate (according to number of users and click %). This must check the amazon aws
+api for the current hosting cost, and adjust it by the number of users, and the profit/loss.
+This needs to be presented on a page with profit/loss graphs 
+(using flot - http://code.google.com/p/flot/), and a way to set paramaters 
+such as the % of nodes which have adverts attached to them, etc. These paramaters should
+automatically adjust to ensure healthy profit and positive user experience are balanced.
+Support different advert suppliers, google adverts, amazon product advertising + sale inside the
+infoburp website.
+9)  -(000%)- Search functionality. search.js. Search functionality, with bar at top of interface.
+if a node matching search string exists, zoom to it, else create a new node containing search
+string, connected to the nearest matching existing node.
+10) -(000%)- Bubbles (line surrounding 2 or more nodes), and link lines like elastic bands,
+nodes, links and bubbles can be voted for. Bubbles and links can have labels.
+11) -(000%)- The infoburp.com interface as a bubble.
+12) -(000%)- Facebook, twitter, google+ integration and apps, login. Google ajax crawler 
+compatibility.

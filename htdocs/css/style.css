@@ -1,0 +1,219 @@
+html, body {
+	width:100%;
+	height:100%;
+	background:black;
+	color:green;
+	margin:0px;
+	padding:0px;
+	cursor:move;
+}
+
+
+
+/*..............BAR */
+#bar {
+	width:100%;
+	height:39px;
+	left:0px;
+	top:0px;
+	position:fixed;
+	background:#272;
+	z-index:2;
+}
+#_bar {
+	width:900px;
+	margin:0px auto;
+	list-style:none inside none;
+	display:table;
+	font-family:arial;
+	font-size:14px;
+	color:#131;
+}
+#_bar >* {
+	display:table-cell;
+	vertical-align:middle;
+	padding:4px 10px;
+}
+
+/*..............LOGO */
+#_logo {
+	font-family:arial;
+	font-size:18px;
+	font-weight:bold;
+	color:#131;
+	border-radius:3px;
+}
+/*..............WHUFFIE */
+#whuffie {
+	
+	font-size:20px;
+}
+#_whuffie {
+	font-weight:bold;
+	font-size:18px;
+	padding-top:2px;
+}
+/*..............BAR SPACING */
+#empty {
+	width:120px;
+}
+/*..............SEARCH */
+#search {
+	text-align:right;
+}
+#_search {
+	font-size:15px;
+	border-radius:2px;
+	background:#eee;
+	border:1px solid #ddd;
+	padding:4px;
+}
+/*..............SIGNIN */
+#signin {
+	
+	font-size:20px;
+}
+
+/*..............BAR */
+#bottombar {
+	width:100%;
+	height:39px;
+	left:0px;
+	bottom:0px;
+	position:fixed;
+	background:#222;
+	z-index:2;
+}
+
+
+
+/*..............INFOBURP */
+#infoburp {
+	width:100%;
+	height:100%;
+	position:fixed;
+	cursor:move;
+	z-index:1;
+}
+#infoburp .html {
+	width:100%;
+	height:100%;
+	left:0px;
+	top:0px;
+	position:absolute;
+}
+
+
+
+/*..............NODES */
+#infoburp .html .node {
+	position:absolute;
+	left:0px;
+	top:0px;
+	padding:0px;
+	font-family:verdana;
+	cursor:pointer;
+}
+#infoburp .html .node.editing {
+}
+#infoburp .html .node .html {
+	position:absolute;
+	top:0%;
+	left:0%;
+	width:100%;
+	height:80%;
+	color:black;
+	font-size:140%;
+	line-height:140%;
+	text-align:center;
+	overflow:auto;
+}
+#infoburp .html .node .vote {
+	position:absolute;
+	bottom:0px;
+	border-radius:100%;
+	width:20%;
+	height:20%;
+	border:1px solid black;
+	overflow:hidden;
+	padding:0px;
+	font-size:inherit;
+}
+#infoburp .html .node .voteUp {
+	background:red;
+	left:0px;
+}
+#infoburp .html .node .voteDown {
+	background:green;
+	right:0px;
+}
+#infoburp .html .node .editor {
+	position:absolute;
+	top:0%;
+	left:0%;
+	width:100%;
+	height:100%;
+	color:black;
+	font-size:inherit;
+	display:none;
+}
+#infoburp .html .node.editing .editor {
+	display:block;
+}
+#infoburp .html .node .editor .textbox {
+	position:absolute;
+	top:5%;
+	left:5%;
+	width:90%;
+	height:70%;
+	border:1px solid #aaa;
+	border-radius:10%;
+	outline:0px solid black;
+	color:black;
+	font-size:inherit;
+	color:black;
+}
+#infoburp .html .node .editor .edit {
+	position:absolute;
+	bottom:0px;
+	border-radius:100%;
+	width:20%;
+	height:20%;
+	border:1px solid black;
+	overflow:hidden;
+	padding:0px;
+	font-size:inherit;
+}
+#infoburp .html .node .editor .editSave {
+	background:red;
+	left:0px;
+}
+#infoburp .html .node .editor .editCancel {
+	background:green;
+	right:0px;
+}
+
+#searchbox {
+	width:250px;
+	border:solid 1px;
+	padding:5px;
+	background:white;
+	color:blue;
+	margin-left:700px;
+	margin-right:20px;
+	margin-top:10px;
+}
+#display {
+	width:250px;
+	display:none;
+	overflow:hidden;
+}
+.display_box {
+	padding:4px;
+	font-size:12px;
+	height:30px;
+}
+.display_box:hover {
+	background:black;
+	color:white;
+}
