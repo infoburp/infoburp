@@ -1,8 +1,62 @@
 how to setup a testing server:
 
-1) Install Xampp apache friend from: http://www.apachefriends.org
+1) Install xampp apache friends from: http://www.apachefriends.org
 2) Copy htdocs from the dropbox to your xampp installation htdocs (e.g. /opt/lampp/htdocs)
-3) Go to localhost/phpmyadmin/ and import infoburp.sql
-4) Go to localhost/index.html
+3) Go to http://localhost/phpmyadmin/, add a database called infoburp,
+   and import /opt/lampp/htdocs/infoburp.sql
+4) Go to http://localhost using google chrome or similar modern browser
 
 DONE
+
+gwolfendale@gmail.com*online*graeme*project lead/backup programmer:
+
+	Project is going well, we need to keep on track and work to this file and the
+	infoburp software development spreadsheet, shared on google docs (make sure
+	that you have this, and check it regularly).
+
+	-Laid out the future structure of infoburp 1.0 in /js
+
+	-We need to make node, bubble, link positions relative, to allow faster display
+	 of available nodes,links and bubbles, a typical subset of the entire graph.
+	 The only node with a fixed position is node0, which is always at position(0,0)
+	 in the centre of the graph.
+
+jmcoding@gmail.com*online*josh*lead programmer:
+	
+	We need to discuss coding regulations. coding style, etc.. possibly variable
+	and function names, tabulating, etc..
+	
+	I recommend sublime code editor instead of notepad++, it's smoother, and better
+	dark themes. all around the best i've seen. you can download at www.sublimetext.com/2
+
+	Moved params for nodes and all other config params into config.js
+	6/24
+		server side: made nodes and links load into separate flat lists
+		client side: js/action.js: sorted all functions to load from get() and post()
+		client side: js/*.js: made loading functions consitently named(load())
+		client side: js/load.js: made nodes and links load into separate flatlists( IB._nodes & IB._links )
+		[in progress]client side: js/create.js: made nodes and links create from flatlist instead of tree
+
+
+lyubimov.denis@gmail.com*inactive*denis*physics:
+
+Good programmer, average communication, keep in touch.
+
+darshan.thanki2011@gmail.com*inactive*darshan*search:
+
+Beginner programmer, good communication, keep in touch.
+
+*inactive*guy*first version:
+
+Programmed first version based on springy, ok programmer, ok communication.
+
+dennis.hotson@gmail.com*inactive*dennis*springy:
+
+Is interested in project, but is employed elsewhere. Developer of springy.js.
+
+@gmail.com*offline*potheek*realtime updates:
+
+Welcome! This is our message board.
+
+
+	

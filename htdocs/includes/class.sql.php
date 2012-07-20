@@ -90,7 +90,7 @@ class sql{
 		'row'=>NULL,
 	);
 	private $query = null;
-	public $insert_id = null;
+	public $create_id = null;
 	private $result = false;
 	private $_error = array();
 	private $host = false;
@@ -213,7 +213,7 @@ class sql{
 			$values = implode(array_values($value),'","');
 			$query = 'INSERT INTO ' . $table . ' (' . $keys . ') VALUES("' . $values . '")';
 			$return = $this->execute($query);
-			$this->insert_id = mysql_insert_id();
+			$this->create_id = mysql_insert_id();
 		}
 		return $return;
 	}

@@ -6,6 +6,13 @@ html, body {
 	margin:0px;
 	padding:0px;
 	cursor:move;
+	color:white;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 
 
@@ -13,12 +20,13 @@ html, body {
 /*..............BAR */
 #bar {
 	width:100%;
-	height:39px;
+	height:36px;
 	left:0px;
-	top:0px;
+	top:3px;
 	position:fixed;
-	background:#272;
+	background:#007b02;
 	z-index:2;
+	
 }
 #_bar {
 	width:900px;
@@ -26,32 +34,77 @@ html, body {
 	list-style:none inside none;
 	display:table;
 	font-family:arial;
-	font-size:14px;
-	color:#131;
+	font-size:18px;
+	padding:0px;
 }
 #_bar >* {
 	display:table-cell;
 	vertical-align:middle;
-	padding:4px 10px;
+	padding:4px 0px;
+	
+}
+/*..............BAR */
+#tophighlight {
+	width:100%;
+	height:3px;
+	left:0px;
+	top:39px;
+	position:fixed;
+	background: #005b00;
+	z-index:2;
+}
+#tophighlight2 {
+	width:100%;
+	height:1px;
+	left:0px;
+	top:38px;
+	position:fixed;
+	background: #006e00;
+	z-index:2;
+}
+#tophighlight3 {
+	width:100%;
+	height:3px;
+	left:0px;
+	top:0px;
+	position:fixed;
+	background: #005b00;
+	z-index:2;
+}
+#tophighlight4 {
+	width:100%;
+	height:1px;
+	left:0px;
+	top:3px;
+	position:fixed;
+	background: #006e00;
+	z-index:2;
 }
 
 /*..............LOGO */
+#logo {
+	
+	background:url('/img/logoIB.png');
+	left:10px;
+	top:11px;
+	position:fixed;
+}
+#logo:hover {
+	
+	background:url('/img/logoIB.mouseover.png');
+	left:10px;
+	top:11px;
+	position:fixed;
+}
 #_logo {
-	font-family:arial;
-	font-size:18px;
-	font-weight:bold;
-	color:#131;
-	border-radius:3px;
+	
+	
+	vertical-align:middle;
 }
 /*..............WHUFFIE */
 #whuffie {
-	
-	font-size:20px;
 }
 #_whuffie {
-	font-weight:bold;
-	font-size:18px;
-	padding-top:2px;
 }
 /*..............BAR SPACING */
 #empty {
@@ -59,19 +112,26 @@ html, body {
 }
 /*..............SEARCH */
 #search {
-	text-align:right;
 }
 #_search {
-	font-size:15px;
-	border-radius:2px;
-	background:#eee;
-	border:1px solid #ddd;
-	padding:4px;
+	font-size:18px;
+	font-family: "URW Gothic L",verdana;
+	vertical-align:middle;
+	border-radius:3px;
+	background:black;
+	border:3px solid #005b00;
+	box-shadow: 0px 0px 0px 1px #006e00;
+	color:#ffffff;
+	padding:0px 2px;
+	width:180px;
+	height:28px;
+	
+}
+#_search:focus {
+	border:3px solid #c73;
 }
 /*..............SIGNIN */
 #signin {
-	
-	font-size:20px;
 }
 
 /*..............BAR */
@@ -79,9 +139,46 @@ html, body {
 	width:100%;
 	height:39px;
 	left:0px;
+	bottom:3px;
+	position:fixed;
+	background:#424242;
+	z-index:2;
+}
+/*..............BAR */
+#bottomhighlight {
+	width:100%;
+	height:3px;
+	left:0px;
+	bottom:41px;
+	position:fixed;
+	background:#0b0b0b;
+	z-index:2;
+}
+#bottomhighlight2 {
+	width:100%;
+	height:1px;
+	left:0px;
+	bottom:44px;
+	position:fixed;
+	background:#040404;
+	z-index:2;
+}
+#bottomhighlight3 {
+	width:100%;
+	height:3px;
+	left:0px;
+	bottom:1px;
+	position:fixed;
+	background:#0b0b0b;
+	z-index:2;
+}
+#bottomhighlight4 {
+	width:100%;
+	height:1px;
+	left:0px;
 	bottom:0px;
 	position:fixed;
-	background:#222;
+	background:#040404;
 	z-index:2;
 }
 
@@ -93,9 +190,16 @@ html, body {
 	height:100%;
 	position:fixed;
 	cursor:move;
+	cursor:url(/cursor/open.hand.cur);
 	z-index:1;
 }
-#infoburp .html {
+#infoburp.dragging {
+	cursor:url(/cursor/gripping.hand.cur);
+}
+#infoburp.creating {
+	cursor:url(/cursor/pointing.hand.cur);
+}
+#infoburp >.html {
 	width:100%;
 	height:100%;
 	left:0px;
@@ -111,22 +215,23 @@ html, body {
 	left:0px;
 	top:0px;
 	padding:0px;
-	font-family:verdana;
-	cursor:pointer;
+	font-family:'URW Gothic L',verdana;
+	cursor: url(/cursor/pointing.hand.cur);
+	vertical-align:middle;
+	text-align:center;
+	
 }
 #infoburp .html .node.editing {
 }
 #infoburp .html .node .html {
-	position:absolute;
-	top:0%;
-	left:0%;
-	width:100%;
-	height:80%;
 	color:black;
-	font-size:140%;
-	line-height:140%;
-	text-align:center;
-	overflow:auto;
+	font-size:inherit;
+	overflow:hidden;
+	display:inline;
+	
+	
+	word-wrap:normal;
+	position:absolute;
 }
 #infoburp .html .node .vote {
 	position:absolute;
@@ -134,18 +239,25 @@ html, body {
 	border-radius:100%;
 	width:20%;
 	height:20%;
-	border:1px solid black;
+	border:2px solid black;
 	overflow:hidden;
 	padding:0px;
 	font-size:inherit;
+	background:url('') center center no-repeat white;
+	background-size:100%;
+	cursor: url(/cursor/pointing.hand.cur);
 }
 #infoburp .html .node .voteUp {
-	background:red;
-	left:0px;
+	border-color:#007b02;
+	background-color:#007b02;
+	color:#007b02;
+	right:3%;
 }
 #infoburp .html .node .voteDown {
-	background:green;
-	right:0px;
+	border-color:#be0000;
+	background-color:#be0000;
+	color:#be0000;
+	left:3%;
 }
 #infoburp .html .node .editor {
 	position:absolute;
@@ -162,16 +274,21 @@ html, body {
 }
 #infoburp .html .node .editor .textbox {
 	position:absolute;
-	top:5%;
-	left:5%;
-	width:90%;
-	height:70%;
-	border:1px solid #aaa;
-	border-radius:10%;
-	outline:0px solid black;
+	top:20px;
+	left:0%;
+	width:100%;
+	height:85%;
+	border: 1px solid white;
+	
 	color:black;
 	font-size:inherit;
+	font-family:'URW Gothic L',verdana;
 	color:black;
+	vertical-align:middle;
+	text-align:center;
+	word-wrap:normal;
+	border-radius:10%;
+    	outline:0px solid black;
 }
 #infoburp .html .node .editor .edit {
 	position:absolute;
@@ -179,26 +296,35 @@ html, body {
 	border-radius:100%;
 	width:20%;
 	height:20%;
-	border:1px solid black;
+	border:1px solid white;
+	background:white;
 	overflow:hidden;
 	padding:0px;
 	font-size:inherit;
+	font-family:'URW Gothic L',verdana;
+	background:url('') center center no-repeat white;
+	background-size:100%;
+	
 }
 #infoburp .html .node .editor .editSave {
-	background:red;
-	left:0px;
+	border-color:#007b02;
+	background-color:#007b02;
+	color:#007b02;
+	right:3%;
 }
 #infoburp .html .node .editor .editCancel {
-	background:green;
-	right:0px;
+	border-color:#be0000;
+	background-color:#be0000;
+	color:#be0000;
+	left:3%;
 }
 
 #searchbox {
-	width:250px;
-	border:solid 1px;
+	width:160px;
+	border:solid 3px;
 	padding:5px;
-	background:white;
-	color:blue;
+	background:black;
+	color:#174917;
 	margin-left:700px;
 	margin-right:20px;
 	margin-top:10px;
@@ -216,4 +342,23 @@ html, body {
 .display_box:hover {
 	background:black;
 	color:white;
+}
+
+
+
+#infoburp #addNode {
+	background:url('/img/addNode.png') center center no-repeat;
+	width:14px;
+	height:14px;
+	position:absolute;
+	left:-100px;
+	top:-100px;
+}
+#infoburp #addLink {
+	background:url('/img/addLink.png') center center no-repeat;
+	width:14px;
+	height:14px;
+	position:absolute;
+	left:-100px;
+	top:-100px;
 }
