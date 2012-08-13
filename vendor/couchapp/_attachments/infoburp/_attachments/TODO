@@ -1,0 +1,48 @@
+a)infoburp uses couchdb as it's server, and is written as a couchapp,
+this means as soon as a user accesses the site the software is
+downloaded to their machine, and works even when their internet
+connection is interrupted.
+
+b)couchdb uses .json files natively, and these are also the standard
+files that d3 accepts.
+
+c)d3 is the chosen visualisation library. we need to add some new functionality.
+
+d)I have chosen the force layout, we need to add:
+
+1. HTML displayed inside the circular nodes.
+
+2. A node content editor, when I click on a node, an editor pops out
+to the right of the screen, allowing me to both view the content more
+closely, and, if I own the node, to edit it's content.
+
+3. The ability to freely create new links from node to node, by
+dragging from one node to another. A line is displayed behind the
+mouse when the mouse is dragged away from a node. Nodes cannot be
+moved and are placed by d3.force.
+
+3a. The ability to create new nodes, by dragging from one node to
+empty space on the graph. The node lands where the user puts it, but
+is immediately added to the force layout.
+
+4. One .json file per node, and one per link, to allow the files to be
+shared more easily between client and server, and accommodate large
+numbers of nodes. nodes and links dynamically added to the user's
+display.
+
+5. infoburp packaged as a couchapp.
+
+6. the ability to login using one of the four:
+
+6a. yahoo
+6b. twitter
+6c. facebook
+6d. google
+
+7. couchdb as the storage and distribution method for both infoburp
+itself and the data it presents to the user.
+
+8. amazon adverts linked to relevant parent node.
+
+9. the ability to pan and zoom the view.
+9a. download the data onscreen on zoom/pan.
