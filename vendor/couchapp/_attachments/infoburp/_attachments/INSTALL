@@ -1,0 +1,25 @@
+
+
+Installing couchdb
+
+Ubuntu
+
+$ sudo apt-get install couchdb
+
+Supposing you have couchdb installed and running. This concerns only installing virtualenv for couchapp.
+
+Make sure python virtual env is installed (sudo apt-get install python-virtualenv)
+
+
+$ mkdir venv
+
+$ virtualenv venv --distribute
+
+$ source ./venv/bin/activate
+
+(venv)$ pip install couchapp 
+
+
+ couchapp generate infoburp
+
+That's all.
