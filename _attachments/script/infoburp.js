@@ -1,33 +1,3 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Force-Directed Layout (Dynamic)</title>
-    <script type="text/javascript" src="d3.v2.js"></script>
-    <style type="text/css">
-
-rect {
-  fill: #fff;
-}
-
-.node {
-  fill: #000;
-}
-
-.cursor {
-  fill: none;
-  stroke: brown;
-  pointer-events: none;
-}
-
-.link {
-  stroke: #999;
-}
-
-    </style>
-  </head>
-  <body>
-    <div id="chart"></div>
-    <script type="text/javascript">
 
 var width = 960,
     height = 500,
@@ -111,6 +81,4 @@ function restart() {
       .call(force.drag);
 }
 
-    </script>
-  </body>
-</html>
+

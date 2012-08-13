@@ -1,15 +1,11 @@
-
-
-Installing couchdb
-
-Ubuntu
+Installing couchdb, couch app and creating an infoburp server node..
 
 $ sudo apt-get install couchdb
 
-Supposing you have couchdb installed and running. This concerns only installing virtualenv for couchapp.
+Supposing you have couchdb installed and running. 
+This concerns only installing virtualenv for couchapp.
 
 Make sure python virtual env is installed (sudo apt-get install python-virtualenv)
-
 
 $ mkdir venv
 
@@ -19,7 +15,10 @@ $ source ./venv/bin/activate
 
 (venv)$ pip install couchapp 
 
+(venv)$ ssh infoburp-ec2 -L 9090:localhost:5984
 
- couchapp generate infoburp
+copy lampp/InfoPython and lampp/config to local disk
+
+(venv)$ couchapp clone http://127.0.0.1:9090/localhost/_design/infoburp infoburp
 
 That's all.
