@@ -10,7 +10,7 @@ var previous_graph_state=restore_graph_state();// persistence/basic_persistence.
 
 var vis = d3.select("#chart").append("svg")
     .attr("width", width)
-    .attr("height", height);
+    .attr("height", height)
     .attr("pointer-events", "all")
 	.append('svg:g')
     .call(d3.behavior.zoom().on("zoom",  redraw))
