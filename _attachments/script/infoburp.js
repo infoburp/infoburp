@@ -26,11 +26,11 @@ var force = d3.layout.force()
     .links(links)
     .size([width, height]);
 
-/*var cursor = vis.append("circle")
-    .attr("r", 3)
+var cursor = vis.append("circle")
+    .attr("r", 0)
     .attr("transform", "translate(-100,-100)")
     .attr("class", "cursor");
-*/
+
 
 force.on("tick", function() {
   vis.selectAll("line.link")
