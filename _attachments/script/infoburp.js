@@ -1,13 +1,20 @@
 
 var width = 960,
     height = 500,
-    fill = d3.scale.category20(),
-    nodes = [],
-    links = [];
+    fill = d3.scale.category20();
+
+
+var previous_graph_state=restore_graph_state();// persistence/basic_persistence.js
+    nodes = previous_graph_state.nodes;
+    links = restore_links(previous_graph_state);
 
 var vis = d3.select("#chart").append("svg")
     .attr("width", width)
     .attr("height", height);
+    .attr("pointer-events", "all")
+	.append('svg:g')
+    .call(d3.behavior.zoom().on("zoom",  redraw))
+	.append('svg:g');
 
 vis.append("rect")
     .attr("width", width)
@@ -19,10 +26,11 @@ var force = d3.layout.force()
     .links(links)
     .size([width, height]);
 
-var cursor = vis.append("circle")
-    .attr("r", 30)
+/*var cursor = vis.append("circle")
+    .attr("r", 3)
     .attr("transform", "translate(-100,-100)")
     .attr("class", "cursor");
+*/
 
 force.on("tick", function() {
   vis.selectAll("line.link")
@@ -49,7 +57,7 @@ vis.on("mousedown", function() {
   nodes.forEach(function(target) {
     var x = target.x - node.x,
         y = target.y - node.y;
-    if (Math.sqrt(x * x + y * y) < 30) {
+    if ((Math.sqrt(x * x + y * y) < 30) && ((x!=0) && (y!=0))) {
       links.push({source: node, target: target});
     }
   });
@@ -81,4 +89,11 @@ function restart() {
       .call(force.drag);
 }
 
+function redraw() {
+	
+  console.log("here", d3.event.translate, d3.event.scale);
+  vis.attr("transform",
+      "translate(" + d3.event.translate + ")"
+      + " scale(" + d3.event.scale + ")");
+}
 
