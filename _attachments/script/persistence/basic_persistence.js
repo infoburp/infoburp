@@ -41,7 +41,7 @@ save_graph_state=function(){
     var graph_state=restore_graph_state();
 
     graph_state.nodes=nodes;
-    graph_state.links=links;
+    graph_state.links=links;    // Probably we should save only source.index and target.index
 
     db.save(graph_state);
 };
