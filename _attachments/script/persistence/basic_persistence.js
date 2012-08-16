@@ -2,6 +2,9 @@
 // Creating graph database which would hold json that describes current
 
 
+
+
+
 function restore_link(linkObj,linkIndex){
 
 // There is a problem with link serialization as target and source are nodes objects, and inter array pointers are not preserved this function should alleviate that problem
@@ -53,6 +56,9 @@ db.save(graph_state);
 
 };
 
+// We saving graph state every 5 seconds.
+
+setInterval(save_graph_state,5000);
 
 // Getting data from d3
 
