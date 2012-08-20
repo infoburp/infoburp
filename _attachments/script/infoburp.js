@@ -1,8 +1,8 @@
-DISTANCE=30;
+DISTANCE=100;
 
-NEW_NODE_TEMPLATE={};
+NEW_NODE_TEMPLATE=function(){return {};}; // Making just {} makes awesome bug.
 
-RADIUS_OF_LINKING=30; // Defines distance 
+RADIUS_OF_LINKING=5; // Defines distance 
 
 dragged_node_number=null;
 dragged_link_number=null;
@@ -48,9 +48,11 @@ function tick_fu() {
 force.on("tick",tick_fu);
 
 
-//vis.on("mousemove", function() {
-//	cursor.attr("transform", "translate(" + d3.mouse(this) + ")");
-//});
+force.start();
+
+vis.on("mousemove", function() {
+	cursor.attr("transform", "translate(" + d3.mouse(this) + ")");
+});
 
 
 var node_drag = d3.behavior.drag()
@@ -63,12 +65,17 @@ function dragstart(d, i) {
         force.stop(); // stops the force auto positioning before you start dragging
 
 	
-	var new_node=NEW_NODE_TEMPLATE;
+	var new_node=NEW_NODE_TEMPLATE();
 
+        new_node.x=d.x+5;
+        new_node.y=d.y;
+    
 	dragged_node_number=global_data.nodes.push(new_node)-1;
 	
 	dragged_link_number=global_data.links.push({source:d,target:new_node})-1;
 	
+        
+        //alert("Added node");
 	restart();
 
     }
@@ -96,11 +103,14 @@ function dragend(d, i) {
 				      
 				     
 				      if ((Math.sqrt(X*X+Y*Y)<RADIUS_OF_LINKING) && ( (X!==0) && (Y!==0) )&& flag && (num!==dragged_node_number) ){
+					  console.log(flag);
 					  
+
 					  global_data.links[dragged_link_number].target=target;
 					  
 					  global_data.nodes.splice(dragged_node_number,dragged_node_number);
 					  console.log(global_data);
+					  //alert("Added link");
 					  flag=false;
 					  restart();
 				      };
@@ -120,15 +130,7 @@ function dragend(d, i) {
 
 function restart() {
 
-    vis.selectAll("line.link")
-	.data(global_data.links)
-	.enter().insert("line", "circle.node")
-	.attr("class", "link")
-	.attr("x1", function(d) { return d.source.x; })
-	.attr("y1", function(d) { return d.source.y; })
-	.attr("x2", function(d) { return d.target.x; })
-	.attr("y2", function(d) { return d.target.y; });
-
+    //alert("restart");
     var loc_nodes=vis.selectAll("circle.node")
 	.data(global_data.nodes);
 
@@ -139,8 +141,17 @@ function restart() {
 	.attr("r", 4.5)
 	.call(node_drag);
     
-    loc_nodes.exit().remove();}
+    loc_nodes.exit().remove();
 
+    vis.selectAll("line.link")
+	.data(global_data.links)
+	.enter().insert("line", "circle.node")
+	.attr("class", "link")
+	.attr("x1", function(d) { return d.source.x; })
+	.attr("y1", function(d) { return d.source.y; })
+	.attr("x2", function(d) { return d.target.x; })
+	.attr("y2", function(d) { return d.target.y; });
+}
 
 restart();
 
