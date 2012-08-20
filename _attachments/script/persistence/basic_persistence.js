@@ -6,8 +6,8 @@ function restore_link(linkObj,linkIndex){
     // TODO check if it works with node removed. It may not as index in array could be different from index property.
     
     return {
-	source:nodes[linkObj.source.index],
-	target:nodes[linkObj.target.index]
+	source:global_data.nodes[linkObj.source.index],
+	target:global_data.nodes[linkObj.target.index]
 	};
     
 
@@ -40,8 +40,8 @@ save_graph_state=function(){
 
     var graph_state=restore_graph_state();
 
-    graph_state.nodes=nodes;
-    graph_state.links=links;    // Probably we should save only source.index and target.index
+    graph_state.nodes=global_data.nodes;
+    graph_state.links=global_data.links;    // Probably we should save only source.index and target.index
 
     db.save(graph_state);
 };
