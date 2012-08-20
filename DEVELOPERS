@@ -1,0 +1,71 @@
+This is workflow for commiting changes to infoburp.
+
+For commiting your changes to project you need to have github account.
+
+After registering/logging you need to fork https://github.com/infoburp/infoburp.git via web-interface.
+
+
+That way you will get your own github repository with adress like that looks like
+
+https://github.com/awesome_developer/infoburp.git
+
+where awesome_developer would be changed to your github login
+
+So now you need to clone that repository to your local computer.
+
+For that you need to install git. And then clone that repository. 
+
+For console users use
+
+$ git clone https://github.com/awesome_developer/infoburp.git
+
+That way you got local copy which you can work on.
+
+
+After you finish working on that copy you need to commit them and push changes to you repository. 
+
+Again from console
+
+add all untracked files
+
+$ git add .
+
+Commit with commentary about work done.
+
+$ git commit -am "I have done this"
+
+
+And finally push changes to github.
+
+$ git push origin master
+
+
+That way you got you changes on your fork of infoburp in github. Now you should make pull request via web interface (it's one of buttons in upper right corner). Write short description of what you have done.
+
+That's all. Repository maintainer should pull your request.
+
+
+Of course you can commit in your local repo not once, but basic minimal workflow described above.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
