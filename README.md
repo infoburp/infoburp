@@ -1,6 +1,8 @@
 ## infoburp CouchApp
 
-infoburp is a website, with the url www.infoburp.com. This facility is useful because it allows people with no experience of the semantic web to easily understand what linked data is, and to easily look up data regarding a certain topic, without having to install new software.
+infoburp is a website, with the url www.infoburp.com. 
+
+It is useful because it allows people with no experience of the semantic web to easily understand what linked data is, and to easily look up data regarding a certain topic, without having to install new software.
 
 By presenting a fresh view to user’s online content and relationships, I hope to create an interesting new business opportunity, both for myself and other people.
 
