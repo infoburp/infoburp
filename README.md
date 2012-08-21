@@ -1,4 +1,4 @@
-## infoburp CouchApp
+## infoburp
 
 infoburp is a website, with the url www.infoburp.com. 
 
