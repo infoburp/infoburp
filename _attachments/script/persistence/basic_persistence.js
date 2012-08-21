@@ -2,7 +2,8 @@
 
 function restore_link(linkObj,linkIndex){
 
-    // There is a problem with link serialization as target and source are nodes objects, and inter array pointers are not preserved this function should alleviate that problem
+    // There is a problem with link serialization as target and source are nodes objects, and inter array pointers are
+    //not preserved this function should alleviate that problem
     // TODO check if it works with node removed. It may not as index in array could be different from index property.
     
     return {
