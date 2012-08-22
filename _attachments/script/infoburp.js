@@ -1,6 +1,6 @@
 DISTANCE=100;
 
-NEW_NODE_TEMPLATE=function(){return {};}; // Making just {} makes awesome bug.
+NEW_NODE_TEMPLATE=function(){return {nodehtml:"New node"};}; // Making just {} makes awesome bug.
 
 RADIUS_OF_LINKING=5; // Defines distance 
 
@@ -33,6 +33,80 @@ var force = d3.layout.force()
 
 var cursor = vis.append("circle").attr("r", 0).attr("transform", "translate(-100,-100)").attr("class", "cursor");
 
+
+// this function based on http://bl.ocks.org/2653660
+
+function insert_editor(d,i){
+    
+var p = this.parentNode;
+        console.log(this, arguments);
+        
+        // inject a HTML form to edit the content here...
+
+        var el = d3.select(this);
+        var p_el = d3.select(p);
+        
+        var frm = p_el.append("xhtml:form");
+        
+        var inp = frm
+	            .attr("class","editor-form")
+                    .append("input")
+                        .attr("value", function() {
+                            // nasty spot to place this call, but here we are sure that the <input> tag is available
+                            // and is handily pointed at by 'this':
+                            this.focus();
+                            
+                            return d.nodehtml;
+                        })
+                        .attr("style", "width: 294px;")
+                        // make the form go away when you jump out (form looses focus) or hit ENTER:
+                        .on("blur", function() {
+                            console.log("blur", this, arguments);
+    
+                            var txt = inp.node().value;
+                            
+                            d.nodehtml = txt;
+                                                        
+                            p_el.select("form.editor-form").remove();
+                        })
+                        .on("keypress", function() {
+ 
+                            var e = d3.event;
+                            if (e.keyCode == 13)
+				{
+
+                                    if (e.stopPropagation)
+					e.stopPropagation();
+                                    e.preventDefault();
+        
+                                    var txt = inp.node().value;
+                                
+                                    d.nodehtml = txt;
+                                    el
+					.text(function(d) { return d.nodehtml; });
+                                
+                                    p_el.select("form.editor-form").remove();
+				}
+                            });
+
+
+    
+    };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function tick_fu() {
 	vis.selectAll("line.link")
 	    .attr("x1", function(d) { return d.source.x; })
@@ -40,9 +114,9 @@ function tick_fu() {
 	    .attr("x2", function(d) { return d.target.x; })
 	    .attr("y2", function(d) { return d.target.y; });
 
-	vis.selectAll("circle.node")
-	    .attr("cx", function(d) { return d.x; })
-	    .attr("cy", function(d) { return d.y; });
+	vis.selectAll(".node")
+	    .attr("x", function(d) { return d.x; })
+	    .attr("y", function(d) { return d.y; });
     };
 
 force.on("tick",tick_fu);
@@ -62,8 +136,10 @@ var node_drag = d3.behavior.drag()
         
 
 function dragstart(d, i) {
-        force.stop(); // stops the force auto positioning before you start dragging
-
+    force.stop(); // stops the force auto positioning before you start dragging
+    
+    if ( d3.event.sourceEvent.srcElement.className!=="blockdragging"){
+	    
 	
 	var new_node=NEW_NODE_TEMPLATE();
 
@@ -77,8 +153,9 @@ function dragstart(d, i) {
         
         //alert("Added node");
 	restart();
-
     }
+
+}
 
     function dragmove(d, i) {
 
@@ -93,6 +170,10 @@ function dragstart(d, i) {
     }
 
 function dragend(d, i) {
+
+
+if ( d3.event.sourceEvent.srcElement.className!=="blockdragging"){
+	    
 	var flag=true;
 	global_data.nodes.forEach(function(target,num){
 				      
@@ -120,7 +201,8 @@ function dragend(d, i) {
 
 	);
 	
-	
+
+	    }
 	force.start();
 
     };
@@ -131,21 +213,41 @@ function dragend(d, i) {
 function restart() {
 
     //alert("restart");
-    var loc_nodes=vis.selectAll("circle.node")
+    var loc_nodes=vis.selectAll(".node")
 	.data(global_data.nodes);
 
-    loc_nodes.enter().insert("circle", "circle.cursor")
+    var new_nodes=loc_nodes.enter().insert("foreignObject")
 	.attr("class", "node")
-	.attr("cx", function(d) { return d.x; })
-	.attr("cy", function(d) { return d.y; })
-	.attr("r", 4.5)
+	.attr("height",50)
+	.attr("width",50)
+	.attr("x", function(d) { return d.x; })
+	.attr("y", function(d) { return d.y; })
 	.call(node_drag);
     
     loc_nodes.exit().remove();
 
+
+    new_nodes.append("xhtml:body")
+	.attr("class","nodebody");
+
+    var bodies = new_nodes.selectAll(".nodebody");
+    
+    bodies.append("xhtml:form")
+	.append("input")
+	.attr("type","button")
+	.attr("class","blockdragging")
+	.attr("value","Edits")
+        .on("click",insert_editor);	
+
+    bodies.append("xhtml:div")
+	.attr("class","nodehtml")
+	.html(function(d){return "nodehtml=" +this.parentElement.__data__.nodehtml;
+			  //return (this.parentElement.__data__.x);console.log(this.parentElement.__data__);  
+			 });	
+
     vis.selectAll("line.link")
 	.data(global_data.links)
-	.enter().insert("line", "circle.node")
+	.enter().insert("line", "foreighnObject.node")
 	.attr("class", "link")
 	.attr("x1", function(d) { return d.source.x; })
 	.attr("y1", function(d) { return d.source.y; })
