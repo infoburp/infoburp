@@ -1,5 +1,4 @@
-DISTANCE=100;
-
+DISTANCE=100; 
 NEW_NODE_TEMPLATE=function(){return {nodehtml:"New node"};}; // Making just {} makes awesome bug.
 var verbose = false; // enable verbose mode, handy for debugging
 RADIUS_OF_LINKING=5; // Defines distance between nodes.
@@ -50,6 +49,7 @@ var p = this.parentNode;
                             d.nodehtml = txt; 
                             p_el.select("form.editor-form").remove();
                         })
+                        //make the form go away when you hit ENTER
                         .on("keypress", function() {
                             var e = d3.event;
                             if (e.keyCode == 13)
@@ -127,7 +127,7 @@ if ( d3.event.sourceEvent.srcElement.className!=="blockdragging"){
 	force.start();
     };
 function restart() {
-    //alert("restart");
+   if (verbose = true){alert("Restart");};
     var loc_nodes=vis.selectAll(".node")
 	.data(global_data.nodes);
     var new_nodes=loc_nodes.enter().insert("foreignObject")
