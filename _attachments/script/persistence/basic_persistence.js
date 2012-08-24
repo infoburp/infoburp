@@ -48,4 +48,9 @@ save_graph_state=function(){
 
 // We saving graph state every 5 seconds.
 
-setInterval(save_graph_state,5000);
+
+// This is for debug purposes. It make possible to develop interface without couchdb instance
+if (COUCHDB){
+
+    setInterval(save_graph_state,5000);
+}

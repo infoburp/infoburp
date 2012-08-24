@@ -12,14 +12,40 @@ var width = 960,
     height = 500, 
     fill = d3.scale.category20();
 
-var previous_graph_state = restore_graph_state();
-// persistence/basic_persistence.js
+
 
 global_data={nodes:[], links:[]};
 
+if (COUCHDB){
+    var previous_graph_state = restore_graph_state();// persistence/basic_persistence.js
+    global_data.nodes = previous_graph_state.nodes;
+    global_data.links = restore_links(previous_graph_state);
+}
+else{
+    global_data.nodes = [
+	{
+	    x:50,
+	    y:50,
+	    nodehtml:"Node 1 html <b>bold</b>"
+	},
+	{
+	    x:50,
+	    y:50,
+	    nodehtml:"Node 2 html <i>italic</i>"
+	}
+    ];
+    global_data.links = [
+	{source:{
+	     index:0
+	 },
+	 target:{
+	     index:1
+	 }
+	}
 
-global_data.nodes = previous_graph_state.nodes;
-global_data.links = restore_links(previous_graph_state);
+    ];
+    
+}
 
 var vis = d3.select("#chart").append("svg").attr("width", width).attr("height", height).attr("pointer-events", "all").append('svg:g').call(d3.behavior.zoom().on("zoom", redraw)).append('svg:g');
 
