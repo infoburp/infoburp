@@ -6,7 +6,7 @@ It is useful because it allows people with no experience of the semantic web to 
 
 This will be useful for anyone who has a lot of information to deal with. This could be pretty much anyone nowadays, but the core market is students of any age, and professionals who must deal with a lot of information on different subjects.
 
-In order to streamline development I have chosen two systems for the front and back end, d3.js and couchdb respectively. Both are tested and reliable open source components and have active communities keeping them up to date.
+In order to streamline development I have chosen two systems for the front and back end, d3.js and couchdb respectively. Both are tested and reliable open source components and have active communities keeping them up to date, and infoburp is a couchapp, which makes it very easy to deploy, and means it can be run locally, and is highly scalable.
 
 This gives a very simple end solution, having only 3 main components, d3.js on the frontend, couchdb on the backend, and infoburp.js acting as middleware glue to hold d3 and couchdb together.
 
