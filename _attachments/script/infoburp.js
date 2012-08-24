@@ -1,15 +1,25 @@
-DISTANCE=100;
+//DISTANCE=20;
+
+
+LINK_STRENGTH=0.01;
+CHARGE =-1000;
+GRAVITY=0.0001;
 
 NEW_NODE_TEMPLATE=function(){return {nodehtml:"New node"};}; // Making just {} makes awesome bug.
 
-RADIUS_OF_LINKING=5; // Defines distance 
+RADIUS_OF_LINKING=100; // Defines distance 
+
+NODE_RADIUS=100;
+
+FOREIGH_OBJECT_SIDE=NODE_RADIUS*1.4142;
+
 
 dragged_node_number=null;
 dragged_link_number=null;
 
 
-var width = 960, 
-    height = 500, 
+var width = 900, 
+    height = 1500, 
     fill = d3.scale.category20();
 
 
@@ -22,28 +32,9 @@ if (COUCHDB){
     global_data.links = restore_links(previous_graph_state);
 }
 else{
-    global_data.nodes = [
-	{
-	    x:50,
-	    y:50,
-	    nodehtml:"Node 1 html <b>bold</b>"
-	},
-	{
-	    x:50,
-	    y:50,
-	    nodehtml:"Node 2 html <i>italic</i>"
-	}
-    ];
-    global_data.links = [
-	{source:{
-	     index:0
-	 },
-	 target:{
-	     index:1
-	 }
-	}
+    global_data.nodes = DEBUG_DATASET.nodes;
+    global_data.links = DEBUG_DATASET.links;
 
-    ];
     
 }
 
@@ -52,7 +43,11 @@ var vis = d3.select("#chart").append("svg").attr("width", width).attr("height", 
 vis.append("rect").attr("width", width).attr("height", height);
 
 var force = d3.layout.force()
-    .distance(DISTANCE)
+//    .distance(DISTANCE)
+//    .linkDistance(200)
+    .linkStrength(LINK_STRENGTH)
+    .gravity(GRAVITY)
+    .charge(CHARGE)
     .nodes(global_data.nodes)
     .links(global_data.links)
     .size([width, height]);
@@ -106,9 +101,13 @@ var p = this.parentNode;
                                     e.preventDefault();
         
                                     var txt = inp.node().value;
-                                
-                                    d.nodehtml = txt;
-                                    el
+                                    
+
+				    //console.log(inp,p_el,p_el.select("form-editor.form"));
+                               
+				    d.nodehtml = txt;
+                                    
+				    el
 					.text(function(d) { return d.nodehtml; });
                                 
                                     p_el.select("form.editor-form").remove();
@@ -140,9 +139,16 @@ function tick_fu() {
 	    .attr("x2", function(d) { return d.target.x; })
 	    .attr("y2", function(d) { return d.target.y; });
 
-	vis.selectAll(".node")
+	vis.selectAll("g.node")
+	.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+
+/*	vis.selectAll(".node")
 	    .attr("x", function(d) { return d.x; })
 	    .attr("y", function(d) { return d.y; });
+
+       vis.selectAll("circle")
+	.attr("cx",function(d) { console.log(d); return d.x; })
+	.attr("cy",function(d) { return d.y; }); */
     };
 
 force.on("tick",tick_fu);
@@ -164,8 +170,11 @@ var node_drag = d3.behavior.drag()
 function dragstart(d, i) {
     force.stop(); // stops the force auto positioning before you start dragging
     
-    if ( d3.event.sourceEvent.srcElement.className!=="blockdragging"){
-	    
+    //console.log(!$(d3.event.sourceEvent.srcElement).hasClass("blockdragging"));
+    
+    if ( !$(d3.event.sourceEvent.srcElement).hasClass("blockdragging") ) {
+	
+	
 	
 	var new_node=NEW_NODE_TEMPLATE();
 
@@ -198,15 +207,15 @@ function dragstart(d, i) {
 function dragend(d, i) {
 
 
-if ( d3.event.sourceEvent.srcElement.className!=="blockdragging"){
+if (  !$(d3.event.sourceEvent.srcElement).hasClass("blockdragging")){
 	    
 	var flag=true;
 	global_data.nodes.forEach(function(target,num){
 				      
 				      var X=d3.event.sourceEvent.x -target.x;
 				      var Y=d3.event.sourceEvent.y -target.y;
-				      //console.log(d3.event.sourceEvent.x);
-				      console.log("X,Y",X,Y);
+				      console.log(d3.event.sourceEvent);
+				      console.log("X,Y",X,Y,"num",num);
 				      
 				     
 				      if ((Math.sqrt(X*X+Y*Y)<RADIUS_OF_LINKING) && ( (X!==0) && (Y!==0) )&& flag && (num!==dragged_node_number) ){
@@ -239,37 +248,55 @@ if ( d3.event.sourceEvent.srcElement.className!=="blockdragging"){
 function restart() {
 
     //alert("restart");
-    var loc_nodes=vis.selectAll(".node")
+    var nodeSelection=vis.selectAll("g.node")
 	.data(global_data.nodes);
+    
+    var nodeEnter = nodeSelection.enter().append("svg:g")
+      .attr("class", "node")
+      .call(node_drag);
 
-    var new_nodes=loc_nodes.enter().insert("foreignObject")
+    var circles=nodeEnter.append("svg:circle")
+        .attr("class","node")
+	.attr("r",NODE_RADIUS);
+
+
+    
+
+    var new_nodes=nodeEnter.append("foreignObject")
 	.attr("class", "node")
-	.attr("height",50)
-	.attr("width",50)
-	.attr("x", function(d) { return d.x; })
-	.attr("y", function(d) { return d.y; })
+	.attr("height",FOREIGH_OBJECT_SIDE)
+	.attr("width",FOREIGH_OBJECT_SIDE)
+        .attr("x",-NODE_RADIUS/1.4142) //so foreign object is inside circle
+        .attr("y",-NODE_RADIUS/1.4142)
+
+    
+//	.attr("x", function(d) { return d.x; })
+//	.attr("y", function(d) { return d.y; })
 	.call(node_drag);
     
-    loc_nodes.exit().remove();
+    nodeSelection.exit().remove();
 
 
-    new_nodes.append("xhtml:body")
-	.attr("class","nodebody");
+//    new_nodes.append("xhtml:body")
+//	.attr("class","nodebody");
 
-    var bodies = new_nodes.selectAll(".nodebody");
+//    var bodies = new_nodes.selectAll(".nodebody");
     
-    bodies.append("xhtml:form")
+/*    bodies.append("xhtml:form")
 	.append("input")
 	.attr("type","button")
 	.attr("class","blockdragging")
 	.attr("value","Edits")
         .on("click",insert_editor);	
-
-    bodies.append("xhtml:div")
-	.attr("class","nodehtml")
+*/
+    new_nodes.append("xhtml:div")
+	.attr("class","nodehtml blockdragging")
+	.attr("height","100%")
+	.attr("width","100%")
 	.html(function(d){return "nodehtml=" +this.parentElement.__data__.nodehtml;
 			  //return (this.parentElement.__data__.x);console.log(this.parentElement.__data__);  
-			 });	
+			 })
+        .on("click",insert_editor);	
 
     vis.selectAll("line.link")
 	.data(global_data.links)
