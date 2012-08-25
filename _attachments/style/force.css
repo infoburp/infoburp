@@ -8,3 +8,8 @@ line.link {
   stroke-opacity: 1;
   stroke-width: 4.2px;
 }
+line.temporal_link {
+  stroke: yellow;
+  stroke-opacity: 0.5;
+  stroke-width: 6.2px;
+}

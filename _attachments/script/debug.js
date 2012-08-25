@@ -1,4 +1,4 @@
-COUCHDB=true;
+COUCHDB=false;
 
 DEBUG_DATASET={
     nodes:[
