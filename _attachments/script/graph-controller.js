@@ -3,13 +3,32 @@ function get_graph_controller(vis){
     return {
 	
 	svg_vis:vis,
-
+	
+	blockdragging:false,
 	temporal_link_array:[],
 	temporal_node_array:[],
 
 
 	state:{
 	    dragged_node_number:null
+	},
+
+	dragstart_handler:function(d,ev){
+	    
+	    if ($(d3.event.sourceEvent.srcElement).hasClass("blockdragging")){
+		
+		this.blockdragging=true;
+		
+	    }
+	    else{
+		
+		this.add_temporal_node(d.x,d.y);
+		this.add_temporal_link(d,this.temporal_node_array[0]);
+	    }
+	    
+	    return this.blockdragging;
+
+	    
 	},
 	
 	add_temporal_node:function(x,y){

@@ -62,7 +62,6 @@ var GraphController=null;
 
 $.getScript("script/graph-controller.js",function(){GraphController=get_graph_controller(vis);});
 
-//console.log(GraphController);
 
 // loading insert_editor function
 $.getScript("script/node-editor/node-editor.js",restart);
@@ -117,86 +116,93 @@ var node_drag = d3.behavior.drag()
 function dragstart(d, i) {
     force.stop(); // stops the force auto positioning before you start dragging
     
-    GraphController.add_temporal_node(d.x,d.y);
-    GraphController.add_temporal_link(d,GraphController.temporal_node_array[0]);
-
-
-//    console.log(!$(d3.event.sourceEvent.srcElement).hasClass("blockdragging"));
     
-//    console.log(d3.event.sourceEvent.srcElement, d);
-
-//    if ( $(d3.event.sourceEvent.srcElement).hasClass("blockdragging") ) {alert("Blockdragging")}
-
-
+    GraphController.dragstart_handler(d,d3.event);
 
 }
 
     function dragmove(d, i) {
 
-	//Moving temp node;
-	
-	GraphController.temporal_tick(d3.event.x,d3.event.y);
-
-	var nodes_distances=GraphController.nodes_distances(d3.event.x,d3.event.y);
-
-	// making all nodes green
-	global_data.nodes.forEach(function(d){
-
-				      d.nodecolor="green";
-				      }
-				  
-	);
-
-
-	// making nearest node yellow if it insider radius of linking
-	if (nodes_distances[0].distance<RADIUS_OF_LINKING){
+	// We do this things only if click originated on element that dont't block dragging
+	if (!GraphController.blockdragging){
 	    
-	    nodes_distances[0].node.nodecolor="yellow";
-	}
+	
+	    //Moving temp node;
+	
+	    GraphController.temporal_tick(d3.event.x,d3.event.y);
+	
+	    //Calculating distances to nodes
+	    var nodes_distances=GraphController.nodes_distances(d3.event.x,d3.event.y);
 
+	    // making all nodes green
+	    global_data.nodes.forEach(function(d){
+					  
+					  d.nodecolor="green";
+				      }
+				      
+				     );
+
+
+	    // making nearest node yellow if it insider radius of linking
+	    if (nodes_distances[0].distance<RADIUS_OF_LINKING){
+		
+		nodes_distances[0].node.nodecolor="yellow";
+	    }
+	}
 	//Making force simulation
 	tick_fu();
     }
 
 function dragend(d, i) {
 
+    // We do this things only if click originated on element that dont't block dragging
+    if (!GraphController.blockdragging){
 
-    GraphController.remove_temporal_node_and_link();
+	var X=GraphController.temporal_node_array[0].x;
+	var Y=GraphController.temporal_node_array[0].y;
+ 
+	    GraphController.remove_temporal_node_and_link();
     
-    var yellow_nodes=$.grep(global_data.nodes,
-			    function(d,n){
-				return d.nodecolor=="yellow";
+	var yellow_nodes=$.grep(global_data.nodes,
+				function(d,n){
+				    return d.nodecolor=="yellow";
 				}
-			  
+				
 			   );
-    
-// If node yellow we make a link to it
-    if (yellow_nodes.length>0){
-
-	target=yellow_nodes[0];
-	global_data.links.push({source:d,target:target});
 	
-	target.nodecolor="green";
-	console.log(" link after ",global_data.links[dragged_link_number]);
-
-	restart();
+	// If node yellow we make a link to it
+	if (yellow_nodes.length>0){
+	    
+	    target=yellow_nodes[0];
+	    global_data.links.push({source:d,target:target});
 	
-    }
-    else {
+	    target.nodecolor="green";
+
+	}
+	else {
 
 	// Adding new node
     
-	var new_node=new NEW_NODE_TEMPLATE();
+	    var new_node=new NEW_NODE_TEMPLATE();
 
-        new_node.x=d.x+5;
-        new_node.y=d.y;
-	global_data.nodes.push(new_node);
-
-	global_data.links.push({source:d,target:new_node});
+            new_node.x=X; // We move new node sligthly
+            new_node.y=Y;
+	    global_data.nodes.push(new_node);
+	    global_data.links.push({source:d,target:new_node});
+	};
+	// Refreshing svg after modifying data
 	restart();
-};
-
-	force.start();
+    }
+    
+    else{
+	
+	//Resetting blockdragging state
+	GraphController.blockdragging=false;
+	
+    }
+	
+ 
+    force.start();
 
 };
 
