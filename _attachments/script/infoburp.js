@@ -1,4 +1,3 @@
-
 //DISTANCE=20;
 
 
@@ -175,8 +174,6 @@ function dragstart(d, i) {
     
     if ( !$(d3.event.sourceEvent.srcElement).hasClass("blockdragging") ) {
 
-
-
 	var new_node=NEW_NODE_TEMPLATE();
 
         new_node.x=d.x+5;
@@ -210,6 +207,7 @@ function dragend(d, i) {
 
 if (  !$(d3.event.sourceEvent.srcElement).hasClass("blockdragging")){
 
+
 	var flag=true;
 	global_data.nodes.forEach(function(target,num){
 
@@ -217,7 +215,6 @@ if (  !$(d3.event.sourceEvent.srcElement).hasClass("blockdragging")){
 				      var Y=d3.event.sourceEvent.y -target.y;
 				      console.log(d3.event.sourceEvent);
 				      console.log("X,Y",X,Y,"num",num);
-
 
 				      if ((Math.sqrt(X*X+Y*Y)<RADIUS_OF_LINKING) && ( (X!==0) && (Y!==0) )&& flag && (num!==dragged_node_number) ){
 					  console.log(flag);
@@ -260,17 +257,12 @@ function restart() {
         .attr("class","node")
 	.attr("r",NODE_RADIUS);
 
-
-    
-
     var new_nodes=nodeEnter.append("foreignObject")
 	.attr("class", "node")
 	.attr("height",FOREIGH_OBJECT_SIDE)
 	.attr("width",FOREIGH_OBJECT_SIDE)
         .attr("x",-NODE_RADIUS/1.4142) //so foreign object is inside circle
-        .attr("y",-NODE_RADIUS/1.4142)
-
-    
+	.attr("y",-NODE_RADIUS/1.4142)
 //	.attr("x", function(d) { return d.x; })
 //	.attr("y", function(d) { return d.y; })
 	.call(node_drag);
