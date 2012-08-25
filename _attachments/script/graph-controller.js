@@ -1,0 +1,129 @@
+function get_graph_controller(vis){
+    
+    return {
+	
+	svg_vis:vis,
+
+	temporal_link_array:[],
+	temporal_node_array:[],
+
+
+	state:{
+	    dragged_node_number:null
+	},
+	
+	add_temporal_node:function(x,y){
+	    // This function adds one circle on x y 
+
+	    this.temporal_node_array.push({
+				     x:x,
+				     y:y
+				     });
+
+	    this.refresh_temporal_state();
+	    
+	},
+	remove_temporal_node_and_link:function(){
+	    this.temporal_node_array=[];
+	    this.temporal_link_array=[];
+	    this.refresh_temporal_state();
+
+	},
+	refresh_temporal_state:function(){
+	    
+	    var temporal_node_selection=this.svg_vis.selectAll("circle.temporal_node")
+		.data(this.temporal_node_array);
+
+	    temporal_node_selection.enter().insert("circle")
+		.attr("class","temporal_node")
+		.style("fill","yellow")
+		.attr("r",20);
+//		.attr("cx", function(d) { return d.x; })
+//		.attr("cy", function(d) { return d.y; });
+	    
+	    console.log(temporal_node_selection);
+	    temporal_node_selection.exit().remove();
+	    
+
+	    var temporal_link_selection=this.svg_vis.selectAll("line.temporal_link")
+		.data(this.temporal_link_array);
+
+
+	    temporal_link_selection.enter().insert("line","circle.temporal_node")
+		.attr("class","temporal_link")
+		.attr("x1", function(d) { return d.source.x; })
+		.attr("y1", function(d) { return d.source.y; })
+		.attr("x2", function(d) { return d.target.x; })
+		.attr("y2", function(d) { return d.target.y; });
+
+	    temporal_link_selection.exit().remove();
+
+	},
+	
+	add_temporal_link:function(source,target){
+	    
+	    // This function adds one line between source and target expecting source and target has x y fields
+
+	    this.temporal_link_array.push({
+				     source:source,
+				     target:target
+				     });
+	   this.refresh_temporal_state();
+	    
+	    
+	},
+	temporal_tick:function(x,y){
+
+	    // Updating position for temporal node circle and  link line
+	    console.log(this.svg_vis.selectAll("circle.temporal_node"));
+	    this.temporal_node_array[0].x=x;
+	    this.temporal_node_array[0].y=y;
+	    this.svg_vis.selectAll("circle.temporal_node")
+		.attr("transform", function(d) {console.log("Moving temporary circle to",d.x,d.y); return "translate(" + d.x + "," + d.y + ")"; });
+		//.attr("cx", function(d) { return d.x; })
+		//.attr("cy", function(d) { return d.y; });
+	    
+
+
+	    this.svg_vis.selectAll("line.temporal_link")
+	    	.attr("x1", function(d) { return d.source.x; })
+		.attr("y1", function(d) { return d.source.y; })
+		.attr("x2", function(d) { return d.target.x; })
+		.attr("y2", function(d) { return d.target.y; });
+	    
+
+
+	},
+	
+	nodes_distances: function(x,y){
+
+	    // This function calculates for all global_data.nodes objects distance to x,y and returns nearest node
+
+	    var distance_array=[];
+	    global_data.nodes.forEach(function(current,num){
+					  
+					  X=x-current.x;
+					  Y=y-current.y;
+					  
+					  distance_array.push({
+						node:current,
+						index:num,
+						distance:Math.sqrt(X*X+Y*Y)
+							      }
+							     );
+	
+					  
+				      });
+	
+				     
+
+	    distance_array.sort(function(a,b){
+				    return (a.distance - b.distance);
+				} );
+	    
+	    return distance_array;
+	
+	}
+
+    };
+}
