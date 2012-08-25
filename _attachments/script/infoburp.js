@@ -11,6 +11,14 @@ RADIUS_OF_LINKING=100; // Defines distance
 
 NODE_RADIUS=100;
 
+BOTTOM_BUMP_X=NODE_RADIUS*0.866; //sqrt(3)/2 ~ 0.866
+BOTTOM_BUMP_Y=NODE_RADIUS/2;
+
+
+
+
+
+
 FOREIGH_OBJECT_SIDE=NODE_RADIUS*1.4142;
 
 
@@ -43,8 +51,6 @@ var vis = d3.select("#chart").append("svg").attr("width", width).attr("height", 
 vis.append("rect").attr("width", width).attr("height", height);
 
 var force = d3.layout.force()
-//    .distance(DISTANCE)
-//    .linkDistance(200)
     .linkStrength(LINK_STRENGTH)
     .gravity(GRAVITY)
     .charge(CHARGE)
@@ -141,14 +147,10 @@ function tick_fu() {
 
 	vis.selectAll("g.node")
 	.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+	vis.selectAll("g.node")
+	.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
 
-/*	vis.selectAll(".node")
-	    .attr("x", function(d) { return d.x; })
-	    .attr("y", function(d) { return d.y; });
 
-       vis.selectAll("circle")
-	.attr("cx",function(d) { console.log(d); return d.x; })
-	.attr("cy",function(d) { return d.y; }); */
     };
 
 force.on("tick",tick_fu);
@@ -241,6 +243,18 @@ if (  !$(d3.event.sourceEvent.srcElement).hasClass("blockdragging")){
     };
 
 
+function addBump(g_collection,radius,xshift,yshift){
+
+    g_collection.append("svg:circle")
+	.attr("class","node")
+        .attr("cx",xshift)
+        .attr("cy",yshift)
+        .attr("r",radius);
+
+
+}
+
+
 
 
 function restart() {
@@ -254,8 +268,24 @@ function restart() {
       .call(node_drag);
 
     var circles=nodeEnter.append("svg:circle")
-        .attr("class","node")
+	.attr("class","node")
 	.attr("r",NODE_RADIUS);
+	
+
+// Adding bumps
+
+    //Right
+    addBump(nodeEnter,NODE_RADIUS/3,BOTTOM_BUMP_X,BOTTOM_BUMP_Y);
+
+    //Left
+
+    addBump(nodeEnter,NODE_RADIUS/3,-BOTTOM_BUMP_X,BOTTOM_BUMP_Y);
+    
+    //Top
+
+    addBump(nodeEnter,NODE_RADIUS/3,0,-NODE_RADIUS);
+
+
 
     var new_nodes=nodeEnter.append("foreignObject")
 	.attr("class", "node")
@@ -263,31 +293,17 @@ function restart() {
 	.attr("width",FOREIGH_OBJECT_SIDE)
         .attr("x",-NODE_RADIUS/1.4142) //so foreign object is inside circle
 	.attr("y",-NODE_RADIUS/1.4142)
-//	.attr("x", function(d) { return d.x; })
-//	.attr("y", function(d) { return d.y; })
 	.call(node_drag);
     
     nodeSelection.exit().remove();
 
 
-//    new_nodes.append("xhtml:body")
-//	.attr("class","nodebody");
 
-//    var bodies = new_nodes.selectAll(".nodebody");
-    
-/*    bodies.append("xhtml:form")
-	.append("input")
-	.attr("type","button")
-	.attr("class","blockdragging")
-	.attr("value","Edits")
-        .on("click",insert_editor);	
-*/
     new_nodes.append("xhtml:div")
 	.attr("class","nodehtml blockdragging")
 	.attr("height","100%")
 	.attr("width","100%")
 	.html(function(d){return "nodehtml=" +this.parentElement.__data__.nodehtml;
-			  //return (this.parentElement.__data__.x);console.log(this.parentElement.__data__);  
 			 })
         .on("click",insert_editor);	
 
