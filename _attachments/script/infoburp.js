@@ -58,7 +58,7 @@ var force = d3.layout.force()
     .links(global_data.links)
     .size([width, height]);
 
-var cursor = vis.append("circle").attr("r", 0).attr("transform", "translate(-100,-100)").attr("class", "cursor");
+//var cursor = vis.append("circle").attr("r", 0).attr("transform", "translate(-100,-100)").attr("class", "cursor");
 
 
 // this function based on http://bl.ocks.org/2653660
@@ -147,8 +147,8 @@ function tick_fu() {
 
 	vis.selectAll("g.node")
 	.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
-	vis.selectAll("g.node")
-	.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+//	vis.selectAll("g.node")
+//	.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
 
 
     };
@@ -158,9 +158,9 @@ force.on("tick",tick_fu);
 
 force.start();
 
-vis.on("mousemove", function() {
-	cursor.attr("transform", "translate(" + d3.mouse(this) + ")");
-});
+//vis.on("mousemove", function() {
+//	cursor.attr("transform", "translate(" + d3.mouse(this) + ")");
+//});
 
 
 var node_drag = d3.behavior.drag()
@@ -172,7 +172,9 @@ var node_drag = d3.behavior.drag()
 function dragstart(d, i) {
     force.stop(); // stops the force auto positioning before you start dragging
     
-    //console.log(!$(d3.event.sourceEvent.srcElement).hasClass("blockdragging"));
+    console.log(!$(d3.event.sourceEvent.srcElement).hasClass("blockdragging"));
+    
+    console.log(d3.event.sourceEvent.srcElement, d);
     
     if ( !$(d3.event.sourceEvent.srcElement).hasClass("blockdragging") ) {
 
@@ -180,6 +182,11 @@ function dragstart(d, i) {
 
         new_node.x=d.x+5;
         new_node.y=d.y;
+	
+	console.log(d.x,d.y);
+	console.log(new_node.x,new_node.y);
+	
+	console.log(new_node);
     
 	dragged_node_number=global_data.nodes.push(new_node)-1;
 
@@ -196,8 +203,14 @@ function dragstart(d, i) {
 
 	//Moving new node;
 
+	console.log(global_data.nodes[dragged_node_number].x,global_data.nodes[dragged_node_number].y,d3.event.x);
+	
+
+//	vis.select(global_data.nodes[dragged_node_number]).attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
+
+//	global_data.nodes[dragged_node_number].fixed=true;
 	if (global_data.nodes[dragged_node_number]){
-            global_data.nodes[dragged_node_number].x = d3.event.x;
+           global_data.nodes[dragged_node_number].x = d3.event.x;
             global_data.nodes[dragged_node_number].y = d3.event.y;
 	};
 
@@ -247,9 +260,11 @@ function addBump(g_collection,radius,xshift,yshift){
 
     g_collection.append("svg:circle")
 	.attr("class","node")
+    .style('fill','green')
         .attr("cx",xshift)
         .attr("cy",yshift)
         .attr("r",radius);
+//	.call(node_drag);
 
 
 }
@@ -269,6 +284,7 @@ function restart() {
 
     var circles=nodeEnter.append("svg:circle")
 	.attr("class","node")
+        .style("fill","green")
 	.attr("r",NODE_RADIUS);
 	
 
@@ -292,20 +308,13 @@ function restart() {
 	.attr("height",FOREIGH_OBJECT_SIDE)
 	.attr("width",FOREIGH_OBJECT_SIDE)
         .attr("x",-NODE_RADIUS/1.4142) //so foreign object is inside circle
-	.attr("y",-NODE_RADIUS/1.4142)
-	.call(node_drag);
+	.attr("y",-NODE_RADIUS/1.4142);
+
+//	.call(node_drag);
     
     nodeSelection.exit().remove();
 
 
-
-    new_nodes.append("xhtml:div")
-	.attr("class","nodehtml blockdragging")
-	.attr("height","100%")
-	.attr("width","100%")
-	.html(function(d){return "nodehtml=" +this.parentElement.__data__.nodehtml;
-			 })
-        .on("click",insert_editor);	
 
     vis.selectAll("line.link")
 	.data(global_data.links)
@@ -315,6 +324,15 @@ function restart() {
 	.attr("y1", function(d) { return d.source.y; })
 	.attr("x2", function(d) { return d.target.x; })
 	.attr("y2", function(d) { return d.target.y; });
+
+    new_nodes.append("xhtml:div")
+	.attr("class","nodehtml blockdragging")
+	.style("height",FOREIGH_OBJECT_SIDE-40)
+	.style("width",FOREIGH_OBJECT_SIDE-4)
+	.html(function(d){return "nodehtml=" +this.parentElement.__data__.nodehtml;
+			 })
+        .on("click",insert_editor);	
+
 }
 
 restart();
