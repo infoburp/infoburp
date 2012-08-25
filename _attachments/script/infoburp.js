@@ -1,6 +1,3 @@
-//DISTANCE=20;
-
-
 LINK_STRENGTH=0.01;
 CHARGE =-1000;
 GRAVITY=0.0001;
@@ -59,15 +56,16 @@ var cursor = vis.append("circle").attr("r", 0).attr("transform", "translate(-100
 
 
 var GraphController=null;
+// loading GraphController generator
 
-$.getScript("script/graph-controller.js",function(){GraphController=get_graph_controller(vis);});
+$.getScript("script/graph-controller.js",function(){
+		// Setting up GraphController to this visualisation
+		GraphController=get_graph_controller(vis);
+	    });
 
 
 // loading insert_editor function
 $.getScript("script/node-editor/node-editor.js",restart);
-
-
-
 
 
 
@@ -87,9 +85,12 @@ function tick_fu() {
 	.attr("y2", function(d) { return d.target.y; });
 
     
+    // Moving all g groups according to data
     vis.selectAll("g.node")
 	.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
 
+
+    // This determines if nodehtml wouldbe hidden when editor appear
     vis.selectAll(".nodehtml").style("display",function(d){return d.showHtml;});
     
     vis.selectAll("circle.node")
