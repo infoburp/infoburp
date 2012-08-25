@@ -5,7 +5,7 @@ LINK_STRENGTH=0.01;
 CHARGE =-1000;
 GRAVITY=0.0001;
 
-NEW_NODE_TEMPLATE=function(){return {nodehtml:"New node"};}; // Making just {} makes awesome bug.
+NEW_NODE_TEMPLATE=function(){return {nodehtml:"New node", showHtml:"inline",nodecolor:"green"};}; // Making just {} makes awesome bug.
 
 RADIUS_OF_LINKING=100; // Defines distance 
 
@@ -13,11 +13,6 @@ NODE_RADIUS=100;
 
 BOTTOM_BUMP_X=NODE_RADIUS*0.866; //sqrt(3)/2 ~ 0.866
 BOTTOM_BUMP_Y=NODE_RADIUS/2;
-
-
-
-
-
 
 FOREIGH_OBJECT_SIDE=NODE_RADIUS*1.4142;
 
@@ -58,80 +53,19 @@ var force = d3.layout.force()
     .links(global_data.links)
     .size([width, height]);
 
-//var cursor = vis.append("circle").attr("r", 0).attr("transform", "translate(-100,-100)").attr("class", "cursor");
-
-
-// this function based on http://bl.ocks.org/2653660
-
-function insert_editor(d,i){
-    
-var p = this.parentNode;
-        console.log(this, arguments);
-        
-        // inject a HTML form to edit the content here...
-
-        var el = d3.select(this);
-        var p_el = d3.select(p);
-        
-        var frm = p_el.append("xhtml:form");
-        
-        var inp = frm
-	            .attr("class","editor-form")
-                    .append("input")
-                        .attr("value", function() {
-                            // nasty spot to place this call, but here we are sure that the <input> tag is available
-                            // and is handily pointed at by 'this':
-                            this.focus();
-                            
-                            return d.nodehtml;
-                        })
-                        .attr("style", "width: 294px;")
-                        // make the form go away when you jump out (form looses focus) or hit ENTER:
-                        .on("blur", function() {
-                            console.log("blur", this, arguments);
-    
-                            var txt = inp.node().value;
-                            
-                            d.nodehtml = txt;
-                                                        
-                            p_el.select("form.editor-form").remove();
-                        })
-                        .on("keypress", function() {
- 
-                            var e = d3.event;
-                            if (e.keyCode == 13)
-				{
-
-                                    if (e.stopPropagation)
-					e.stopPropagation();
-                                    e.preventDefault();
-        
-                                    var txt = inp.node().value;
-                                    
-
-				    //console.log(inp,p_el,p_el.select("form-editor.form"));
-                               
-				    d.nodehtml = txt;
-                                    
-				    el
-					.text(function(d) { return d.nodehtml; });
-                                
-                                    p_el.select("form.editor-form").remove();
-				}
-                            });
-
-
-    
-    };
+var cursor = vis.append("circle").attr("r", 0).attr("transform", "translate(-100,-100)").attr("class", "cursor");
 
 
 
 
+var GraphController=null;
 
+$.getScript("script/graph-controller.js",function(){GraphController=get_graph_controller(vis);});
 
+//console.log(GraphController);
 
-
-
+// loading insert_editor function
+$.getScript("script/node-editor/node-editor.js",restart);
 
 
 
@@ -139,14 +73,28 @@ var p = this.parentNode;
 
 
 function tick_fu() {
-	vis.selectAll("line.link")
-	    .attr("x1", function(d) { return d.source.x; })
-	    .attr("y1", function(d) { return d.source.y; })
-	    .attr("x2", function(d) { return d.target.x; })
-	    .attr("y2", function(d) { return d.target.y; });
+    
+    vis.selectAll("line.link")
+	.attr("x1", function(d) { return d.source.x; })
+	.attr("y1", function(d) { return d.source.y; })
+	.attr("x2", function(d) { return d.target.x; })
+	.attr("y2", function(d) { return d.target.y; });
+    
 
-	vis.selectAll("g.node")
+    vis.selectAll("line.temporal_link")
+	.attr("x1", function(d) { return d.source.x; })
+	.attr("y1", function(d) { return d.source.y; })
+	.attr("x2", function(d) { return d.target.x; })
+	.attr("y2", function(d) { return d.target.y; });
+
+    
+    vis.selectAll("g.node")
 	.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+
+    vis.selectAll(".nodehtml").style("display",function(d){return d.showHtml;});
+    
+    vis.selectAll("circle.node")
+	.style("fill",function(d){return d.nodecolor;});
 //	vis.selectAll("g.node")
 //	.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
 
@@ -158,9 +106,9 @@ force.on("tick",tick_fu);
 
 force.start();
 
-//vis.on("mousemove", function() {
-//	cursor.attr("transform", "translate(" + d3.mouse(this) + ")");
-//});
+vis.on("mousemove", function() {
+	cursor.attr("transform", "translate(" + d3.mouse(this) + ")");
+});
 
 
 var node_drag = d3.behavior.drag()
@@ -172,88 +120,91 @@ var node_drag = d3.behavior.drag()
 function dragstart(d, i) {
     force.stop(); // stops the force auto positioning before you start dragging
     
-    console.log(!$(d3.event.sourceEvent.srcElement).hasClass("blockdragging"));
+    GraphController.add_temporal_node(d.x,d.y);
+    GraphController.add_temporal_link(d,GraphController.temporal_node_array[0]);
+
+
+//    console.log(!$(d3.event.sourceEvent.srcElement).hasClass("blockdragging"));
     
-    console.log(d3.event.sourceEvent.srcElement, d);
-    
-    if ( !$(d3.event.sourceEvent.srcElement).hasClass("blockdragging") ) {
+//    console.log(d3.event.sourceEvent.srcElement, d);
 
-	var new_node=NEW_NODE_TEMPLATE();
+//    if ( $(d3.event.sourceEvent.srcElement).hasClass("blockdragging") ) {alert("Blockdragging")}
 
-        new_node.x=d.x+5;
-        new_node.y=d.y;
-	
-	console.log(d.x,d.y);
-	console.log(new_node.x,new_node.y);
-	
-	console.log(new_node);
-    
-	dragged_node_number=global_data.nodes.push(new_node)-1;
 
-	dragged_link_number=global_data.links.push({source:d,target:new_node})-1;
-
-        
-        //alert("Added node");
-	restart();
-    }
 
 }
 
     function dragmove(d, i) {
 
-	//Moving new node;
-
-	console.log(global_data.nodes[dragged_node_number].x,global_data.nodes[dragged_node_number].y,d3.event.x);
+	//Moving temp node;
 	
+	GraphController.temporal_tick(d3.event.x,d3.event.y);
 
-//	vis.select(global_data.nodes[dragged_node_number]).attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
+	var nodes_distances=GraphController.nodes_distances(d3.event.x,d3.event.y);
 
-//	global_data.nodes[dragged_node_number].fixed=true;
-	if (global_data.nodes[dragged_node_number]){
-           global_data.nodes[dragged_node_number].x = d3.event.x;
-            global_data.nodes[dragged_node_number].y = d3.event.y;
-	};
+	// making all nodes green
+	global_data.nodes.forEach(function(d){
 
+				      d.nodecolor="green";
+				      }
+				  
+	);
+
+
+	// making nearest node yellow if it insider radius of linking
+	if (nodes_distances[0].distance<RADIUS_OF_LINKING){
+	    
+	    nodes_distances[0].node.nodecolor="yellow";
+	}
+
+	//Making force simulation
 	tick_fu();
     }
 
 function dragend(d, i) {
 
 
-if (  !$(d3.event.sourceEvent.srcElement).hasClass("blockdragging")){
+    GraphController.remove_temporal_node_and_link();
+    
+    var yellow_nodes=$.grep(global_data.nodes,
+			    function(d,n){
+				return d.nodecolor=="yellow";
+				}
+			  
+			   );
+    
+// If node yellow we make a link to it
+    if (yellow_nodes.length>0){
 
+//	var target=nodes_distances[0].node;
+//	console.log("Distance less than ROL target=",target,"link before ",global_data.links[dragged_link_number]);
+	//global_data.links[dragged_link_number].target=target;
+	target=yellow_nodes[0];
+	global_data.links.push({source:d,target:target});
+	
+	target.nodecolor="green";
+	console.log(" link after ",global_data.links[dragged_link_number]);
 
-	var flag=true;
-	global_data.nodes.forEach(function(target,num){
+	restart();
+	
+    }
+    else {
 
-				      var X=d3.event.sourceEvent.x -target.x;
-				      var Y=d3.event.sourceEvent.y -target.y;
-				      console.log(d3.event.sourceEvent);
-				      console.log("X,Y",X,Y,"num",num);
+	// Adding new node
+    
+	var new_node=new NEW_NODE_TEMPLATE();
 
-				      if ((Math.sqrt(X*X+Y*Y)<RADIUS_OF_LINKING) && ( (X!==0) && (Y!==0) )&& flag && (num!==dragged_node_number) ){
-					  console.log(flag);
+        new_node.x=d.x+5;
+        new_node.y=d.y;
+	global_data.nodes.push(new_node);
 
+	global_data.links.push({source:d,target:new_node});
+	restart();
+};
 
-					  global_data.links[dragged_link_number].target=target;
-
-					  global_data.nodes.splice(dragged_node_number,dragged_node_number);
-					  console.log(global_data);
-					  //alert("Added link");
-					  flag=false;
-					  restart();
-				      };
-
-				  }
-
-
-	);
-
-
-	    }
 	force.start();
 
-    };
+};
 
 
 function addBump(g_collection,radius,xshift,yshift){
@@ -264,9 +215,6 @@ function addBump(g_collection,radius,xshift,yshift){
         .attr("cx",xshift)
         .attr("cy",yshift)
         .attr("r",radius);
-//	.call(node_drag);
-
-
 }
 
 
@@ -274,19 +222,19 @@ function addBump(g_collection,radius,xshift,yshift){
 
 function restart() {
 
-    //alert("restart");
     var nodeSelection=vis.selectAll("g.node")
 	.data(global_data.nodes);
     
     var nodeEnter = nodeSelection.enter().append("svg:g")
-      .attr("class", "node")
-      .call(node_drag);
+      .attr("class", "node");
+
 
     var circles=nodeEnter.append("svg:circle")
 	.attr("class","node")
-        .style("fill","green")
+        .style("fill",function(d){return d.node_color;})
 	.attr("r",NODE_RADIUS);
-	
+
+      nodeEnter.call(node_drag);	
 
 // Adding bumps
 
@@ -310,7 +258,6 @@ function restart() {
         .attr("x",-NODE_RADIUS/1.4142) //so foreign object is inside circle
 	.attr("y",-NODE_RADIUS/1.4142);
 
-//	.call(node_drag);
     
     nodeSelection.exit().remove();
 
@@ -327,15 +274,16 @@ function restart() {
 
     new_nodes.append("xhtml:div")
 	.attr("class","nodehtml blockdragging")
-	.style("height",FOREIGH_OBJECT_SIDE-40)
-	.style("width",FOREIGH_OBJECT_SIDE-4)
-	.html(function(d){return "nodehtml=" +this.parentElement.__data__.nodehtml;
+	.style("height",FOREIGH_OBJECT_SIDE)
+	.style("width",FOREIGH_OBJECT_SIDE)
+        .style("display",function(d){return d.showHtml;})
+	.html(function(d,i){return "nodehtml=" +d.nodehtml+i;
 			 })
         .on("click",insert_editor);	
 
 }
 
-restart();
+
 
 function redraw() {
 
