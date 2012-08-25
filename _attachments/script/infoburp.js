@@ -176,9 +176,6 @@ function dragend(d, i) {
 // If node yellow we make a link to it
     if (yellow_nodes.length>0){
 
-//	var target=nodes_distances[0].node;
-//	console.log("Distance less than ROL target=",target,"link before ",global_data.links[dragged_link_number]);
-	//global_data.links[dragged_link_number].target=target;
 	target=yellow_nodes[0];
 	global_data.links.push({source:d,target:target});
 	
