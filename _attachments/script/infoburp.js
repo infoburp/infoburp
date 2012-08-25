@@ -95,9 +95,6 @@ function tick_fu() {
     
     vis.selectAll("circle.node")
 	.style("fill",function(d){return d.nodecolor;});
-//	vis.selectAll("g.node")
-//	.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
-
 
     };
 
