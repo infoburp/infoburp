@@ -1,3 +1,5 @@
+TEMPORARY_NODE_CIRCLE_RADIUS=20;
+
 function get_graph_controller(vis){
     
     return {
@@ -58,7 +60,7 @@ function get_graph_controller(vis){
 	    temporal_node_selection.enter().insert("circle")
 		.attr("class","temporal_node")
 		.style("fill","yellow")
-		.attr("r",20);
+		.attr("r",TEMPORARY_NODE_CIRCLE_RADIUS);
 	    
 
 	    temporal_node_selection.exit().remove();
