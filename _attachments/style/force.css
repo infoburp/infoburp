@@ -3,6 +3,15 @@ circle.node {
   stroke-width: 1.6px;
 }
 
+circle.unselected_node{
+  fill:green;
+}
+
+circle.selected_node {
+    fill:yellow;
+}
+
+
 line.link {
   stroke: #007b02;
   stroke-opacity: 1;
@@ -12,4 +21,10 @@ line.temporal_link {
   stroke: yellow;
   stroke-opacity: 0.5;
   stroke-width: 6.2px;
+}
+
+div.nodehtml{
+
+text-align:center;
+
 }
