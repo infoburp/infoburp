@@ -260,6 +260,8 @@ function restart() {
 	.attr("x2", function(d) { return d.target.x; })
 	.attr("y2", function(d) { return d.target.y; });
 
+
+
     var nodeSelection=vis.selectAll("g.node")
 	.data(global_data.nodes);
     
