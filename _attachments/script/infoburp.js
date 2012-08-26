@@ -159,7 +159,7 @@ function dragmove(d, i) {
 
 	
 	// making nearest node yellow if it insider radius of linking
-	if (nodes_distances[0].distance<RADIUS_OF_LINKING){
+	if ((nodes_distances[0].distance<RADIUS_OF_LINKING) &&(nodes_distances[0].node.index !== d.index)){
 	    
 	    nodes_distances[0].node.selected=true;
 	}

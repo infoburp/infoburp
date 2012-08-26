@@ -87,6 +87,10 @@ function get_graph_controller(vis){
 
 	    temporal_node_selection.enter().insert("circle")
 		.attr("class","temporal_node")
+		.attr("transform", function(d) {return "translate(" + d.x + "," + d.y + ")"; })
+		.transition()
+		.duration(NODE_APPEARANCE_DURATION)
+	        .style("stroke-opacity",0)
 		.attr("r",TEMPORARY_NODE_CIRCLE_RADIUS);
 	    
 
