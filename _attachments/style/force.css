@@ -5,10 +5,12 @@ circle.node {
 
 circle.unselected_node{
   fill:black;
+  stroke: #007b02;
 }
 
 circle.selected_node {
     fill:black;
+     stroke: #ff7e00;
 }
 
 
