@@ -87,12 +87,8 @@ function get_graph_controller(vis){
 
 	    temporal_node_selection.enter().insert("circle")
 		.attr("class","temporal_node")
-		.attr("transform", function(d) {return "translate(" + d.x + "," + d.y + ")"; })
-		.transition()
-		.duration(NODE_APPEARANCE_DURATION)
-	        .style("stroke-opacity",0)
-		.attr("r",TEMPORARY_NODE_CIRCLE_RADIUS);
-	    
+		.attr("r",TEMPORARY_NODE_CIRCLE_RADIUS)
+		.attr("transform", function(d) {return "translate(" + d.x + "," + d.y + ")"; });;
 
 	    temporal_node_selection.exit().remove();
 	    
@@ -155,6 +151,7 @@ function get_graph_controller(vis){
 	    return Math.sqrt(X*X+Y*Y);
 	
 	},
+
 	distance_to_temporal_node:function(x,y){
 	    
 	    return this.distance_to_node(x,y,this.temporal_node_array[0]);
@@ -166,7 +163,7 @@ function get_graph_controller(vis){
 
 	    var distance_array=[];
 
-	    var that = this;
+	    var that=this;
 
 	    global_data.nodes.forEach(function(current,num){
 					 

@@ -6,6 +6,7 @@ NEW_NODE_TEMPLATE=function(){
     return {
 	nodehtml:"New node", 
 	showHtml:"block",
+	showEditor:false,
 	selected:false};}; // Making just {} makes awesome bug.
 
 RADIUS_OF_LINKING=100; // Defines distance 
@@ -102,7 +103,36 @@ function tick_fu() {
 
     // This determines if nodehtml wouldbe hidden when editor appear
     vis.selectAll(".nodehtml").style("display",function(d){return d.showHtml;});
-    
+
+/*    vis.selectAll(".node-editor")
+	.attr("value",function(d){return d.nodehtml;})
+        .attr("class",function(d){
+		  if (d.showEditor){
+					return "node-editor active-editor";
+				    }
+				    else{
+
+					return "node-editor non-active-editor";
+					
+				    }
+		  
+	      })
+        .style("display",function(d){
+		  if (d.showEditor){
+					return "block";
+				    }
+				    else{
+
+					return "none";
+					
+				    }
+		  
+	      })
+
+
+;*/
+
+
     vis.selectAll("circle.node")
 	.attr("class",function (d){ if (d.selected){
 					return "node selected_node";
@@ -113,6 +143,59 @@ function tick_fu() {
 				    }
 				    
 				  });
+
+
+
+
+    vis.selectAll("input")
+	.attr("class","node-editor active-editor")
+	.style("height",FOREIGHN_OBJECT_SIDE)
+        .style("width",FOREIGHN_OBJECT_SIDE)
+	.attr("value",function(d){return d.nodehtml;})
+	.on("blur", function(d) {
+	       
+               var txt = this.value;
+               
+               d.nodehtml = txt;
+	       d.showHtml = "block";
+               d.showEditor= false;
+           })
+	.on("keypress", function(d) {
+	       
+               var e = d3.event;
+               if (e.keyCode == 13)
+	       {
+		   
+                   if (e.stopPropagation)
+		       e.stopPropagation();
+                   e.preventDefault();
+		   
+		   var selected_input=d3.select("input.node-editor");
+
+		   console.log("inner select from keypress",selected_input.node());
+                   var txt = this.value;
+                                   
+
+		   d.nodehtml = txt;
+		   d.showHtml = "block";
+                   d.showEditor= false;
+		   
+	       }
+           });
+
+
+    var selected_input=d3.select("input.node-editor");
+
+	   // console.log("inner select",selected_input.node());
+		if (selected_input.node()===null){
+
+		}
+		else{
+		    
+		    
+		    selected_input.node().focus();
+		}
+
 
     };
 
@@ -133,7 +216,21 @@ function dragstart(d, i) {
     
     
     GraphController.dragstart_handler(d,d3.event);
+    
+    if (!GraphController.blockdragging){
 
+	global_data.nodes.forEach(function(d){d.showEditor=false;d.showHtml="block";});
+    }
+    else
+	{
+	    global_data.nodes.forEach(function(d){d.showEditor=false;d.showHtml="block";});
+	    d.showEditor=true;d.showHtml="none";
+
+
+	    
+	}
+
+    
 }
 
 function dragmove(d, i) {
@@ -226,7 +323,6 @@ function dragend(d, i) {
 	
 	//Resetting blockdragging state
 	GraphController.blockdragging=false;
-	
     }
  
     force.start();
@@ -311,7 +407,10 @@ function restart() {
     nodeSelection.exit().remove();
 
 
-    new_nodes.append("xhtml:div")
+    container_html=new_nodes.append("xhtml:div")	
+	.attr("class","container");
+
+    container_html.append("xhtml:div")
 	.attr("class","nodehtml blockdragging")
 	.style("height",FOREIGHN_OBJECT_SIDE)
 	.style("width",FOREIGHN_OBJECT_SIDE)
@@ -323,7 +422,51 @@ function restart() {
 		  return d.nodehtml;
 		
 	      })
-        .on("click",insert_editor);
+        .on("click",function(d){d.showHtml='none';});
+
+
+
+
+
+
+    vis.selectAll("div.container").filter(function(d){
+						   return d.showEditor;			 
+					       })
+	.insert("xhtml:input")
+	.attr("class","node-editor active-editor")
+	.style("height",FOREIGHN_OBJECT_SIDE)
+        .style("width",FOREIGHN_OBJECT_SIDE)
+	.attr("value",function(d){return d.nodehtml;})
+	.on("blur", function(d) {
+	       
+               var txt = this.value;
+               
+               d.nodehtml = txt;
+	       d.showHtml = "block";
+               d.showEditor= false;
+           })
+	.on("keypress", function(d) {
+	       
+               var e = d3.event;
+               if (e.keyCode == 13)
+	       {
+		   
+                   if (e.stopPropagation)
+		       e.stopPropagation();
+                   e.preventDefault();
+		   
+                   var txt = this.value;
+                                   
+
+		   d.nodehtml = txt;
+		   d.showHtml = "block";
+                   d.showEditor= false;
+		   
+	       }
+           });
+
+
+
 
 }
 
