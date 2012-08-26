@@ -22,8 +22,8 @@ var p = this.parentNode;
 			    d.showHtml = "none";
                             return d.nodehtml;
                               })
-                      	.style("height",FOREIGH_OBJECT_SIDE)
-                 	.style("width",FOREIGH_OBJECT_SIDE)
+                      	.style("height",FOREIGHN_OBJECT_SIDE)
+                 	.style("width",FOREIGHN_OBJECT_SIDE)
                         // make the form go away when you jump out (form looses focus) or hit ENTER:
                         .on("blur", function() {
                             console.log("blur", this, arguments);
