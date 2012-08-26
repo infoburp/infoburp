@@ -38,13 +38,14 @@ if (COUCHDB){
 else{
     global_data.nodes = DEBUG_DATASET.nodes;
     global_data.links = DEBUG_DATASET.links;
-
-    
 }
 
 var vis = d3.select("#chart").append("svg").attr("width", width).attr("height", height).attr("pointer-events", "all").append('svg:g').call(d3.behavior.zoom().on("zoom", redraw)).append('svg:g');
 
 vis.append("rect").attr("width", width).attr("height", height);
+
+
+// Standard force layout see https://github.com/mbostock/d3/wiki/Force-Layout for documentation
 
 var force = d3.layout.force()
     .linkStrength(LINK_STRENGTH)
@@ -54,22 +55,28 @@ var force = d3.layout.force()
     .links(global_data.links)
     .size([width, height]);
 
-var cursor = vis.append("circle").attr("r", 0).attr("transform", "translate(-100,-100)").attr("class", "cursor");
-
+var cursor = vis
+    .append("circle")
+    .attr("r", 0)
+    .attr("transform", "translate(-100,-100)")
+    .attr("class", "cursor");
 
 
 var GraphController=null;
 // loading GraphController generator
 
 $.getScript("script/graph-controller.js",function(){
+
 		// Setting up GraphController to this visualisation
+
 		GraphController=get_graph_controller(vis);
+
 	    });
 
 
 // loading insert_editor function
-$.getScript("script/node-editor/node-editor.js",restart);
 
+$.getScript("script/node-editor/node-editor.js",restart);
 
 
 function tick_fu() {
@@ -107,7 +114,6 @@ function tick_fu() {
 				    
 				  });
 
-
     };
 
 force.on("tick",tick_fu);
@@ -115,9 +121,12 @@ force.on("tick",tick_fu);
 
 force.start();
 
+
 vis.on("mousemove", function() {
-	cursor.attr("transform", "translate(" + d3.mouse(this) + ")");
-});
+
+	   cursor.attr("transform", "translate(" + d3.mouse(this) + ")");
+
+       });
 
 
 var node_drag = d3.behavior.drag()
@@ -134,43 +143,43 @@ function dragstart(d, i) {
 
 }
 
-    function dragmove(d, i) {
-
-	// We do this things only if click originated on element that dont't block dragging
-	if (!GraphController.blockdragging){
-	    
-	
-	    //Moving temp node;
-	
-	    GraphController.temporal_tick(d3.event.x,d3.event.y);
-	
-	    //Calculating distances to nodes
-	    var nodes_distances=GraphController.nodes_distances(d3.event.x,d3.event.y);
-
-	    // making all nodes green
-	    global_data.nodes.forEach(function(d){
-					  
-					  d.selected=false;
-				      }
-				      
-				     );
-
-
-	    // making nearest node yellow if it insider radius of linking
-	    if (nodes_distances[0].distance<RADIUS_OF_LINKING){
-		
-		nodes_distances[0].node.selected=true;
-	    }
-	}
-	//Making force simulation
-	tick_fu();
-    }
-
-function dragend(d, i) {
-
+function dragmove(d, i) {
+    
     // We do this things only if click originated on element that dont't block dragging
     if (!GraphController.blockdragging){
+	
+	
+	//Moving temp node;
+	
+	GraphController.temporal_tick(d3.event.x,d3.event.y);
+	
+	//Calculating distances to nodes
+	var nodes_distances=GraphController.nodes_distances(d3.event.x,d3.event.y);
+	
+	// making all nodes green
+	global_data.nodes.forEach(function(d){
+					  
+				      d.selected=false;
+				  }
+				  
+				 );
 
+	
+	// making nearest node yellow if it insider radius of linking
+	if (nodes_distances[0].distance<RADIUS_OF_LINKING){
+	    
+	    nodes_distances[0].node.selected=true;
+	}
+    }
+    //Making force simulation
+    tick_fu();
+}
+
+function dragend(d, i) {
+    
+    // We do this things only if click originated on element that dont't block dragging
+    if (!GraphController.blockdragging){
+	
 	var X=GraphController.temporal_node_array[0].x;
 	var Y=GraphController.temporal_node_array[0].y;
  
@@ -194,8 +203,8 @@ function dragend(d, i) {
 
 	}
 	else {
-
-	// Adding new node
+	    
+	    // Adding new node
     
 	    var new_node=new NEW_NODE_TEMPLATE();
 
@@ -204,6 +213,7 @@ function dragend(d, i) {
 	    global_data.nodes.push(new_node);
 	    global_data.links.push({source:d,target:new_node});
 	};
+
 	// Refreshing svg after modifying data
 	restart();
     }
@@ -214,7 +224,6 @@ function dragend(d, i) {
 	GraphController.blockdragging=false;
 	
     }
-	
  
     force.start();
 
@@ -222,11 +231,12 @@ function dragend(d, i) {
 
 
 function restart() {
+   
     
-    
-    // There are some problems with z-order in svg.
-    // https://github.com/mbostock/d3/issues/252
-    // So here we creating pool of unused lines with two classe that created before any
+    /* There are some problems with z-order in svg.
+       See for example https://github.com/mbostock/d3/issues/252
+       So here we creating pool of unused lines with two classe that created before any circles
+    */
 
     var empty_array=[];
     
@@ -237,7 +247,6 @@ function restart() {
 			     target:{x:0,y:0}
 			 });
 	
-
     }
     
     vis.selectAll("line.unused_link")
@@ -278,8 +287,8 @@ function restart() {
 	.attr("r",NODE_RADIUS);
 
 
-
     nodeEnter.call(node_drag);	
+
 
     var new_nodes=nodeEnter.append("foreignObject")
 	.attr("class", "node")
@@ -296,21 +305,22 @@ function restart() {
 	.attr("class","nodehtml blockdragging")
 	.style("height",FOREIGH_OBJECT_SIDE)
 	.style("width",FOREIGH_OBJECT_SIDE)
-        .style("display",function(d){return d.showHtml;})
-	.html(function(d,i){return "nodehtml=" +d.nodehtml+i;
-			 })
+        .style("display",function(d){
+		   return d.showHtml;
+	       })
+	.html(function(d,i){
+		  
+		  return "nodehtml=" +d.nodehtml+i;
+		
+	      })
         .on("click",insert_editor);
 
-    
-
-	
-
 }
-
 
 
 function redraw() {
 
 	console.log("here", d3.event.translate, d3.event.scale);
 	vis.attr("transform", "translate(" + d3.event.translate + ")" + " scale(" + d3.event.scale + ")");
+
 }
