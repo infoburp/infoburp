@@ -71,7 +71,6 @@ function get_graph_controller(vis){
 	    var that =this;
 	    
 	    setTimeout(function(){
-			   console.log(this,that);
 			   that.temporal_node_array=[];
 			   that.temporal_link_array=[];
 			   that.refresh_temporal_state();
