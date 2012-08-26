@@ -21,11 +21,14 @@ function get_graph_controller(vis){
 	    
 	    if ($(ev.sourceEvent.srcElement).hasClass("blockdragging")){
 		
+		// Flag if event come from blockdragging source
 		this.blockdragging=true;
 		
 	    }
 	    else{
 		
+		//Add new temporary node
+
 		this.add_temporal_node(d.x,d.y);
 		this.add_temporal_link(d,this.temporal_node_array[0]);
 	    }
@@ -47,12 +50,15 @@ function get_graph_controller(vis){
 	    
 	},
 	remove_temporal_node_and_link:function(){
+
 	    this.temporal_node_array=[];
 	    this.temporal_link_array=[];
 	    this.refresh_temporal_state();
 
 	},
 	refresh_temporal_state:function(){
+
+	    // Refreshing view for temporary elements
 	    
 	    var temporal_node_selection=this.svg_vis.selectAll("circle.temporal_node")
 		.data(this.temporal_node_array);
@@ -89,6 +95,7 @@ function get_graph_controller(vis){
 				     source:source,
 				     target:target
 				     });
+
 	   this.refresh_temporal_state();
 	    
 	    
@@ -118,6 +125,7 @@ function get_graph_controller(vis){
 	    // This function calculates for all global_data.nodes objects distance to x,y and returns nearest node
 
 	    var distance_array=[];
+
 	    global_data.nodes.forEach(function(current,num){
 					  
 					  X=x-current.x;
@@ -136,7 +144,11 @@ function get_graph_controller(vis){
 				     
 
 	    distance_array.sort(function(a,b){
+
+				    // We are sorting in descending order so nearest node comes first
+
 				    return (a.distance - b.distance);
+
 				} );
 	    
 	    return distance_array;
