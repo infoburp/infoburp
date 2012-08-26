@@ -188,23 +188,34 @@ function dragend(d, i) {
 	
 	// If there are selected nodes we get first one and make a link to it
 	if (yellow_nodes.length>0){
+
+	    target=yellow_nodes[0];	    
+	    if (d.index !== target.index){
 	    
-	    target=yellow_nodes[0];
-	    global_data.links.push({source:d,target:target});
+
+		global_data.links.push({source:d,target:target});
 	
+		
+	    }
+
 	    target.selected=false;
+		
 
 	}
 	else {
 	    
-	    // Adding new node
-    
-	    var new_node=new NEW_NODE_TEMPLATE();
+	    // Adding new node only if temporal node is far from source
+	    
+	    if (GraphController.distance_to_temporal_node(d.x,d.y)>NODE_RADIUS){
+		
 
-            new_node.x=X; // We move new node sligthly
-            new_node.y=Y;
-	    global_data.nodes.push(new_node);
-	    global_data.links.push({source:d,target:new_node});
+		var new_node=new NEW_NODE_TEMPLATE();
+
+		new_node.x=X; // We move new node sligthly
+		new_node.y=Y;
+		global_data.nodes.push(new_node);
+		global_data.links.push({source:d,target:new_node});
+	    }
 	};
 
 	// Refreshing svg after modifying data
@@ -259,6 +270,8 @@ function restart() {
 	.attr("y1", function(d) { return d.source.y; })
 	.attr("x2", function(d) { return d.target.x; })
 	.attr("y2", function(d) { return d.target.y; });
+
+
 
     var nodeSelection=vis.selectAll("g.node")
 	.data(global_data.nodes);
