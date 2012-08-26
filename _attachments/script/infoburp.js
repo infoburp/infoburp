@@ -54,7 +54,6 @@ var cursor = vis.append("circle").attr("r", 0).attr("transform", "translate(-100
 
 
 
-
 var GraphController=null;
 // loading GraphController generator
 
@@ -208,19 +207,6 @@ function dragend(d, i) {
 };
 
 
-function addBump(g_collection,radius,xshift,yshift){
-
-    g_collection.append("svg:circle")
-	.attr("class","node")
-    .style('fill','green')
-        .attr("cx",xshift)
-        .attr("cy",yshift)
-        .attr("r",radius);
-}
-
-
-
-
 function restart() {
 
     var nodeSelection=vis.selectAll("g.node")
@@ -236,21 +222,6 @@ function restart() {
 	.attr("r",NODE_RADIUS);
 
       nodeEnter.call(node_drag);	
-
-// Adding bumps
-
-    //Right
-    addBump(nodeEnter,NODE_RADIUS/3,BOTTOM_BUMP_X,BOTTOM_BUMP_Y);
-
-    //Left
-
-    addBump(nodeEnter,NODE_RADIUS/3,-BOTTOM_BUMP_X,BOTTOM_BUMP_Y);
-    
-    //Top
-
-    addBump(nodeEnter,NODE_RADIUS/3,0,-NODE_RADIUS);
-
-
 
     var new_nodes=nodeEnter.append("foreignObject")
 	.attr("class", "node")
