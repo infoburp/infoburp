@@ -1,14 +1,14 @@
 circle.node {
   stroke: #007b02;
-  stroke-width: 1.6px;
+  stroke-width: 4.2px;
 }
 
 circle.unselected_node{
-  fill:green;
+  fill:black;
 }
 
 circle.selected_node {
-    fill:yellow;
+    fill:black;
 }
 
 
@@ -18,13 +18,14 @@ line.link {
   stroke-width: 4.2px;
 }
 line.temporal_link {
-  stroke: yellow;
+  stroke: #ff7e00;
   stroke-opacity: 0.5;
-  stroke-width: 6.2px;
+  stroke-width: 4.2px;
 }
 
 div.nodehtml{
 
 text-align:center;
+vertical-align:middle;
 
 }
