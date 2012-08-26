@@ -59,10 +59,8 @@ function get_graph_controller(vis){
 		.attr("class","temporal_node")
 		.style("fill","yellow")
 		.attr("r",20);
-//		.attr("cx", function(d) { return d.x; })
-//		.attr("cy", function(d) { return d.y; });
 	    
-	    console.log(temporal_node_selection);
+
 	    temporal_node_selection.exit().remove();
 	    
 
@@ -96,14 +94,11 @@ function get_graph_controller(vis){
 	temporal_tick:function(x,y){
 
 	    // Updating position for temporal node circle and  link line
-	    console.log(this.svg_vis.selectAll("circle.temporal_node"));
+
 	    this.temporal_node_array[0].x=x;
 	    this.temporal_node_array[0].y=y;
 	    this.svg_vis.selectAll("circle.temporal_node")
-		.attr("transform", function(d) {console.log("Moving temporary circle to",d.x,d.y); return "translate(" + d.x + "," + d.y + ")"; });
-		//.attr("cx", function(d) { return d.x; })
-		//.attr("cy", function(d) { return d.y; });
-	    
+		.attr("transform", function(d) {return "translate(" + d.x + "," + d.y + ")"; });
 
 
 	    this.svg_vis.selectAll("line.temporal_link")
