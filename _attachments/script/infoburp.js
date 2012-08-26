@@ -58,14 +58,6 @@ var force = d3.layout.force()
     .nodes(global_data.nodes)
     .links(global_data.links);
 
-// Drawing cursor
-
-var cursor = vis
-    .append("circle")
-    .attr("r", 0)
-    .attr("transform", "translate(-100,-100)")
-    .attr("class", "cursor");
-
 
 var GraphController=null;
 // loading GraphController generator
@@ -125,14 +117,6 @@ force.on("tick",tick_fu);
 
 
 force.start();
-
-
-vis.on("mousemove", function() {
-
-	   cursor.attr("transform", "translate(" + d3.mouse(this) + ")");
-
-       });
-
 
 
 var node_drag = d3.behavior.drag()
