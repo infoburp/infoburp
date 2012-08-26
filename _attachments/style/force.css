@@ -1,6 +1,6 @@
 circle.node {
   stroke: #007b02;
-  stroke-width: 4.2px;
+  stroke-width: 8.4px;
 }
 
 circle.unselected_node{
@@ -15,12 +15,12 @@ circle.selected_node {
 line.link {
   stroke: #007b02;
   stroke-opacity: 1;
-  stroke-width: 4.2px;
+  stroke-width: 8.4px;
 }
 line.temporal_link {
   stroke: #ff7e00;
   stroke-opacity: 1;
-  stroke-width: 4.2px;
+  stroke-width: 8.4px;
 }
 
 div.nodehtml{
