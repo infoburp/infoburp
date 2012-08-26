@@ -2,7 +2,11 @@ LINK_STRENGTH=0.01;
 CHARGE =-1000;
 GRAVITY=0.0001;
 
-NEW_NODE_TEMPLATE=function(){return {nodehtml:"New node", showHtml:"inline",nodecolor:"green"};}; // Making just {} makes awesome bug.
+NEW_NODE_TEMPLATE=function(){
+    return {
+	nodehtml:"New node", 
+	showHtml:"inline",
+	selected:false};}; // Making just {} makes awesome bug.
 
 RADIUS_OF_LINKING=100; // Defines distance 
 
@@ -21,7 +25,6 @@ dragged_link_number=null;
 var width = 900, 
     height = 1500, 
     fill = d3.scale.category20();
-
 
 
 global_data={nodes:[], links:[]};
@@ -93,7 +96,16 @@ function tick_fu() {
     vis.selectAll(".nodehtml").style("display",function(d){return d.showHtml;});
     
     vis.selectAll("circle.node")
-	.style("fill",function(d){return d.nodecolor;});
+	.attr("class",function (d){ if (d.selected){
+					return "node selected_node";
+				    }
+				    else{
+					return "node unselected_node";
+					
+				    }
+				    
+				  });
+
 
     };
 
@@ -137,7 +149,7 @@ function dragstart(d, i) {
 	    // making all nodes green
 	    global_data.nodes.forEach(function(d){
 					  
-					  d.nodecolor="green";
+					  d.selected=false;
 				      }
 				      
 				     );
@@ -146,7 +158,7 @@ function dragstart(d, i) {
 	    // making nearest node yellow if it insider radius of linking
 	    if (nodes_distances[0].distance<RADIUS_OF_LINKING){
 		
-		nodes_distances[0].node.nodecolor="yellow";
+		nodes_distances[0].node.selected=true;
 	    }
 	}
 	//Making force simulation
@@ -163,20 +175,21 @@ function dragend(d, i) {
  
 	    GraphController.remove_temporal_node_and_link();
     
+	// Finding selected nodes.
 	var yellow_nodes=$.grep(global_data.nodes,
 				function(d,n){
-				    return d.nodecolor=="yellow";
+				    return d.selected;
 				}
 				
 			   );
 	
-	// If node yellow we make a link to it
+	// If there are selected nodes we get first one and make a link to it
 	if (yellow_nodes.length>0){
 	    
 	    target=yellow_nodes[0];
 	    global_data.links.push({source:d,target:target});
 	
-	    target.nodecolor="green";
+	    target.selected=false;
 
 	}
 	else {
@@ -217,9 +230,18 @@ function restart() {
 
 
     var circles=nodeEnter.append("svg:circle")
-	.attr("class","node")
-        .style("fill",function(d){return d.node_color;})
+	.attr("class",function (d){ if (d.selected){
+					return "node selected_node";
+				    }
+				    else{
+					return "node unselected_node";
+					
+				    }
+				    
+				  })
 	.attr("r",NODE_RADIUS);
+
+
 
       nodeEnter.call(node_drag);	
 
