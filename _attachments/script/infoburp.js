@@ -17,6 +17,7 @@ BOTTOM_BUMP_Y=NODE_RADIUS/2;
 
 FOREIGH_OBJECT_SIDE=NODE_RADIUS*1.4142;
 
+UNUSED_LINK_PULL_SIZE=100; // This is workaround for z order of links. This should be greater than maximum number of links that are displayed.
 
 dragged_node_number=null;
 dragged_link_number=null;
@@ -221,6 +222,41 @@ function dragend(d, i) {
 
 
 function restart() {
+    
+    
+    // There are some problems with z-order in svg.
+    // https://github.com/mbostock/d3/issues/252
+    // So here we creating pool of unused lines with two classe that created before any
+
+    var empty_array=[];
+    
+    for (var i=0;i<UNUSED_LINK_PULL_SIZE;i++) {
+	
+	empty_array.push({
+			     source:{x:0,y:0},
+			     target:{x:0,y:0}
+			 });
+	
+
+    }
+    
+    vis.selectAll("line.unused_link")
+	.data(empty_array)
+	.enter()
+	.insert("line")
+	.attr("class","link unused_link");
+
+
+    // Normal links which would reuse pool of unused_links
+
+    vis.selectAll("line.link")
+	.data(global_data.links)
+	.enter().insert("line")
+	.attr("class", "link")
+	.attr("x1", function(d) { return d.source.x; })
+	.attr("y1", function(d) { return d.source.y; })
+	.attr("x2", function(d) { return d.target.x; })
+	.attr("y2", function(d) { return d.target.y; });
 
     var nodeSelection=vis.selectAll("g.node")
 	.data(global_data.nodes);
@@ -243,7 +279,7 @@ function restart() {
 
 
 
-      nodeEnter.call(node_drag);	
+    nodeEnter.call(node_drag);	
 
     var new_nodes=nodeEnter.append("foreignObject")
 	.attr("class", "node")
@@ -256,16 +292,6 @@ function restart() {
     nodeSelection.exit().remove();
 
 
-
-    vis.selectAll("line.link")
-	.data(global_data.links)
-	.enter().insert("line", "foreighnObject.node")
-	.attr("class", "link")
-	.attr("x1", function(d) { return d.source.x; })
-	.attr("y1", function(d) { return d.source.y; })
-	.attr("x2", function(d) { return d.target.x; })
-	.attr("y2", function(d) { return d.target.y; });
-
     new_nodes.append("xhtml:div")
 	.attr("class","nodehtml blockdragging")
 	.style("height",FOREIGH_OBJECT_SIDE)
@@ -273,7 +299,11 @@ function restart() {
         .style("display",function(d){return d.showHtml;})
 	.html(function(d,i){return "nodehtml=" +d.nodehtml+i;
 			 })
-        .on("click",insert_editor);	
+        .on("click",insert_editor);
+
+    
+
+	
 
 }
 
