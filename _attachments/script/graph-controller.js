@@ -1,3 +1,5 @@
+TEMPORARY_NODE_CIRCLE_RADIUS=20;
+
 function get_graph_controller(vis){
     
     return {
@@ -19,11 +21,14 @@ function get_graph_controller(vis){
 	    
 	    if ($(ev.sourceEvent.srcElement).hasClass("blockdragging")){
 		
+		// Flag if event come from blockdragging source
 		this.blockdragging=true;
 		
 	    }
 	    else{
 		
+		//Add new temporary node
+
 		this.add_temporal_node(d.x,d.y);
 		this.add_temporal_link(d,this.temporal_node_array[0]);
 	    }
@@ -45,12 +50,15 @@ function get_graph_controller(vis){
 	    
 	},
 	remove_temporal_node_and_link:function(){
+
 	    this.temporal_node_array=[];
 	    this.temporal_link_array=[];
 	    this.refresh_temporal_state();
 
 	},
 	refresh_temporal_state:function(){
+
+	    // Refreshing view for temporary elements
 	    
 	    var temporal_node_selection=this.svg_vis.selectAll("circle.temporal_node")
 		.data(this.temporal_node_array);
@@ -58,11 +66,9 @@ function get_graph_controller(vis){
 	    temporal_node_selection.enter().insert("circle")
 		.attr("class","temporal_node")
 		.style("fill","yellow")
-		.attr("r",20);
-//		.attr("cx", function(d) { return d.x; })
-//		.attr("cy", function(d) { return d.y; });
+		.attr("r",TEMPORARY_NODE_CIRCLE_RADIUS);
 	    
-	    console.log(temporal_node_selection);
+
 	    temporal_node_selection.exit().remove();
 	    
 
@@ -89,6 +95,7 @@ function get_graph_controller(vis){
 				     source:source,
 				     target:target
 				     });
+
 	   this.refresh_temporal_state();
 	    
 	    
@@ -96,14 +103,11 @@ function get_graph_controller(vis){
 	temporal_tick:function(x,y){
 
 	    // Updating position for temporal node circle and  link line
-	    console.log(this.svg_vis.selectAll("circle.temporal_node"));
+
 	    this.temporal_node_array[0].x=x;
 	    this.temporal_node_array[0].y=y;
 	    this.svg_vis.selectAll("circle.temporal_node")
-		.attr("transform", function(d) {console.log("Moving temporary circle to",d.x,d.y); return "translate(" + d.x + "," + d.y + ")"; });
-		//.attr("cx", function(d) { return d.x; })
-		//.attr("cy", function(d) { return d.y; });
-	    
+		.attr("transform", function(d) {return "translate(" + d.x + "," + d.y + ")"; });
 
 
 	    this.svg_vis.selectAll("line.temporal_link")
@@ -121,6 +125,7 @@ function get_graph_controller(vis){
 	    // This function calculates for all global_data.nodes objects distance to x,y and returns nearest node
 
 	    var distance_array=[];
+
 	    global_data.nodes.forEach(function(current,num){
 					  
 					  X=x-current.x;
@@ -139,7 +144,11 @@ function get_graph_controller(vis){
 				     
 
 	    distance_array.sort(function(a,b){
+
+				    // We are sorting in descending order so nearest node comes first
+
 				    return (a.distance - b.distance);
+
 				} );
 	    
 	    return distance_array;
