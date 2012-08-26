@@ -65,7 +65,7 @@ function get_graph_controller(vis){
 
 	    temporal_node_selection.enter().insert("circle")
 		.attr("class","temporal_node")
-		.style("fill","yellow")
+		.style("fill","#ff7e00")
 		.attr("r",TEMPORARY_NODE_CIRCLE_RADIUS);
 	    
 
