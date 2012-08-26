@@ -23,9 +23,7 @@ dragged_node_number=null;
 dragged_link_number=null;
 
 
-var width = 900, 
-    height = 1500, 
-    fill = d3.scale.category20();
+var fill = d3.scale.category20();
 
 
 global_data={nodes:[], links:[]};
@@ -40,9 +38,15 @@ else{
     global_data.links = DEBUG_DATASET.links;
 }
 
-var vis = d3.select("#chart").append("svg").attr("width", width).attr("height", height).attr("pointer-events", "all").append('svg:g').call(d3.behavior.zoom().on("zoom", redraw)).append('svg:g');
+var vis = d3.select("#chart").append("svg")
+    .attr("pointer-events", "all")
+    .append('svg:g')
+    .call(d3.behavior
+	  .zoom()
+	  .on("zoom", redraw))
+    .append('svg:g');
 
-vis.append("rect").attr("width", width).attr("height", height);
+vis.append("rect").attr("width", "100%").attr("height", "100%");
 
 
 // Standard force layout see https://github.com/mbostock/d3/wiki/Force-Layout for documentation
@@ -52,8 +56,9 @@ var force = d3.layout.force()
     .gravity(GRAVITY)
     .charge(CHARGE)
     .nodes(global_data.nodes)
-    .links(global_data.links)
-    .size([width, height]);
+    .links(global_data.links);
+
+// Drawing cursor
 
 var cursor = vis
     .append("circle")
@@ -127,6 +132,7 @@ vis.on("mousemove", function() {
 	   cursor.attr("transform", "translate(" + d3.mouse(this) + ")");
 
        });
+
 
 
 var node_drag = d3.behavior.drag()
