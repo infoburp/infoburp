@@ -5,7 +5,7 @@ GRAVITY=0.0001;
 NEW_NODE_TEMPLATE=function(){
     return {
 	nodehtml:"New node", 
-	showHtml:"inline",
+	showHtml:"block",
 	selected:false};}; // Making just {} makes awesome bug.
 
 RADIUS_OF_LINKING=100; // Defines distance 
