@@ -162,12 +162,14 @@ function get_graph_controller(vis){
 
 	    var distance_array=[];
 
+	    var that = this;
+
 	    global_data.nodes.forEach(function(current,num){
-					  
+					 
 					  distance_array.push({
 						node:current,
 						index:num,
-						distance:this.distance_to_node(x,y,current)
+						distance:that.distance_to_node(x,y,current)
 							      }
 							     );
 	
