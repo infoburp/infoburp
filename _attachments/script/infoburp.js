@@ -310,7 +310,7 @@ function restart() {
 	       })
 	.html(function(d,i){
 		  
-		  return "nodehtml=" +d.nodehtml+i;
+		  return d.nodehtml;
 		
 	      })
         .on("click",insert_editor);
