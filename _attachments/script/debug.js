@@ -5,7 +5,7 @@ DEBUG_DATASET={
     	{
 	    x:200,
 	    y:200,
-	    nodehtml:"Second node."
+	    nodehtml:"infoburp"
 	}],
     links:[ ]
     
