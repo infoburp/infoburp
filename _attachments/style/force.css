@@ -19,7 +19,7 @@ line.link {
 }
 line.temporal_link {
   stroke: #ff7e00;
-  stroke-opacity: 0.5;
+  stroke-opacity: 1;
   stroke-width: 4.2px;
 }
 
