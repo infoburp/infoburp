@@ -10,12 +10,15 @@ NEW_NODE_TEMPLATE=function(){
 
 RADIUS_OF_LINKING=100; // Defines distance 
 
-NODE_RADIUS=100;
+NODE_APPEARANCE_DURATION=500; // ms Time for animation of new node appearance
+NODE_APPEARANCE_RADIUS=20;    // px Animation starts from that radius to NODE_RADIUS
+NODE_RADIUS=100;              // Node radius
 
 BOTTOM_BUMP_X=NODE_RADIUS*0.866; //sqrt(3)/2 ~ 0.866
 BOTTOM_BUMP_Y=NODE_RADIUS/2;
 
-FOREIGH_OBJECT_SIDE=NODE_RADIUS*1.4142;
+FOREIGHN_OBJECT_SIDE=NODE_RADIUS*1.4142;
+FOREIGHN_OBJECT_SHIFT=-NODE_RADIUS/1.4142;
 
 UNUSED_LINK_PULL_SIZE=100; // This is workaround for z order of links. This should be greater than maximum number of links that are displayed.
 
@@ -23,9 +26,7 @@ dragged_node_number=null;
 dragged_link_number=null;
 
 
-var width = 900, 
-    height = 1500, 
-    fill = d3.scale.category20();
+var fill = d3.scale.category20();
 
 
 global_data={nodes:[], links:[]};
@@ -40,9 +41,15 @@ else{
     global_data.links = DEBUG_DATASET.links;
 }
 
-var vis = d3.select("#chart").append("svg").attr("width", width).attr("height", height).attr("pointer-events", "all").append('svg:g').call(d3.behavior.zoom().on("zoom", redraw)).append('svg:g');
+var vis = d3.select("#chart").append("svg")
+    .attr("pointer-events", "all")
+    .append('svg:g')
+    .call(d3.behavior
+	  .zoom()
+	  .on("zoom", redraw))
+    .append('svg:g');
 
-vis.append("rect").attr("width", width).attr("height", height);
+vis.append("rect").attr("width", "100%").attr("height", "100%");
 
 
 // Standard force layout see https://github.com/mbostock/d3/wiki/Force-Layout for documentation
@@ -52,14 +59,7 @@ var force = d3.layout.force()
     .gravity(GRAVITY)
     .charge(CHARGE)
     .nodes(global_data.nodes)
-    .links(global_data.links)
-    .size([width, height]);
-
-var cursor = vis
-    .append("circle")
-    .attr("r", 0)
-    .attr("transform", "translate(-100,-100)")
-    .attr("class", "cursor");
+    .links(global_data.links);
 
 
 var GraphController=null;
@@ -120,13 +120,6 @@ force.on("tick",tick_fu);
 
 
 force.start();
-
-
-vis.on("mousemove", function() {
-
-	   cursor.attr("transform", "translate(" + d3.mouse(this) + ")");
-
-       });
 
 
 var node_drag = d3.behavior.drag()
@@ -284,7 +277,11 @@ function restart() {
 				    }
 				    
 				  })
-	.attr("r",NODE_RADIUS);
+        .attr("r",NODE_APPEARANCE_RADIUS)
+	.transition()
+	.duration(NODE_APPEARANCE_DURATION)
+	.attr("r", NODE_RADIUS);
+
 
 
     nodeEnter.call(node_drag);	
@@ -292,10 +289,10 @@ function restart() {
 
     var new_nodes=nodeEnter.append("foreignObject")
 	.attr("class", "node")
-	.attr("height",FOREIGH_OBJECT_SIDE)
-	.attr("width",FOREIGH_OBJECT_SIDE)
-        .attr("x",-NODE_RADIUS/1.4142) //so foreign object is inside circle
-	.attr("y",-NODE_RADIUS/1.4142);
+	.attr("height",FOREIGHN_OBJECT_SIDE)
+	.attr("width",FOREIGHN_OBJECT_SIDE)
+        .attr("x",FOREIGHN_OBJECT_SHIFT) //so foreign object is inside circle
+	.attr("y",FOREIGHN_OBJECT_SHIFT);
 
     
     nodeSelection.exit().remove();
@@ -303,8 +300,8 @@ function restart() {
 
     new_nodes.append("xhtml:div")
 	.attr("class","nodehtml blockdragging")
-	.style("height",FOREIGH_OBJECT_SIDE)
-	.style("width",FOREIGH_OBJECT_SIDE)
+	.style("height",FOREIGHN_OBJECT_SIDE)
+	.style("width",FOREIGHN_OBJECT_SIDE)
         .style("display",function(d){
 		   return d.showHtml;
 	       })
