@@ -21,8 +21,9 @@ var p = this.parentNode;
                             this.focus();
 			    d.showHtml = "none";
                             return d.nodehtml;
-                        })
-                        .attr("style", "width: 294px;")
+                              })
+                      	.style("height",FOREIGH_OBJECT_SIDE)
+                 	.style("width",FOREIGH_OBJECT_SIDE)
                         // make the form go away when you jump out (form looses focus) or hit ENTER:
                         .on("blur", function() {
                             console.log("blur", this, arguments);
@@ -30,7 +31,7 @@ var p = this.parentNode;
                             var txt = inp.node().value;
                             
                             d.nodehtml = txt;
-			    d.showHtml = "inline";
+			    d.showHtml = "block";
                                                         
                             p_el.select("form.editor-form").remove();
                         })

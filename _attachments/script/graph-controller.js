@@ -14,8 +14,10 @@ function get_graph_controller(vis){
 	},
 
 	dragstart_handler:function(d,ev){
+
+	    // Handle dragstart event and return result if event comes from element that blocking dragging i.e. inner node html.
 	    
-	    if ($(d3.event.sourceEvent.srcElement).hasClass("blockdragging")){
+	    if ($(ev.sourceEvent.srcElement).hasClass("blockdragging")){
 		
 		this.blockdragging=true;
 		
