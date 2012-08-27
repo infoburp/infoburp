@@ -80,11 +80,22 @@ $.getScript("script/node-editor/node-editor.js",restart);
 
 
 function get_current_active_editor(){
-
+	return vis.selectAll("input.node-editor")
+	.filter(function(d){
+		    return !d.showHtml;
+		}).node();		
     }
 
 function get_current_active_editor_value(){
     
+    var current_input=get_current_active_editor();
+
+    if (current_input === null){
+	return null;}
+    else{
+    
+    return get_current_active_editor().value;}
+
 }
 
 function tick_fu() {
@@ -145,16 +156,13 @@ function tick_fu() {
         .style("width",FOREIGHN_OBJECT_SIDE)
 	.attr("value",function(d){return d.nodehtml;})
 	.on("blur", function(d) {
-		var selected_input=vis.selectAll("input.node-editor").filter(function(d){
-										 console.log(d.showHtml);
-										 return !d.showHtml;			 
-					       });
 		
-
-                var txt = selected_input.node().value;
-	       
-               
-               d.nodehtml = txt;
+               var txt = get_current_active_editor_value();
+		
+		if (txt){
+		    d.nodehtml = txt;
+		}
+		
 	       d.showHtml = true;
            })
 	.on("keypress", function(d) {
@@ -167,33 +175,25 @@ function tick_fu() {
 		       e.stopPropagation();
                    e.preventDefault();
 		   
+                   var txt = get_current_active_editor_value();                                   
+		   
+		   if (txt){      
 
-		   var selected_input=vis.selectAll("input.node-editor").filter(function(d){
-								 console.log(d.showHtml);
-						   return !d.showHtml;			 
-					       });
+		       d.nodehtml = txt;
+		   }
 
-
-                   var txt = selected_input.node().value;
-                                   
-
-		   d.nodehtml = txt;
 		   d.showHtml = true;
+
 		   
 	       }
            });
 
 
-    var selected_input=vis
-	.selectAll("input.node-editor")
-	.filter(function(d){
-		    console.log(d.showHtml);
-		    return !d.showHtml;			 
-		});
+    var selected_input = get_current_active_editor();
 
-    if (selected_input.node()===null){}
+    if (selected_input===null){}
         else{
-	    selected_input.node().focus();
+	    selected_input.focus();
 	}
 
 };
@@ -213,22 +213,7 @@ var node_drag = d3.behavior.drag()
 function dragstart(d, i) {
     force.stop(); // stops the force auto positioning before you start dragging
     
-    
     GraphController.dragstart_handler(d,d3.event);
-    
-    if (!GraphController.blockdragging){
-
-	global_data.nodes.forEach(function(d){d.showHtml=true;});
-    }
-    else
-	{
-	    global_data.nodes.forEach(function(d){d.showHtml=true;});
-	    d.showHtml=false;
-
-
-	    
-	}
-
     
 }
 
@@ -425,7 +410,7 @@ function restart() {
 		  return d.nodehtml;
 		
 	      })
-        .on("click",function(d){d.showHtml=false;});
+        .on("click",function(d){d.showHtml=false; restart();});
 
 
 
@@ -440,10 +425,11 @@ function restart() {
 	.attr("value",function(d){return d.nodehtml;})
 	.on("blur", function(d) {
 	       
-               var txt = this.value;
-               
-               d.nodehtml = txt;
-	       d.showHtml = true;
+		var txt = get_current_active_editor_value();
+               		   if (txt){
+			       d.nodehtml = txt;
+			   }
+		d.showHtml = true;
            })
 	.on("keypress", function(d) {
 	       
@@ -454,10 +440,11 @@ function restart() {
                    if (e.stopPropagation)
 		       e.stopPropagation();
                    e.preventDefault();
-		   
-                   var txt = this.value;
 
-		   d.nodehtml = txt;
+		       var txt = get_current_active_editor_value();   
+		   if (txt){
+		       d.nodehtml = txt;
+		   }
 		   d.showHtml = true;
 		   
 	       }
