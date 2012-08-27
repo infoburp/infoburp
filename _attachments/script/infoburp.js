@@ -5,8 +5,7 @@ GRAVITY=0.0001;
 NEW_NODE_TEMPLATE=function(){
     return {
 	nodehtml:"New node", 
-	showHtml:"block",
-	showEditor:false,
+	showHtml:true,
 	selected:false};}; // Making just {} makes awesome bug.
 
 RADIUS_OF_LINKING=100; // Defines distance 
@@ -80,6 +79,14 @@ $.getScript("script/graph-controller.js",function(){
 $.getScript("script/node-editor/node-editor.js",restart);
 
 
+function get_current_active_editor(){
+
+    }
+
+function get_current_active_editor_value(){
+    
+}
+
 function tick_fu() {
     
     vis.selectAll("line.link")
@@ -102,35 +109,20 @@ function tick_fu() {
 
 
     // This determines if nodehtml wouldbe hidden when editor appear
-    vis.selectAll(".nodehtml").style("display",function(d){return d.showHtml;});
-
-/*    vis.selectAll(".node-editor")
-	.attr("value",function(d){return d.nodehtml;})
-        .attr("class",function(d){
-		  if (d.showEditor){
-					return "node-editor active-editor";
-				    }
-				    else{
-
-					return "node-editor non-active-editor";
-					
-				    }
+    vis.selectAll(".nodehtml")
+	.html(function(d,i){
 		  
+		  return d.nodehtml;
+		
 	      })
-        .style("display",function(d){
-		  if (d.showEditor){
-					return "block";
-				    }
-				    else{
-
-					return "none";
-					
-				    }
-		  
-	      })
-
-
-;*/
+	.style("display",function(d){
+		   if (d.showHtml){
+		       return "block";
+		   }
+		   else{
+		       return "none";
+		   }
+	       });
 
 
     vis.selectAll("circle.node")
@@ -148,17 +140,22 @@ function tick_fu() {
 
 
     vis.selectAll("input")
-	.attr("class","node-editor active-editor")
+	.attr("class","node-editor")
 	.style("height",FOREIGHN_OBJECT_SIDE)
         .style("width",FOREIGHN_OBJECT_SIDE)
 	.attr("value",function(d){return d.nodehtml;})
 	.on("blur", function(d) {
+		var selected_input=vis.selectAll("input.node-editor").filter(function(d){
+										 console.log(d.showHtml);
+										 return !d.showHtml;			 
+					       });
+		
+
+                var txt = selected_input.node().value;
 	       
-               var txt = this.value;
                
                d.nodehtml = txt;
-	       d.showHtml = "block";
-               d.showEditor= false;
+	       d.showHtml = true;
            })
 	.on("keypress", function(d) {
 	       
@@ -170,34 +167,36 @@ function tick_fu() {
 		       e.stopPropagation();
                    e.preventDefault();
 		   
-		   var selected_input=d3.select("input.node-editor");
 
-		   console.log("inner select from keypress",selected_input.node());
-                   var txt = this.value;
+		   var selected_input=vis.selectAll("input.node-editor").filter(function(d){
+								 console.log(d.showHtml);
+						   return !d.showHtml;			 
+					       });
+
+
+                   var txt = selected_input.node().value;
                                    
 
 		   d.nodehtml = txt;
-		   d.showHtml = "block";
-                   d.showEditor= false;
+		   d.showHtml = true;
 		   
 	       }
            });
 
 
-    var selected_input=d3.select("input.node-editor");
+    var selected_input=vis
+	.selectAll("input.node-editor")
+	.filter(function(d){
+		    console.log(d.showHtml);
+		    return !d.showHtml;			 
+		});
 
-	   // console.log("inner select",selected_input.node());
-		if (selected_input.node()===null){
+    if (selected_input.node()===null){}
+        else{
+	    selected_input.node().focus();
+	}
 
-		}
-		else{
-		    
-		    
-		    selected_input.node().focus();
-		}
-
-
-    };
+};
 
 force.on("tick",tick_fu);
 
@@ -219,12 +218,12 @@ function dragstart(d, i) {
     
     if (!GraphController.blockdragging){
 
-	global_data.nodes.forEach(function(d){d.showEditor=false;d.showHtml="block";});
+	global_data.nodes.forEach(function(d){d.showHtml=true;});
     }
     else
 	{
-	    global_data.nodes.forEach(function(d){d.showEditor=false;d.showHtml="block";});
-	    d.showEditor=true;d.showHtml="none";
+	    global_data.nodes.forEach(function(d){d.showHtml=true;});
+	    d.showHtml=false;
 
 
 	    
@@ -415,25 +414,27 @@ function restart() {
 	.style("height",FOREIGHN_OBJECT_SIDE)
 	.style("width",FOREIGHN_OBJECT_SIDE)
         .style("display",function(d){
-		   return d.showHtml;
+		   if ( d.showHtml){
+		       return "block";
+		   }else{
+		       return "none";
+		   };
 	       })
 	.html(function(d,i){
 		  
 		  return d.nodehtml;
 		
 	      })
-        .on("click",function(d){d.showHtml='none';});
+        .on("click",function(d){d.showHtml=false;});
 
 
 
+    vis.selectAll("div.container").selectAll("input").remove();
 
 
-
-    vis.selectAll("div.container").filter(function(d){
-						   return d.showEditor;			 
-					       })
+    vis.selectAll("div.container")
 	.insert("xhtml:input")
-	.attr("class","node-editor active-editor")
+	.attr("class","node-editor")
 	.style("height",FOREIGHN_OBJECT_SIDE)
         .style("width",FOREIGHN_OBJECT_SIDE)
 	.attr("value",function(d){return d.nodehtml;})
@@ -442,8 +443,7 @@ function restart() {
                var txt = this.value;
                
                d.nodehtml = txt;
-	       d.showHtml = "block";
-               d.showEditor= false;
+	       d.showHtml = true;
            })
 	.on("keypress", function(d) {
 	       
@@ -456,11 +456,9 @@ function restart() {
                    e.preventDefault();
 		   
                    var txt = this.value;
-                                   
 
 		   d.nodehtml = txt;
-		   d.showHtml = "block";
-                   d.showEditor= false;
+		   d.showHtml = true;
 		   
 	       }
            });
