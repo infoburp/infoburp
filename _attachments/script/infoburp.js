@@ -98,6 +98,99 @@ function get_current_active_editor_value(){
 
 }
 
+
+function node_edit_end_handle(d){
+    
+    var txt = get_current_active_editor_value();                                   
+    
+    if (txt){      
+
+	d.nodehtml = txt;
+    }
+    
+    d.showHtml = true;
+}
+
+function get_selected_nodes(){
+
+	// Finding selected nodes.
+	// TODO use d3.js instead of jquery for filter
+	return $.grep(global_data.nodes,
+				function(d,n){
+				    return d.selected;
+				}
+				
+			   );
+
+
+};
+
+function select_nearest_node(source_data,source_event){
+    
+	//Calculating distances to nodes
+	var nodes_distances=GraphController.nodes_distances(source_event.x,source_event.y);
+	
+	// making all nodes green
+	global_data.nodes.forEach(function(d){
+					  
+				      d.selected=false;
+				  }
+				  
+				 );
+
+	
+	// making nearest node yellow if it insider radius of linking
+    if ((nodes_distances[0].distance<RADIUS_OF_LINKING) &&(nodes_distances[0].node.index !== source_data.index)){
+	
+	    nodes_distances[0].node.selected=true;
+	}
+
+
+}
+
+
+
+function add_new_link(source_data){
+
+    var yellow_nodes=get_selected_nodes();
+	
+    // If there are selected nodes we get first one and make a link to it
+    
+    var there_where_selected_nodes=yellow_nodes.length>0;
+
+    if (there_where_selected_nodes){
+	
+	target=yellow_nodes[0];	    
+
+	if (source_data.index !== target.index){
+	    
+		global_data.links.push({source:source_data,target:target});
+		
+	    }
+	
+	target.selected=false;
+
+    }
+
+    return there_where_selected_nodes;
+}
+
+
+function add_new_node(source_data,X,Y){
+    
+    if (GraphController.distance_to_temporal_node(source_data.x,source_data.y)>NODE_RADIUS){
+	    
+	
+	var new_node=new NEW_NODE_TEMPLATE();
+	
+	new_node.x=X; // We move new node sligthly
+	new_node.y=Y;
+	global_data.nodes.push(new_node);
+	global_data.links.push({source:source_data,target:new_node});
+    }
+}
+
+
 function tick_fu() {
     
     vis.selectAll("line.link")
@@ -157,13 +250,8 @@ function tick_fu() {
 	.attr("value",function(d){return d.nodehtml;})
 	.on("blur", function(d) {
 		
-               var txt = get_current_active_editor_value();
-		
-		if (txt){
-		    d.nodehtml = txt;
-		}
-		
-	       d.showHtml = true;
+		node_edit_end_handle(d);
+
            })
 	.on("keypress", function(d) {
 	       
@@ -175,16 +263,8 @@ function tick_fu() {
 		       e.stopPropagation();
                    e.preventDefault();
 		   
-                   var txt = get_current_active_editor_value();                                   
-		   
-		   if (txt){      
+		   node_edit_end_handle(d);		   
 
-		       d.nodehtml = txt;
-		   }
-
-		   d.showHtml = true;
-
-		   
 	       }
            });
 
@@ -227,24 +307,11 @@ function dragmove(d, i) {
 	
 	GraphController.temporal_tick(d3.event.x,d3.event.y);
 	
-	//Calculating distances to nodes
-	var nodes_distances=GraphController.nodes_distances(d3.event.x,d3.event.y);
-	
-	// making all nodes green
-	global_data.nodes.forEach(function(d){
-					  
-				      d.selected=false;
-				  }
-				  
-				 );
-
-	
-	// making nearest node yellow if it insider radius of linking
-	if ((nodes_distances[0].distance<RADIUS_OF_LINKING) &&(nodes_distances[0].node.index !== d.index)){
-	    
-	    nodes_distances[0].node.selected=true;
-	}
     }
+
+    // Selecting node nearest to mouse event
+    select_nearest_node(d,d3.event);
+
     //Making force simulation
     tick_fu();
 }
@@ -254,55 +321,28 @@ function dragend(d, i) {
     // We do this things only if click originated on element that dont't block dragging
     if (!GraphController.blockdragging){
 	
+	// Saving last temporal node coordinates before removing
 	var X=GraphController.temporal_node_array[0].x;
 	var Y=GraphController.temporal_node_array[0].y;
- 
-	    GraphController.remove_temporal_node_and_link();
-    
-	// Finding selected nodes.
-	var yellow_nodes=$.grep(global_data.nodes,
-				function(d,n){
-				    return d.selected;
-				}
-				
-			   );
 	
-	// If there are selected nodes we get first one and make a link to it
-	if (yellow_nodes.length>0){
-
-	    target=yellow_nodes[0];	    
-	    if (d.index !== target.index){
-	    
-
-		global_data.links.push({source:d,target:target});
+	// Removing temporal link and node
+	GraphController.remove_temporal_node_and_link();
 	
-		
-	    }
-
-	    target.selected=false;
-		
-
+	// Adding new link if necessary (function checks if source and target are distinct). 
+	if (add_new_link(d)){
 	}
+	
 	else {
+	
+	    // And if there where no internode links added then we adding new node only if temporal node is far from source
 	    
-	    // Adding new node only if temporal node is far from source
-	    
-	    if (GraphController.distance_to_temporal_node(d.x,d.y)>NODE_RADIUS){
-		
-
-		var new_node=new NEW_NODE_TEMPLATE();
-
-		new_node.x=X; // We move new node sligthly
-		new_node.y=Y;
-		global_data.nodes.push(new_node);
-		global_data.links.push({source:d,target:new_node});
-	    }
-	};
-
+	    add_new_node(d,X,Y);
+	}
+	
 	// Refreshing svg after modifying data
-	restart();
+	    restart();
+	
     }
-    
     else{
 	
 	//Resetting blockdragging state
@@ -394,6 +434,7 @@ function restart() {
     container_html=new_nodes.append("xhtml:div")	
 	.attr("class","container");
 
+
     container_html.append("xhtml:div")
 	.attr("class","nodehtml blockdragging")
 	.style("height",FOREIGHN_OBJECT_SIDE)
@@ -424,12 +465,9 @@ function restart() {
         .style("width",FOREIGHN_OBJECT_SIDE)
 	.attr("value",function(d){return d.nodehtml;})
 	.on("blur", function(d) {
+
+		node_edit_end_handle(d);
 	       
-		var txt = get_current_active_editor_value();
-               		   if (txt){
-			       d.nodehtml = txt;
-			   }
-		d.showHtml = true;
            })
 	.on("keypress", function(d) {
 	       
@@ -440,12 +478,9 @@ function restart() {
                    if (e.stopPropagation)
 		       e.stopPropagation();
                    e.preventDefault();
+		   
+		   node_edit_end_handle(d);
 
-		       var txt = get_current_active_editor_value();   
-		   if (txt){
-		       d.nodehtml = txt;
-		   }
-		   d.showHtml = true;
 		   
 	       }
            });
