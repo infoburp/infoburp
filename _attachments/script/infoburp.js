@@ -2,9 +2,9 @@ LINK_STRENGTH=0.01;
 CHARGE =-1000;
 GRAVITY=0.0001;
 
-NEW_NODE_TEMPLATE=function(){
+NEW_NODE_TEMPLATE=function(node_html){
     return {
-	nodehtml:"New node", 
+	nodehtml:node_html, 
 	showHtml:true,
 	selected:false};}; // Making just {} makes awesome bug.
 
@@ -178,7 +178,7 @@ function add_new_node(source_data,X,Y){
     if (GraphController.distance_to_temporal_node(source_data.x,source_data.y)>NODE_RADIUS){
 	    
 	
-	var new_node=new NEW_NODE_TEMPLATE();
+	var new_node=new NEW_NODE_TEMPLATE(source_data.nodehtml);
 	
 	new_node.x=X; // We move new node sligthly
 	new_node.y=Y;
