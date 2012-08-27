@@ -2,10 +2,10 @@ LINK_STRENGTH=0.01;
 CHARGE =-1000;
 GRAVITY=0.0001;
 
-NEW_NODE_TEMPLATE=function(){
+NEW_NODE_TEMPLATE=function(node_html){
     return {
-	nodehtml:"New node", 
-	showHtml:"block",
+	nodehtml:node_html, 
+	showHtml:true,
 	selected:false};}; // Making just {} makes awesome bug.
 
 RADIUS_OF_LINKING=100; // Defines distance 
@@ -70,13 +70,122 @@ $.getScript("script/graph-controller.js",function(){
 		// Setting up GraphController to this visualisation
 
 		GraphController=get_graph_controller(vis);
+		
+		restart();
 
 	    });
 
 
-// loading insert_editor function
+function get_current_active_editor(){
+	return vis.selectAll("input.node-editor")
+	.filter(function(d){
+		    return !d.showHtml;
+		}).node();		
+    }
 
-$.getScript("script/node-editor/node-editor.js",restart);
+function get_current_active_editor_value(){
+    
+    var current_input=get_current_active_editor();
+
+    if (current_input === null){
+	return null;}
+    else{
+    
+    return get_current_active_editor().value;}
+
+}
+
+
+function node_edit_end_handle(d){
+    
+    var txt = get_current_active_editor_value();                                   
+    
+    if (txt){      
+
+	d.nodehtml = txt;
+    }
+    
+    d.showHtml = true;
+}
+
+function get_selected_nodes(){
+
+	// Finding selected nodes.
+	// TODO use d3.js instead of jquery for filter
+	return $.grep(global_data.nodes,
+				function(d,n){
+				    return d.selected;
+				}
+				
+			   );
+
+
+};
+
+function select_nearest_node(source_data,source_event){
+    
+	//Calculating distances to nodes
+	var nodes_distances=GraphController.nodes_distances(source_event.x,source_event.y);
+	
+	// making all nodes green
+	global_data.nodes.forEach(function(d){
+					  
+				      d.selected=false;
+				  }
+				  
+				 );
+
+	
+	// making nearest node yellow if it insider radius of linking
+    if ((nodes_distances[0].distance<RADIUS_OF_LINKING) &&(nodes_distances[0].node.index !== source_data.index)){
+	
+	    nodes_distances[0].node.selected=true;
+	}
+
+
+}
+
+
+
+function add_new_link(source_data){
+
+    var yellow_nodes=get_selected_nodes();
+	
+    // If there are selected nodes we get first one and make a link to it
+    
+    var there_where_selected_nodes=yellow_nodes.length>0;
+
+    if (there_where_selected_nodes){
+	
+	target=yellow_nodes[0];	    
+
+	if (source_data.index !== target.index){
+	    
+		global_data.links.push({source:source_data,target:target});
+		
+	    }
+	
+	target.selected=false;
+
+    }
+
+    return there_where_selected_nodes;
+}
+
+
+function add_new_node(source_data,X,Y){
+    
+    if (GraphController.distance_to_temporal_node(source_data.x,source_data.y)>NODE_RADIUS){
+	    
+	
+	var new_node=new NEW_NODE_TEMPLATE(source_data.nodehtml);
+	
+	new_node.x=X; // We move new node sligthly
+	new_node.y=Y;
+	global_data.nodes.push(new_node);
+	global_data.links.push({source:source_data,target:new_node});
+    }
+}
 
 
 function tick_fu() {
@@ -101,10 +210,24 @@ function tick_fu() {
 
 
     // This determines if nodehtml wouldbe hidden when editor appear
-    vis.selectAll(".nodehtml").style("display",function(d){return d.showHtml;});
-    
+    vis.selectAll(".nodehtml")
+	.html(function(d,i){
+		  
+		  return d.nodehtml;
+		
+	      })
+	.style("display",function(d){
+		   if (d.showHtml){
+		       return "block";
+		   }
+		   else{
+		       return "none";
+		   }
+	       });
+
+
     vis.selectAll("circle.node")
-	.attr("class",function (d){ if (d.selected){
+	.attr("class",function (d){ if (d.selected || !d.showHtml){
 					return "node selected_node";
 				    }
 				    else{
@@ -114,7 +237,51 @@ function tick_fu() {
 				    
 				  });
 
-    };
+
+
+
+    vis.selectAll("input")
+	.attr("class","node-editor")
+	.style("height",FOREIGHN_OBJECT_SIDE)
+        .style("width",FOREIGHN_OBJECT_SIDE)
+	.attr("value",function(d){return d.nodehtml;})
+	.style("display",function(d){
+		   if (!d.showHtml){
+		       return "block";
+		   }
+		   else{
+		       return "none";
+		   }
+	       })
+	.on("blur", function(d) {
+		
+		node_edit_end_handle(d);
+
+           })
+	.on("keypress", function(d) {
+	       
+               var e = d3.event;
+               if (e.keyCode == 13)
+	       {
+		   
+                   if (e.stopPropagation)
+		       e.stopPropagation();
+                   e.preventDefault();
+		   
+		   node_edit_end_handle(d);		   
+
+	       }
+           });
+
+
+    var selected_input = get_current_active_editor();
+
+    if (selected_input===null){}
+        else{
+	    selected_input.focus();
+	}
+
+};
 
 force.on("tick",tick_fu);
 
@@ -131,9 +298,8 @@ var node_drag = d3.behavior.drag()
 function dragstart(d, i) {
     force.stop(); // stops the force auto positioning before you start dragging
     
-    
     GraphController.dragstart_handler(d,d3.event);
-
+    
 }
 
 function dragmove(d, i) {
@@ -146,24 +312,11 @@ function dragmove(d, i) {
 	
 	GraphController.temporal_tick(d3.event.x,d3.event.y);
 	
-	//Calculating distances to nodes
-	var nodes_distances=GraphController.nodes_distances(d3.event.x,d3.event.y);
-	
-	// making all nodes green
-	global_data.nodes.forEach(function(d){
-					  
-				      d.selected=false;
-				  }
-				  
-				 );
-
-	
-	// making nearest node yellow if it insider radius of linking
-	if ((nodes_distances[0].distance<RADIUS_OF_LINKING) &&(nodes_distances[0].node.index !== d.index)){
-	    
-	    nodes_distances[0].node.selected=true;
-	}
     }
+
+    // Selecting node nearest to mouse event
+    select_nearest_node(d,d3.event);
+
     //Making force simulation
     tick_fu();
 }
@@ -173,60 +326,32 @@ function dragend(d, i) {
     // We do this things only if click originated on element that dont't block dragging
     if (!GraphController.blockdragging){
 	
+	// Saving last temporal node coordinates before removing
 	var X=GraphController.temporal_node_array[0].x;
 	var Y=GraphController.temporal_node_array[0].y;
- 
-	    GraphController.remove_temporal_node_and_link();
-    
-	// Finding selected nodes.
-	var yellow_nodes=$.grep(global_data.nodes,
-				function(d,n){
-				    return d.selected;
-				}
-				
-			   );
 	
-	// If there are selected nodes we get first one and make a link to it
-	if (yellow_nodes.length>0){
-
-	    target=yellow_nodes[0];	    
-	    if (d.index !== target.index){
-	    
-
-		global_data.links.push({source:d,target:target});
+	// Removing temporal link and node
+	GraphController.remove_temporal_node_and_link();
 	
-		
-	    }
-
-	    target.selected=false;
-		
-
+	// Adding new link if necessary (function checks if source and target are distinct). 
+	if (add_new_link(d)){
 	}
+	
 	else {
+	
+	    // And if there where no internode links added then we adding new node only if temporal node is far from source
 	    
-	    // Adding new node only if temporal node is far from source
-	    
-	    if (GraphController.distance_to_temporal_node(d.x,d.y)>NODE_RADIUS){
-		
-
-		var new_node=new NEW_NODE_TEMPLATE();
-
-		new_node.x=X; // We move new node sligthly
-		new_node.y=Y;
-		global_data.nodes.push(new_node);
-		global_data.links.push({source:d,target:new_node});
-	    }
-	};
-
+	    add_new_node(d,X,Y);
+	}
+	
 	// Refreshing svg after modifying data
-	restart();
+	    restart();
+	
     }
-    
     else{
 	
 	//Resetting blockdragging state
 	GraphController.blockdragging=false;
-	
     }
  
     force.start();
@@ -311,19 +436,68 @@ function restart() {
     nodeSelection.exit().remove();
 
 
-    new_nodes.append("xhtml:div")
+    container_html=new_nodes.append("xhtml:div")	
+	.attr("class","container");
+
+
+
+    container_html.append("xhtml:div")
 	.attr("class","nodehtml blockdragging")
 	.style("height",FOREIGHN_OBJECT_SIDE)
 	.style("width",FOREIGHN_OBJECT_SIDE)
         .style("display",function(d){
-		   return d.showHtml;
+		   if ( d.showHtml){
+		       return "block";
+		   }else{
+		       return "none";
+		   };
 	       })
 	.html(function(d,i){
 		  
 		  return d.nodehtml;
 		
 	      })
-        .on("click",insert_editor);
+        .on("click",function(d){d.showHtml=false; restart();});
+
+    container_html
+        .style("opacity",0)
+	.transition()
+	.duration(NODE_APPEARANCE_DURATION)
+	.style("opacity",1);
+
+    //TODO Write more specific selector
+    vis.selectAll("div.container").selectAll("input").remove();
+
+
+    vis.selectAll("div.container")
+	.insert("xhtml:input")
+	.attr("class","node-editor")
+	.style("height",FOREIGHN_OBJECT_SIDE)
+        .style("width",FOREIGHN_OBJECT_SIDE)
+	.attr("value",function(d){return d.nodehtml;})
+	.on("blur", function(d) {
+
+		node_edit_end_handle(d);
+	       
+           })
+	.on("keypress", function(d) {
+	       
+               var e = d3.event;
+               if (e.keyCode == 13)
+	       {
+		   
+                   if (e.stopPropagation)
+		       e.stopPropagation();
+                   e.preventDefault();
+		   
+		   node_edit_end_handle(d);
+
+		   
+	       }
+           });
+
+
+
 
 }
 
