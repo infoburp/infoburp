@@ -37,3 +37,14 @@ circle.temporal_node{
 fill: #ff7e00;
 }
 
+input.non-active-editor{
+
+display:none;
+
+}
+
+input.active-editor{
+
+display:block;
+
+}
