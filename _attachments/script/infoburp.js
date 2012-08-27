@@ -227,7 +227,7 @@ function tick_fu() {
 
 
     vis.selectAll("circle.node")
-	.attr("class",function (d){ if (d.selected){
+	.attr("class",function (d){ if (d.selected || !d.showHtml){
 					return "node selected_node";
 				    }
 				    else{
@@ -440,6 +440,7 @@ function restart() {
 	.attr("class","container");
 
 
+
     container_html.append("xhtml:div")
 	.attr("class","nodehtml blockdragging")
 	.style("height",FOREIGHN_OBJECT_SIDE)
@@ -458,8 +459,13 @@ function restart() {
 	      })
         .on("click",function(d){d.showHtml=false; restart();});
 
+    container_html
+        .style("opacity",0)
+	.transition()
+	.duration(NODE_APPEARANCE_DURATION)
+	.style("opacity",1);
 
-
+    //TODO Write more specific selector
     vis.selectAll("div.container").selectAll("input").remove();
 
 
