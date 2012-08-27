@@ -245,6 +245,14 @@ function tick_fu() {
 	.style("height",FOREIGHN_OBJECT_SIDE)
         .style("width",FOREIGHN_OBJECT_SIDE)
 	.attr("value",function(d){return d.nodehtml;})
+	.style("display",function(d){
+		   if (!d.showHtml){
+		       return "block";
+		   }
+		   else{
+		       return "none";
+		   }
+	       })
 	.on("blur", function(d) {
 		
 		node_edit_end_handle(d);
