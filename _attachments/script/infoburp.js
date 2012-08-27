@@ -70,13 +70,10 @@ $.getScript("script/graph-controller.js",function(){
 		// Setting up GraphController to this visualisation
 
 		GraphController=get_graph_controller(vis);
+		
+		restart();
 
 	    });
-
-
-// loading insert_editor function
-
-$.getScript("script/node-editor/node-editor.js",restart);
 
 
 function get_current_active_editor(){
