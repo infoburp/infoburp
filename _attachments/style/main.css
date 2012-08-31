@@ -194,6 +194,21 @@ html, body {
 	background:#424242;
 	z-index:2;
 }
+#_bottombar {
+	width:100%;
+	margin:0px auto;
+	list-style:none inside none;
+	display:table;
+	font-family:arial;
+	font-size:18px;
+	padding:0px 6px;
+}
+#_bottombar >* {
+	display:table-cell;
+	top:21px;
+	padding:4px 0px;
+
+}
 #8-4 {
     width: 28px;
 }
