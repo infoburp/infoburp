@@ -1,3 +1,251 @@
+html, body {
+	width:100%;
+	height:100%;
+	background:black;
+	color:green;
+	margin:0px;
+	padding:0px;
+	cursor:move;
+	color:white;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+
+
+/*..............BAR */
+#bar {
+	width:100%;
+	height:36px;
+	left:0px;
+	top:3px;
+	position:fixed;
+	background:#007b02;
+	z-index:2;
+
+}
+#_bar {
+	width:100%;
+	margin:0px auto;
+	list-style:none inside none;
+	display:table;
+	font-family:arial;
+	font-size:18px;
+	padding:0px 6px;
+}
+#_bar >* {
+	display:table-cell;
+	top:21px;
+	padding:4px 0px;
+
+}
+/*..............BAR */
+#tophighlight {
+	width:100%;
+	height:3px;
+	left:0px;
+	top:39px;
+	position:fixed;
+	background: #005b00;
+	z-index:2;
+}
+#tophighlight2 {
+	width:100%;
+	height:1px;
+	left:0px;
+	top:38px;
+	position:fixed;
+	background: #006e00;
+	z-index:2;
+}
+#tophighlight3 {
+	width:100%;
+	height:3px;
+	left:0px;
+	top:0px;
+	position:fixed;
+	background: #005b00;
+	z-index:2;
+}
+#tophighlight4 {
+	width:100%;
+	height:1px;
+	left:0px;
+	top:3px;
+	position:fixed;
+	background: #006e00;
+	z-index:2;
+}
+
+/*..............LOGO */
+#logo {
+
+	background:url('/img/logo.png');
+	left:6px;
+	top:3px;
+	position:fixed;
+}
+
+}
+#_logo {
+
+	margin-left:-52px;
+
+
+}
+/*..............WHUFFIE */
+#whuffie {
+}
+#_whuffie {
+}
+/*..............BAR SPACING */
+#empty {
+	width:0px;
+}
+/*..............SEARCH */
+#search {
+    
+}
+#_search {
+	font-size:18px;
+	font-family: "URW Gothic L",verdana;
+	vertical-align:middle;
+	border-radius:3px;
+	background:black;
+	border:3px solid #005b00;
+	box-shadow: 0px 0px 0px 1px #006e00;
+	color:#ffffff;
+	padding:0px 2px;
+	width:180px;
+	height:28px;
+	left:190px;
+	top:7px;
+	position:fixed;
+	font-weight:bold;
+}
+#_search:focus {
+	border:3px solid #c73;
+}
+/*..............SIGNIN */
+#signin {
+    width: 87px;
+}
+#signin img{
+    position: absolute;
+    right:117px;
+    top:4px;
+    z-index: 1;
+}
+
+
+#twitter {
+    width: 28px;
+}
+#twitter img{
+    position: absolute;
+    right:5px;
+    top:6px;
+    z-index: 1;
+}
+
+#google {
+    width: 28px;
+}
+#google img{
+    position: absolute;
+    right:61px;
+    top:6px;
+    z-index: 1;
+}
+#facebook {
+    width: 28px;
+}
+#facebook img{
+    position: absolute;
+    right:33px;
+    top:6px;
+    z-index: 1;
+}
+#yahoo {
+    width: 28px;
+}
+#yahoo img{
+    position: absolute;
+    right:89px;
+    top:6px;
+    z-index: 1;
+}
+
+#logoIB {
+    width: 175px;
+}
+
+/*..............BAR */
+#bottombar {
+	width:100%;
+	height:39px;
+	left:0px;
+	bottom:3px;
+	position:fixed;
+	background:#424242;
+	z-index:2;
+}
+/*..............BAR */
+#bottomhighlight {
+	width:100%;
+	height:3px;
+	left:0px;
+	bottom:41px;
+	position:fixed;
+	background:#0b0b0b;
+	z-index:2;
+}
+#bottomhighlight2 {
+	width:100%;
+	height:1px;
+	left:0px;
+	bottom:44px;
+	position:fixed;
+	background:#040404;
+	z-index:2;
+}
+#bottomhighlight3 {
+	width:100%;
+	height:3px;
+	left:0px;
+	bottom:1px;
+	position:fixed;
+	background:#646464;
+	z-index:2;
+}
+#bottomhighlight4 {
+	width:100%;
+	height:1px;
+	left:0px;
+	bottom:0px;
+	position:fixed;
+	background:#aaaaaa;
+	z-index:2;
+}
+
+
+
+/*..............INFOBURP */
+#searchbox {
+	width:160px;
+	border:solid 3px;
+	padding:5px;
+	background:black;
+	color:#174917;
+	margin-left:700px;
+	margin-right:20px;
+	margin-top:10px;
+	vertical-align:middle
+}
 
 circle.node {
   stroke: #007b02;
@@ -30,7 +278,7 @@ div.nodehtml{
 
 text-align:center;
 vertical-align:middle;
-
+font-family:'URW Gothic L',verdana;
 }
 
 circle.temporal_node{
