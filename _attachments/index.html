@@ -79,7 +79,17 @@
                 <!--burps -->
 		</div>
 	
-		<script>$('.textarea').wysihtml5();</script>
+		<script type="text/javascript">$(document).ready(function () {
+   $('.someLink').live('click', function () {
+     $('#textarea').wysihtml5();
+     var wysihtml5Editor = $("#textarea").data("wysihtml5").editor;
+     console.log('wysihtml5Editor: '+wysihtml5Editor);
+     // The following is important since wysihtml5 is initialized asynchronously
+     wysihtml5Editor.observe("load", function() {
+       wysihtml5Editor.composer.commands.exec("bold");
+     });
+   });
+});</script>
                 </div>		
 		<!-- bottom bar-->
 		<div id="bottombar"><div id="_bottombar">
