@@ -3,10 +3,10 @@ COUCHDB=false;
 DEBUG_DATASET={
     nodes:[
     	{
-	    x:0,
-	    y:0,
+	    x:-70,
+	    y:-70,
 
-	    nodehtml:"Second node.",
+	    nodehtml:"infoburp.com",
 	    showEditor:false,
 	    showHtml:"block"
 
