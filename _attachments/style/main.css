@@ -1,74 +1,51 @@
-/* add styles here */
 
-body {
-  font:1em Helvetica, sans-serif;
+circle.node {
+  stroke: #007b02;
+  stroke-width: 8.4px;
 }
 
-h1 {
-  margin-top:0;
+circle.unselected_node{
+  fill:black;
+  stroke: #007b02;
 }
 
-#account {
-  float:right;
+circle.selected_node {
+    fill:black;
+     stroke: #ff7e00;
 }
 
-#profile {
-  border:4px solid #edd;
-  background:#fee;
-  padding:8px;
-  margin-bottom:8px;
+
+line.link {
+  stroke: #007b02;
+  stroke-opacity: 1;
+  stroke-width: 8.4px;
+}
+line.temporal_link {
+  stroke: #ff7e00;
+  stroke-opacity: 1;
+  stroke-width: 8.4px;
 }
 
-#content {
-  border:4px solid #dde;
-  background:#eef;
-  padding:8px;
-  width:60%;
-  float:left;
+div.nodehtml{
+
+text-align:center;
+vertical-align:middle;
+
 }
 
-#sidebar {
-  border:4px solid #dfd;
-  padding:8px;
-  float:right;
-  width:30%;
+circle.temporal_node{
+
+fill: #ff7e00;
 }
 
-#items li {
-  border:4px solid #f5f5ff;
-  background:#fff;
-  padding:8px;
-  margin:4px 0;
+input.non-active-editor{
+
+display:none;
+
 }
 
-form {
-  padding:4px;
-  margin:6px;
-  background-color:#ddd;  
-}
+input.active-editor{
 
-div.avatar {
-  padding:2px;
-  padding-bottom:0;
-  margin-right:4px;
-  float:left;
-  font-size:0.78em;
-  width : 60px;
-  height : 60px;
-  text-align: center;
-}
+display:block;
 
-div.avatar .name {
-  padding-top:2px;
-}
-
-div.avatar img {
-  margin:0 auto;
-  padding:0;
-  width : 40px;
-  height : 40px;
-}
-
-ul {
-  list-style: none;
 }
