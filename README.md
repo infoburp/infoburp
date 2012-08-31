@@ -16,14 +16,17 @@ Start infoburp, for new developers (initially not connected to couchdb for simpl
 
 Prerequesites -
 
-git
+git,
 python
 
 To set up a simple HTTP server on your computer, allowing you to develop infoburp frontend code locally, first install the prerequesites, then issue the following commands:
 
 cd ~/
+
 git clone https://github.com/infoburp/infoburp.git
+
 cd infoburp/_attachments
+
 python -m SimpleHTTPServer
 
 Then browse to :
