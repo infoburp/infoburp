@@ -205,7 +205,7 @@ html, body {
 }
 #_bottombar >* {
 	display:table-cell;
-	top:21px;
+	bottom:3px;
 	padding:4px 0px;
 
 }
