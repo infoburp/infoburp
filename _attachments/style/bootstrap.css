@@ -357,11 +357,12 @@ a:hover {
 }
 
 .row-fluid [class*="span"]:first-child {
-  margin-left: 0;border-right: 3px solid #007b00;
+  margin-left: 0;border-right: 4px solid #005b00;
   
 }
+
 .row-fluid [class*="span"]:last-child {
-  margin-left: 0;border-left: 3px solid #194593; 
+  margin-left: 0;border-left: 4px solid #194593; 
   
 }
 
