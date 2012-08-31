@@ -218,6 +218,12 @@ a:hover {
   float: left;
   margin-left: 20px;
 }
+.row > [class*="span"]:first-child {
+    border-left: 3px solid #007b00;
+}
+.row > [class*="span"]:last-child {
+    border-right: 3px solid #194593;
+}
 
 .container,
 .navbar-static-top .container,
