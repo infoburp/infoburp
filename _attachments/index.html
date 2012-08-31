@@ -15,8 +15,10 @@
 		<!-- css stylesheet -->	
 		<!-- main stylesheet -->		
 	        <link type="text/css" rel="stylesheet" href="style/main.css"/>
-		<!-- prototype stylesheet -->
+		<!-- bootstrap stylesheet -->
 		<link href="style/bootstrap.css" rel="stylesheet">
+		<!-- bootstrap-wysihtml5 stylesheet -->
+		<link href="style/bootstrap-wysihtml5.css" rel="stylesheet">
 		<!-- top bar -->
  		<div id="bar">
 		<ul id="_bar">
@@ -74,7 +76,9 @@
                 <div class="span6">
                 <!--burps -->
 		</div>
-		$('.textarea').wysihtml5();
+		<!-- wysihtml5 -->
+		<script type="text/javascript" src="script/bootstrap-wysihtml5.js"></script>
+		<script>$('.textarea').wysihtml5();</script>
                 </div>		
 		<!-- bottom bar-->
 		<div id="bottombar"><div id="_bottombar"></div></div>
