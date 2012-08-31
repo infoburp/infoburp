@@ -25,6 +25,14 @@ UNUSED_LINK_PULL_SIZE=100; // This is workaround for z order of links. This shou
 dragged_node_number=null;
 dragged_link_number=null;
 
+var burp_data=[{
+    original_data:{
+	showHtml:true,
+	nodehtml:"Hello,world"
+    }
+}];
+
+
 
 var fill = d3.scale.category20();
 
@@ -41,7 +49,9 @@ else{
     global_data.links = DEBUG_DATASET.links;
 }
 
-var vis = d3.select("#chart").append("svg")
+var vis = d3.select("#graph").append("svg")
+    .attr("width", "100%")
+    .attr("height", "100%")
     .attr("pointer-events", "all")
     .append('svg:g')
     .call(d3.behavior
@@ -242,11 +252,9 @@ function tick_fu() {
 
     vis.selectAll("input")
 	.attr("class","node-editor")
-	.style("height",FOREIGHN_OBJECT_SIDE)
-        .style("width",FOREIGHN_OBJECT_SIDE)
-	.attr("value",function(d){return d.nodehtml;})
+	.attr("value",function(d){return d.original_data.nodehtml;})
 	.style("display",function(d){
-		   if (!d.showHtml){
+		   if (!d.original_data.showHtml){
 		       return "block";
 		   }
 		   else{
@@ -255,7 +263,7 @@ function tick_fu() {
 	       })
 	.on("blur", function(d) {
 		
-		node_edit_end_handle(d);
+		node_edit_end_handle(d.original_data);
 
            })
 	.on("keypress", function(d) {
@@ -268,7 +276,7 @@ function tick_fu() {
 		       e.stopPropagation();
                    e.preventDefault();
 		   
-		   node_edit_end_handle(d);		   
+		   node_edit_end_handle(d.original_data);		   
 
 	       }
            });
@@ -377,7 +385,7 @@ function restart() {
 			 });
 	
     }
-    
+  
     vis.selectAll("line.unused_link")
 	.data(empty_array)
 	.enter()
@@ -436,15 +444,52 @@ function restart() {
     nodeSelection.exit().remove();
 
 
-    container_html=new_nodes.append("xhtml:div")	
+
+    var burp_group=d3.select("#burp").append("svg").append("svg:g").selectAll("g.burp")
+	.data(burp_data);
+
+    var burpEnter = burp_group.enter().append("svg:g")
+      .attr("class", "burp");
+
+    
+    
+
+
+    var rects=burpEnter
+	.append("g:rect")
+	.style("stroke","blue")
+    	.attr("x",600)
+	.attr("y",0)
+	.attr("height",FOREIGHN_OBJECT_SIDE)
+	.attr("width",FOREIGHN_OBJECT_SIDE);
+
+    var container_foreign=burpEnter
+	.append("foreignObject")
+	.attr("class","foreign")
+	.style("overflow","visible")
+	.attr("x",600)
+	.attr("y",0)
+	.attr("height",FOREIGHN_OBJECT_SIDE)
+	.attr("width",FOREIGHN_OBJECT_SIDE);
+
+    var container_html=container_foreign
+	.append("xhtml:div")
+	.style("overflow","visible")
 	.attr("class","container");
 
 
+    burp_group.append("svg:line")
+      .style("stroke","green")
+      .style("stroke-width",16)
+      .attr("x1",0)
+      .attr("x2",100)
+      .attr("y1",0)
+      .attr("y2",100);
 
-    container_html.append("xhtml:div")
+
+
+    var nodehtmls=new_nodes.append("xhtml:div")
 	.attr("class","nodehtml blockdragging")
-	.style("height",FOREIGHN_OBJECT_SIDE)
-	.style("width",FOREIGHN_OBJECT_SIDE)
         .style("display",function(d){
 		   if ( d.showHtml){
 		       return "block";
@@ -459,7 +504,7 @@ function restart() {
 	      })
         .on("click",function(d){d.showHtml=false; restart();});
 
-    container_html
+    nodehtmls
         .style("opacity",0)
 	.transition()
 	.duration(NODE_APPEARANCE_DURATION)
@@ -472,15 +517,13 @@ function restart() {
     vis.selectAll("div.container")
 	.insert("xhtml:input")
 	.attr("class","node-editor")
-	.style("height",FOREIGHN_OBJECT_SIDE)
-        .style("width",FOREIGHN_OBJECT_SIDE)
-	.attr("value",function(d){return d.nodehtml;})
+	.attr("value",function(d){console.log("data",d); return d.original_data.nodehtml;})
 	.on("blur", function(d) {
 
-		node_edit_end_handle(d);
+		node_edit_end_handle(d.original_data);
 	       
            })
-	.on("keypress", function(d) {
+	.on("keypress", function(d) { 
 	       
                var e = d3.event;
                if (e.keyCode == 13)
@@ -490,7 +533,7 @@ function restart() {
 		       e.stopPropagation();
                    e.preventDefault();
 		   
-		   node_edit_end_handle(d);
+		   node_edit_end_handle(d.original_data);
 
 		   
 	       }
