@@ -12,19 +12,25 @@ This gives a very simple end solution, having only 3 main components, d3.js on t
 
 The interface is designed using K.I.S.S principles and the unix philosophy, with the intention of producing an end product that is both easy to use, and a sturdy piece of software.
 
+Start infoburp, for new developers (initially not connected to couchdb for simplicity)
+
+Prerequesites -
+
+git
+python
+
+To set up a simple HTTP server on your computer, allowing you to develop infoburp frontend code locally, first install the prerequesites, then issue the following commands:
+
+cd ~/
+git clone https://github.com/infoburp/infoburp.git
+cd infoburp/_attachments
+python -m SimpleHTTPServer
+
+Then browse to :
+
+http://localhost:8000
+
 infoburp is free software, and is licensed under the GNU GPL v3 license, because all software should be free.
 
-Clone with git:
 
-    git clone git://github.com/couchapp/example.git
-    cd example
-
-Install with 
-    
-    couchapp push . http://localhost:5984/example
-
-or (if you have security turned on)
-
-    couchapp push . http://adminname:adminpass@localhost:5984/example
-  
 
