@@ -511,10 +511,10 @@ function restart() {
 	.style("opacity",1);
 
     //TODO Write more specific selector
-    vis.selectAll("div.container").selectAll("input").remove();
+    //vis.selectAll("div.container").selectAll("input").remove();
 
 
-    vis.selectAll("div.container")
+    d3.select("#burp")
 	.insert("xhtml:input")
 	.attr("class","node-editor")
 	.attr("value",function(d){console.log("data",d); return d.original_data.nodehtml;})
@@ -538,10 +538,6 @@ function restart() {
 		   
 	       }
            });
-
-
-
-
 }
 
 
