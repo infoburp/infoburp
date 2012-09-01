@@ -214,7 +214,7 @@ html, body {
 }
 #leftbrain img{
     position: absolute;
-    right:5px;
+    right:117px;
     bottom:6px;
     z-index: 1;
 }
@@ -223,7 +223,7 @@ html, body {
 }
 #rightbrain img{
     position: absolute;
-    right:5px;
+    right:89px;
     bottom:6px;
     z-index: 1;
 }
