@@ -4,8 +4,9 @@ GRAVITY=0.0001;
 
 NEW_NODE_TEMPLATE=function(node_html){
     return {
-	nodehtml:node_html, 
+	nodehtml:node_html,
 	showHtml:true,
+	editorActive:false,
 	selected:false};}; // Making just {} makes awesome bug.
 
 RADIUS_OF_LINKING=100; // Defines distance 
@@ -72,8 +73,23 @@ var force = d3.layout.force()
     .links(global_data.links);
 
 
+var BurpController=null;
+
+$.getScript("script/burp.js",function(){
+
+		// Setting up GraphController to this visualisation
+
+		BurpController=getBurpController(document.getElementById("burp-edit"));
+		
+	    });
+
+
+
 var GraphController=null;
 // loading GraphController generator
+
+
+
 
 $.getScript("script/graph-controller.js",function(){
 
@@ -86,37 +102,8 @@ $.getScript("script/graph-controller.js",function(){
 	    });
 
 
-function get_current_active_editor(){
-	return vis.selectAll("input.node-editor")
-	.filter(function(d){
-		    return !d.showHtml;
-		}).node();		
-    }
-
-function get_current_active_editor_value(){
-    
-    var current_input=get_current_active_editor();
-
-    if (current_input === null){
-	return null;}
-    else{
-    
-    return get_current_active_editor().value;}
-
-}
 
 
-function node_edit_end_handle(d){
-    
-    var txt = get_current_active_editor_value();                                   
-    
-    if (txt){      
-
-	d.nodehtml = txt;
-    }
-    
-    d.showHtml = true;
-}
 
 function get_selected_nodes(){
 
@@ -246,48 +233,6 @@ function tick_fu() {
 				    }
 				    
 				  });
-
-
-
-
-    vis.selectAll("input")
-	.attr("class","node-editor")
-	.attr("value",function(d){return d.original_data.nodehtml;})
-	.style("display",function(d){
-		   if (!d.original_data.showHtml){
-		       return "block";
-		   }
-		   else{
-		       return "none";
-		   }
-	       })
-	.on("blur", function(d) {
-		
-		node_edit_end_handle(d.original_data);
-
-           })
-	.on("keypress", function(d) {
-	       
-               var e = d3.event;
-               if (e.keyCode == 13)
-	       {
-		   
-                   if (e.stopPropagation)
-		       e.stopPropagation();
-                   e.preventDefault();
-		   
-		   node_edit_end_handle(d.original_data);		   
-
-	       }
-           });
-
-
-    var selected_input = get_current_active_editor();
-
-    if (selected_input===null){}
-        else{
-	    selected_input.focus();
-	}
 
 };
 
@@ -445,49 +390,6 @@ function restart() {
 
 
 
-    var burp_group=d3.select("#burp").append("svg").append("svg:g").selectAll("g.burp")
-	.data(burp_data);
-
-    var burpEnter = burp_group.enter().append("svg:g")
-      .attr("class", "burp");
-
-    
-    
-
-
-    var rects=burpEnter
-	.append("g:rect")
-	.style("stroke","blue")
-    	.attr("x",600)
-	.attr("y",0)
-	.attr("height",FOREIGHN_OBJECT_SIDE)
-	.attr("width",FOREIGHN_OBJECT_SIDE);
-
-    var container_foreign=burpEnter
-	.append("foreignObject")
-	.attr("class","foreign")
-	.style("overflow","visible")
-	.attr("x",600)
-	.attr("y",0)
-	.attr("height",FOREIGHN_OBJECT_SIDE)
-	.attr("width",FOREIGHN_OBJECT_SIDE);
-
-    var container_html=container_foreign
-	.append("xhtml:div")
-	.style("overflow","visible")
-	.attr("class","container");
-
-
-    burp_group.append("svg:line")
-      .style("stroke","green")
-      .style("stroke-width",16)
-      .attr("x1",0)
-      .attr("x2",100)
-      .attr("y1",0)
-      .attr("y2",100);
-
-
-
     var nodehtmls=new_nodes.append("xhtml:div")
 	.attr("class","nodehtml blockdragging")
         .style("display",function(d){
@@ -502,7 +404,7 @@ function restart() {
 		  return d.nodehtml;
 		
 	      })
-        .on("click",function(d){d.showHtml=false; restart();});
+        .on("click",function(d){BurpController.start_edit(d);d.editorActive=true;});
 
     nodehtmls
         .style("opacity",0)
@@ -510,34 +412,7 @@ function restart() {
 	.duration(NODE_APPEARANCE_DURATION)
 	.style("opacity",1);
 
-    //TODO Write more specific selector
-    //vis.selectAll("div.container").selectAll("input").remove();
 
-
-    d3.select("#burp")
-	.insert("xhtml:input")
-	.attr("class","node-editor")
-	.attr("value",function(d){console.log("data",d); return d.original_data.nodehtml;})
-	.on("blur", function(d) {
-
-		node_edit_end_handle(d.original_data);
-	       
-           })
-	.on("keypress", function(d) { 
-	       
-               var e = d3.event;
-               if (e.keyCode == 13)
-	       {
-		   
-                   if (e.stopPropagation)
-		       e.stopPropagation();
-                   e.preventDefault();
-		   
-		   node_edit_end_handle(d.original_data);
-
-		   
-	       }
-           });
 }
 
 
