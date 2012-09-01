@@ -209,6 +209,24 @@ html, body {
 	padding:4px 0px;
 
 }
+#leftbrain {
+    width: 28px;
+}
+#leftbrain img{
+    position: absolute;
+    right:5px;
+    bottom:6px;
+    z-index: 1;
+}
+#rightbrain {
+    width: 28px;
+}
+#rightbrain img{
+    position: absolute;
+    right:5px;
+    bottom:6px;
+    z-index: 1;
+}
 #8-4 {
     width: 28px;
 }
