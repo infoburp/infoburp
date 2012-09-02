@@ -297,7 +297,7 @@ html, body {
 }
 #edit img{
     position: absolute;
-    right:370px;
+    right:398px;
     bottom:8px;
     z-index: 1;
 }
@@ -306,7 +306,7 @@ html, body {
 }
 #run img{
     position: absolute;
-    right:398px;
+    right:370px;
     bottom:8px;
     z-index: 1;
 }
