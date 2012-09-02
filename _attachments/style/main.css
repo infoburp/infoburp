@@ -209,51 +209,7 @@ html, body {
 	padding:4px 0px;
 
 }
-#leftbrain {
-    width: 28px;
-}
-#leftbrain img{
-    position: absolute;
-    right:117px;
-    bottom:6px;
-    z-index: 1;
-}
-#rightbrain {
-    width: 28px;
-}
-#rightbrain img{
-    position: absolute;
-    right:89px;
-    bottom:6px;
-    z-index: 1;
-}
-#84 {
-    width: 28px;
-}
-#84 img{
-    position: absolute;
-    right:5px;
-    bottom:6px;
-    z-index: 1;
-}
-#66 {
-    width: 28px;
-}
-#66 img{
-    position: absolute;
-    right:33px;
-    bottom:6px;
-    z-index: 1;
-}
-#48 {
-    width: 28px;
-}
-#48 img{
-    position: absolute;
-    right:61px;
-    bottom:6px;
-    z-index: 1;
-}
+
 /*..............BAR */
 #bottomhighlight {
 	width:100%;
