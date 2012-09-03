@@ -4,8 +4,9 @@ GRAVITY=0.0001;
 
 NEW_NODE_TEMPLATE=function(node_html){
     return {
-	nodehtml:node_html, 
+	nodehtml:node_html,
 	showHtml:true,
+	editorActive:false,
 	selected:false};}; // Making just {} makes awesome bug.
 
 RADIUS_OF_LINKING=100; // Defines distance 
@@ -25,6 +26,14 @@ UNUSED_LINK_PULL_SIZE=100; // This is workaround for z order of links. This shou
 dragged_node_number=null;
 dragged_link_number=null;
 
+var burp_data=[{
+    original_data:{
+	showHtml:true,
+	nodehtml:"Hello,world"
+    }
+}];
+
+
 
 var fill = d3.scale.category20();
 
@@ -41,7 +50,9 @@ else{
     global_data.links = DEBUG_DATASET.links;
 }
 
-var vis = d3.select("#chart").append("svg")
+var vis = d3.select("#graph").append("svg")
+    .attr("width", "100%")
+    .attr("height", "100%")
     .attr("pointer-events", "all")
     .append('svg:g')
     .call(d3.behavior
@@ -62,8 +73,23 @@ var force = d3.layout.force()
     .links(global_data.links);
 
 
+var BurpController=null;
+
+$.getScript("script/burp.js",function(){
+
+		// Setting up GraphController to this visualisation
+
+		BurpController=getBurpController(document.getElementById("burp-edit"));
+		
+	    });
+
+
+
 var GraphController=null;
 // loading GraphController generator
+
+
+
 
 $.getScript("script/graph-controller.js",function(){
 
@@ -76,37 +102,8 @@ $.getScript("script/graph-controller.js",function(){
 	    });
 
 
-function get_current_active_editor(){
-	return vis.selectAll("input.node-editor")
-	.filter(function(d){
-		    return !d.showHtml;
-		}).node();		
-    }
-
-function get_current_active_editor_value(){
-    
-    var current_input=get_current_active_editor();
-
-    if (current_input === null){
-	return null;}
-    else{
-    
-    return get_current_active_editor().value;}
-
-}
 
 
-function node_edit_end_handle(d){
-    
-    var txt = get_current_active_editor_value();                                   
-    
-    if (txt){      
-
-	d.nodehtml = txt;
-    }
-    
-    d.showHtml = true;
-}
 
 function get_selected_nodes(){
 
@@ -237,50 +234,6 @@ function tick_fu() {
 				    
 				  });
 
-
-
-
-    vis.selectAll("input")
-	.attr("class","node-editor")
-	.style("height",FOREIGHN_OBJECT_SIDE)
-        .style("width",FOREIGHN_OBJECT_SIDE)
-	.attr("value",function(d){return d.nodehtml;})
-	.style("display",function(d){
-		   if (!d.showHtml){
-		       return "block";
-		   }
-		   else{
-		       return "none";
-		   }
-	       })
-	.on("blur", function(d) {
-		
-		node_edit_end_handle(d);
-
-           })
-	.on("keypress", function(d) {
-	       
-               var e = d3.event;
-               if (e.keyCode == 13)
-	       {
-		   
-                   if (e.stopPropagation)
-		       e.stopPropagation();
-                   e.preventDefault();
-		   
-		   node_edit_end_handle(d);		   
-
-	       }
-           });
-
-
-    var selected_input = get_current_active_editor();
-
-    if (selected_input===null){}
-        else{
-	    selected_input.focus();
-	}
-
 };
 
 force.on("tick",tick_fu);
@@ -377,7 +330,7 @@ function restart() {
 			 });
 	
     }
-    
+  
     vis.selectAll("line.unused_link")
 	.data(empty_array)
 	.enter()
@@ -436,15 +389,9 @@ function restart() {
     nodeSelection.exit().remove();
 
 
-    container_html=new_nodes.append("xhtml:div")	
-	.attr("class","container");
 
-
-
-    container_html.append("xhtml:div")
+    var nodehtmls=new_nodes.append("xhtml:div")
 	.attr("class","nodehtml blockdragging")
-	.style("height",FOREIGHN_OBJECT_SIDE)
-	.style("width",FOREIGHN_OBJECT_SIDE)
         .style("display",function(d){
 		   if ( d.showHtml){
 		       return "block";
@@ -457,46 +404,13 @@ function restart() {
 		  return d.nodehtml;
 		
 	      })
-        .on("click",function(d){d.showHtml=false; restart();});
+        .on("click",function(d){BurpController.start_edit(d);d.editorActive=true;});
 
-    container_html
+    nodehtmls
         .style("opacity",0)
 	.transition()
 	.duration(NODE_APPEARANCE_DURATION)
 	.style("opacity",1);
-
-    //TODO Write more specific selector
-    vis.selectAll("div.container").selectAll("input").remove();
-
-
-    vis.selectAll("div.container")
-	.insert("xhtml:input")
-	.attr("class","node-editor")
-	.style("height",FOREIGHN_OBJECT_SIDE)
-        .style("width",FOREIGHN_OBJECT_SIDE)
-	.attr("value",function(d){return d.nodehtml;})
-	.on("blur", function(d) {
-
-		node_edit_end_handle(d);
-	       
-           })
-	.on("keypress", function(d) {
-	       
-               var e = d3.event;
-               if (e.keyCode == 13)
-	       {
-		   
-                   if (e.stopPropagation)
-		       e.stopPropagation();
-                   e.preventDefault();
-		   
-		   node_edit_end_handle(d);
-
-		   
-	       }
-           });
-
-
 
 
 }
