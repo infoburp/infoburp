@@ -157,6 +157,19 @@ function select_nearest_node(source_data,source_event){
 
 }
 
+function link_not_redundant(source_index,target_index){
+
+
+    var test_function=function(d){
+
+	return (d.source.index == source_index)&&(d.target.index == target_index)||(d.target.index == source_index)&&(d.source.index == target_index);
+	
+    };
+    
+    return !((global_data.links.filter(test_function)).length >0);
+
+
+    }
 
 
 function add_new_link(source_data){
@@ -171,7 +184,7 @@ function add_new_link(source_data){
 	
 	target=yellow_nodes[0];	    
 
-	if (source_data.index !== target.index){
+	if ((source_data.index !== target.index) && (link_not_redundant(source_data.index,target.index)) ){
 	    
 		global_data.links.push({source:source_data,target:target});
 		
