@@ -58,9 +58,24 @@ var vis = d3.select("#graph").append("svg")
     .call(d3.behavior
 	  .zoom()
 	  .on("zoom", redraw))
-    .append('svg:g');
+    .append('svg:g')
 
-vis.append("rect").attr("width", "100%").attr("height", "100%");
+;
+
+vis.append("rect").attr("width", "100%").attr("height", "100%").
+    on("click", function (e){
+	    console.log("event",d3.event);
+	   if (!GraphController.blockdragging){
+	       global_data.nodes.forEach(function(d,i){
+					     
+					     d.selected=false;
+					     
+					 }
+					 
+					 
+					);
+	   }
+       });
 
 
 // Standard force layout see https://github.com/mbostock/d3/wiki/Force-Layout for documentation
@@ -300,14 +315,18 @@ function dragend(d, i) {
 	// Refreshing svg after modifying data
 	    restart();
 	
-	force.start();
+	force.start(); 
     }
     else{
 	
 	//Resetting blockdragging state
 	GraphController.blockdragging=false;
+
+	// making one step to color selected node
+	setTimeout(tick_fu,10);
+
     }
- 
+
 
 
 };
