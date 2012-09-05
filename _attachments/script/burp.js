@@ -21,23 +21,26 @@ function getBurpController(input){
 	    }
 	    
 	    d.showHtml = true;
+	    d.selected=false;
 	},
 
 
 	start_edit:function(original_data){
 
 	    
-	    
+	    original_data.selected=true;
 	    
 	    this.burp_data=[{original_data:original_data}];
-	    
+
 	    console.log(this.burp_data);
+	    
+	    var that=this;
 
 	    var input_object_selection= d3.select(input)
 		.data(this.burp_data)
 		.on("blur", function(d) {
 		    
-			BurpController.node_edit_end_handle(d.original_data);
+			that.node_edit_end_handle(d.original_data);
 			
 		    })
 		.on("keypress", function(d) { 
@@ -50,7 +53,7 @@ function getBurpController(input){
 				e.stopPropagation();
 			    e.preventDefault();
 			
-			    console.log("enter",d);
+			  //  console.log("enter",d);
 			    BurpController.node_edit_end_handle(d.original_data);
 			    
 			    
