@@ -64,7 +64,6 @@ var vis = d3.select("#graph").append("svg")
 
 vis.append("rect").attr("width", "100%").attr("height", "100%").
     on("click", function (e){
-	    console.log("event",d3.event);
 	   if (!GraphController.blockdragging){
 	       global_data.nodes.forEach(function(d,i){
 					     
@@ -151,8 +150,14 @@ function select_nearest_node(source_data,source_event){
 	// making nearest node yellow if it insider radius of linking
     if ((nodes_distances[0].distance<RADIUS_OF_LINKING) &&(nodes_distances[0].node.index !== source_data.index)){
 	
-	    nodes_distances[0].node.selected=true;
+	nodes_distances[0].node.selected=true;
+	GraphController.snap=nodes_distances[0].node;
 	}
+    else{
+
+    	GraphController.snap=null;
+
+    }
 
 
 }
