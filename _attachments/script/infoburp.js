@@ -300,6 +300,7 @@ function dragend(d, i) {
 	// Refreshing svg after modifying data
 	    restart();
 	
+	force.start();
     }
     else{
 	
@@ -307,7 +308,7 @@ function dragend(d, i) {
 	GraphController.blockdragging=false;
     }
  
-    force.start();
+
 
 };
 
@@ -404,7 +405,7 @@ function restart() {
 		  return d.nodehtml;
 		
 	      })
-        .on("click",function(d){BurpController.start_edit(d);d.editorActive=true;});
+        .on("click",function(d){BurpController.start_edit(d);d.editorActive=true; d.selected=true;});
 
     nodehtmls
         .style("opacity",0)
