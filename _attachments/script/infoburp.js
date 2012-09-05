@@ -64,11 +64,15 @@ var vis = d3.select("#graph").append("svg")
 
 vis.append("rect").attr("width", "100%").attr("height", "100%").
     on("click", function (e){
+	   console.log(d3.event,GraphController.blockdragging);
 	   if (!GraphController.blockdragging){
 	       global_data.nodes.forEach(function(d,i){
 					     
 					     d.selected=false;
 					     
+					     // Refreshing view
+					     
+					     tick_fu();
 					 }
 					 
 					 
