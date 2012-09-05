@@ -58,9 +58,23 @@ var vis = d3.select("#graph").append("svg")
     .call(d3.behavior
 	  .zoom()
 	  .on("zoom", redraw))
-    .append('svg:g');
+    .append('svg:g')
 
-vis.append("rect").attr("width", "100%").attr("height", "100%");
+;
+
+vis.append("rect").attr("width", "100%").attr("height", "100%").
+    on("click", function (e){
+	   if (!GraphController.blockdragging){
+	       global_data.nodes.forEach(function(d,i){
+					     
+					     d.selected=false;
+					     
+					 }
+					 
+					 
+					);
+	   }
+       });
 
 
 // Standard force layout see https://github.com/mbostock/d3/wiki/Force-Layout for documentation
@@ -136,12 +150,31 @@ function select_nearest_node(source_data,source_event){
 	// making nearest node yellow if it insider radius of linking
     if ((nodes_distances[0].distance<RADIUS_OF_LINKING) &&(nodes_distances[0].node.index !== source_data.index)){
 	
-	    nodes_distances[0].node.selected=true;
+	nodes_distances[0].node.selected=true;
+	GraphController.snap=nodes_distances[0].node;
 	}
+    else{
+
+    	GraphController.snap=null;
+
+    }
 
 
 }
 
+function link_not_redundant(source_index,target_index){
+
+
+    var test_function=function(d){
+
+	return (d.source.index == source_index)&&(d.target.index == target_index)||(d.target.index == source_index)&&(d.source.index == target_index);
+	
+    };
+    
+    return !((global_data.links.filter(test_function)).length >0);
+
+
+    }
 
 
 function add_new_link(source_data){
@@ -156,7 +189,7 @@ function add_new_link(source_data){
 	
 	target=yellow_nodes[0];	    
 
-	if (source_data.index !== target.index){
+	if ((source_data.index !== target.index) && (link_not_redundant(source_data.index,target.index)) ){
 	    
 		global_data.links.push({source:source_data,target:target});
 		
@@ -300,14 +333,19 @@ function dragend(d, i) {
 	// Refreshing svg after modifying data
 	    restart();
 	
+	force.start(); 
     }
     else{
 	
 	//Resetting blockdragging state
 	GraphController.blockdragging=false;
+
+	// making one step to color selected node
+	setTimeout(tick_fu,10);
+
     }
- 
-    force.start();
+
+
 
 };
 
@@ -404,7 +442,7 @@ function restart() {
 		  return d.nodehtml;
 		
 	      })
-        .on("click",function(d){BurpController.start_edit(d);d.editorActive=true;});
+        .on("click",function(d){BurpController.start_edit(d);d.editorActive=true; d.selected=true;});
 
     nodehtmls
         .style("opacity",0)

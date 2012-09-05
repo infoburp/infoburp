@@ -77,6 +77,9 @@ function getBurpController(input){
 
 //	    console.log("inner text",this.input_object.innerText);
 
+	    // TODO Refactor next line
+	    force.start();
+
 	    to_return=this.input_object.value;
 	    this.input_object.value="";
 	    return to_return;

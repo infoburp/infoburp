@@ -6,6 +6,12 @@ function get_graph_controller(vis){
 	
 	svg_vis:vis,
 	
+	snap:{
+	    x:null,
+	    y:null
+	    },
+	
+
 	blockdragging:false,
 	temporal_link_array:[],
 	temporal_node_array:[],
@@ -42,8 +48,9 @@ function get_graph_controller(vis){
 	    // This function adds one circle on x y 
 
 	    this.temporal_node_array.push({
-				     x:x,
-				     y:y
+					      x:x,
+					      y:y,
+					      showCircle:true
 				     });
 
 	    this.refresh_temporal_state();
@@ -73,14 +80,17 @@ function get_graph_controller(vis){
 	    setTimeout(function(){
 			   that.temporal_node_array=[];
 			   that.temporal_link_array=[];
+			   this.snap=null;
 			   that.refresh_temporal_state();
 		       },NODE_APPEARANCE_DURATION);
-
+	    
+	   
 
 	},
 	refresh_temporal_state:function(){
 
 	    // Refreshing view for temporary elements
+	    
 	    
 	    var temporal_node_selection=this.svg_vis.selectAll("circle.temporal_node")
 		.data(this.temporal_node_array);
@@ -92,10 +102,11 @@ function get_graph_controller(vis){
 
 	    temporal_node_selection.exit().remove();
 	    
+	  //  this.temporal_link_array[0].target=this.temporal_node_array[0];
 
 	    var temporal_link_selection=this.svg_vis.selectAll("line.temporal_link")
 		.data(this.temporal_link_array);
-
+	    
 
 	    temporal_link_selection.enter().insert("line","circle.temporal_node")
 		.attr("class","temporal_link")
@@ -128,8 +139,32 @@ function get_graph_controller(vis){
 	    this.temporal_node_array[0].x=x;
 	    this.temporal_node_array[0].y=y;
 	    this.svg_vis.selectAll("circle.temporal_node")
+		.style("opacity",function(d){
+			   if (d.showCircle){
+			       return 1;
+			   }
+			   else
+			       {
+				   return 0;
+			       }
+
+		       })
+
 		.attr("transform", function(d) {return "translate(" + d.x + "," + d.y + ")"; });
 
+
+	    if (this.snap !== null){
+		
+		
+		this.temporal_link_array[0].target=this.snap;
+
+		this.temporal_node_array[0].showCircle=false;
+		
+	    }else{
+
+		this.temporal_link_array[0].target=this.temporal_node_array[0];
+		this.temporal_node_array[0].showCircle=true;		
+	    }
 
 	    this.svg_vis.selectAll("line.temporal_link")
 	    	.attr("x1", function(d) { return d.source.x; })
