@@ -7,8 +7,7 @@ DEBUG_DATASET={
 	    y:200,
 
 	    nodehtml:"infoburp.com",
-	    showEditor:false,
-	    showHtml:"block"
+	    showHtml:true
 
 	}],
     links:[ ]
