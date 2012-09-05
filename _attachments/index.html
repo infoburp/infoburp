@@ -1,147 +1,178 @@
 <!DOCTYPE html!>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="script/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="script/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <!-- favicon -->
+  <link rel="icon" type="image/ico" href="image/favicon.ico"> 
+  <!-- title --> 
+  <title>infoburp.com</title> 
+  <!-- content definition --> 
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/> 
+  <!-- css stylesheets -->	 
+  <!-- main stylesheet -->		 
+  <link type="text/css" rel="stylesheet" href="style/main.css"/> 
+  <!-- bootstrap stylesheet --> 
+  <link href="style/bootstrap.css" rel="stylesheet"> 
+  <!-- bootstrap-wysihtml5 stylesheet --> 
+  <link href="style/bootstrap-wysihtml5.css" rel="stylesheet">  
 
-</head>
-<html>
-	<body>
-		<!-- basics/first impression -->
-		<!-- hide scroll bars -->
-		<body style="overflow:hidden">
-		<!-- background colour -->
-		<body bgcolor="#000000">
-		<!-- favicon -->
-		<link rel="icon" type="image/ico" href="image/favicon.ico">
-		<!-- title -->
-		<title>infoburp.com</title>
-		<!-- content definition -->
-		<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
-		<!-- css stylesheets -->	
-		<!-- main stylesheet -->		
-	        <link type="text/css" rel="stylesheet" href="style/main.css"/>
-		<!-- bootstrap stylesheet -->
-		<link href="style/bootstrap.css" rel="stylesheet">
-		<!-- bootstrap-wysihtml5 stylesheet -->
-		<link href="style/bootstrap-wysihtml5.css" rel="stylesheet"> 
-		<!-- top bar -->
- 		<div id="bar">
-		<ul id="_bar">
-		<!-- infoburp logo -->
-		<li id="logo"><img id="_logo" src="image/logo.png" /></li>
-		<!-- search bar -->
-		<li id="search"><input id="_search" value="alpha" /></li>
-		<!-- signin icon -->
-		<li id="signin"><img id="_signin" src="image/signin.png"/></li>
-		<!-- twitter signin icon -->
-		<li id="twitter"><img id="_twitter" src="image/twitter.png"/></li>
-		<!-- google signin icon -->				
-		<li id="google"><img id="_google" src="image/google.png"/></li>
-		<!-- facebook signin icon -->
-		<li id="facebook"><img id="_facebook" src="image/facebook.png"/></li>
-		<!-- yahoo signin icon -->
-		<li id="yahoo"><img id="_yahoo" src="image/yahoo.png"/></li>
-		</ul>
-		</div>
-		<!-- top highlight-->
-		<div id="tophighlight"><div id="_tophighlight"></div></div>
-		<div id="tophighlight2"><div id="_tophighlight2"></div></div>
-		<div id="tophighlight3"><div id="_tophighlight3"></div></div>
-		<div id="tophighlight4"><div id="_tophighlight4"></div></div>
-		<!-- debugging code -->
-		<script type="text/javascript" src="script/debug.js"></script>
-		<!-- prettify -->
-		<link rel="stylesheet" type="text/css" href="style/prettify.css"></link>
-		<!-- bootstrap -->
-		<script src="script/bootstrap.js"></script>
-		<!-- wysihtml5 -->
-		<script type="text/javascript" src="script/wysihtml5-0.3.0_rc2.js"></script>
-		<!-- bootstrap-wysihtml5 -->
-		<script src="script/bootstrap-wysihtml5.js"></script> 
-		<!-- jquery -->
-		<script type="text/javascript" src="script/jquery.js"></script>
-<!--		<script type="text/javascript" src="script/jquery-1.7.2.js"></script>	-->
-		<!-- raphael -->
-<!--		<script type="text/javascript" src="script/raphael.js"></script> -->
-		<!-- couchdb -->
-		<script type="text/javascript" src="script/couch.js"></script>
-		<!-- pouchdb -->
-<!--		<script type="text/javascript" src="script/pouch.js"></script> -->
-		<!-- oauth -->
-		<script type="text/javascript" src="script/oauth.js"></script>
-		<!-- sh1 -->
-<!--		<script type="text/javascript" src="script/sh1.js"></script> -->
-		<!-- d3 -->
-		<script type="text/javascript" src="script/d3.v2.js"></script>
-		<!-- basic persistence -->
-		<script type="text/javascript" src="script/persistence/basic_persistence.js"></script>
+  <script type="text/javascript" src="script/debug.js"></script> 
+  <!-- prettify --> 
+  <link rel="stylesheet" type="text/css" href="style/prettify.css"></link> 
+  <!-- bootstrap --> 
+  <script src="script/bootstrap.js"></script> 
+  <!-- wysihtml5 --> 
+  <script type="text/javascript" src="script/wysihtml5-0.3.0_rc2.js"></script> 
+  <!-- bootstrap-wysihtml5 --> 
+  <script src="script/bootstrap-wysihtml5.js"></script>  
+  <!-- jquery --> 
+  <script type="text/javascript" src="script/jquery.js"></script> 
+  <!--		<script type="text/javascript" src="script/jquery-1.7.2.js"></script>	 -->
+  <!-- raphael --> 
+  <!--		<script type="text/javascript" src="script/raphael.js"></script>  -->
+  <!-- couchdb --> 
+  <script type="text/javascript" src="script/couch.js"></script> 
+  <!-- pouchdb --> 
+  <!--		<script type="text/javascript" src="script/pouch.js"></script>  -->
+  <!-- oauth --> 
+  <script type="text/javascript" src="script/oauth.js"></script> 
+  <!-- sh1 --> 
+  <!--		<script type="text/javascript" src="script/sh1.js"></script>  -->
+  <!-- d3 --> 
+  <script type="text/javascript" src="script/d3.v2.js"></script> 
+  <!-- basic persistence --> 
+  <script type="text/javascript" src="script/persistence/basic_persistence.js"></script> 
+</head> 
 
-		<!-- infoburp -->
-		<div class="span6" id="graph"></div>
-   		<script type="text/javascript" src="script/infoburp.js"></script>	
-                </div>
-                <div class="span6">
-                <!--burps -->
-		
-		<script type="text/javascript" src="script/editor.js"></script>
-		<div class="container">
-		<div class="hero-unit">
+<html> 
+  <body style="overflow:hidden" bgcolor="#000000"> 
+    <!-- top bar --> 
+    <div id="bar"> 
+      <ul id="_bar"> 
+	<!-- infoburp logo --> 
+	<li id="logo"><img id="_logo" src="image/logo.png" /></li> 
+	<!-- search bar --> 
+	<li id="search"><input id="_search" value="alpha" /></li> 
+	<!-- signin icon --> 
+	<li id="signin"><img id="_signin" src="image/signin.png"/></li> 
+	<!-- twitter signin icon --> 
+	<li id="twitter"><img id="_twitter" src="image/twitter.png"/></li> 
+	<!-- google signin icon -->				 
+	<li id="google"><img id="_google" src="image/google.png"/></li> 
+	<!-- facebook signin icon --> 
+	<li id="facebook"><img id="_facebook" src="image/facebook.png"/></li> 
+	<!-- yahoo signin icon --> 
+	<li id="yahoo"><img id="_yahoo" src="image/yahoo.png"/></li> 
+      </ul> 
+    </div>
+ 
+    <!-- top highlight--> 
+    <div id="tophighlight">
+      <div id="_tophighlight">
+      </div>
+    </div> 
+
+    <div id="tophighlight2">
+      <div id="_tophighlight2">
+      </div>
+    </div> 
+
+    <div id="tophighlight3">
+      <div id="_tophighlight3">
+      </div>
+    </div> 
+
+    <div id="tophighlight4">
+      <div id="_tophighlight4">
+      </div>
+    </div> 
+    <!-- debugging code --> 
+    
+    <!-- infoburp --> 
+    <div class="row-fluid">
+      <div class="span6" id="graph">
+      </div> 
+      <script type="text/javascript" src="script/infoburp.js"></script>	 
+      
+      <div class="span6"> 
+	<!--burps --> 
+      
+	<script type="text/javascript" src="script/editor.js"></script> 
+	<div class="container"> 
+	  <div class="hero-unit"> 
+	    <textarea id="burp-edit" class="textarea" placeholder="Enter text ..." style="width: 98%; height: 98%">
+	    </textarea> 
+	  </div> 
+	</div> 
+      </div>		 
+    </div>
+    <!-- bottom bar--> 
+    <div id="bottombar">
+      <div id="_bottombar"> 
+	<!-- leftbrain view icon --> 
+	<li id="leftbrain"><img id="_leftbrain" src="image/leftbrain.png" /></li> 
+	<!-- rightbrain view icon --> 
+	<li id="rightbrain"><img id="_rightbrain" src="image/rightbrain.png" /></li> 
+	<!-- 8:4 view icon --> 
+	<li id="viewone"><img id="_viewone" src="image/8-4.png" /></li> 
+	<!-- 6:6 view icon --> 
+	<li id="viewtwo"><img id="_viewtwo" src="image/6-6.png" /></li> 
+	<!-- 4:8 view icon --> 
+	<li id="viewthree"><img id="_viewthree" src="image/4-8.png" /></li> 
+	<!-- edit view icon --> 
+	<li id="edit"><img id="_edit" src="image/edit.png" /></li> 
+	<!-- run view icon --> 
+	<li id="run"><img id="_run" src="image/run.png" /></li> 
+		 
+	<!-- normal text icon --> 
+	<li id="normaltext"><img id="_normaltext" src="image/normaltext.png" /></li> 
+	<!-- h1 text icon --> 
+	<li id="headerone"><img id="_headerone" src="image/headerone.png" /></li> 
+	<!-- h2 text icon --> 
+	<li id="headertwo"><img id="_headertwo" src="image/headertwo.png" /></li> 
+	<!-- bold text icon --> 
+	<li id="bold"><img id="_bold" src="image/bold.png" /></li> 
+	<!-- italic text icon --> 
+	<li id="italic"><img id="_italic" src="image/italic.png" /></li> 
+	<!-- underline text icon --> 
+	<li id="underline"><img id="_underline" src="image/underline.png" /></li> 
+	<!-- unordered list text icon --> 
+	<li id="unorderedlist"><img id="_unorderedlist" src="image/unorderedlist.png" /></li> 
+	<!-- ordered list text icon --> 
+	<li id="orderedlist"><img id="_orderedlist" src="image/orderedlist.png" /></li> 
+	<!-- outdent text icon --> 
+	<li id="outdent"><img id="_outdent" src="image/outdent.png" /></li> 
+	<!-- indent text icon --> 
+	<li id="indent"><img id="_indent" src="image/indent.png" /></li> 
+	<!-- link text icon --> 
+	<li id="link"><img id="_link" src="image/link.png" /></li> 
+	<!-- insert image text icon --> 
+	<li id="insertimage"><img id="_insertimage" src="image/insertimage.png" /></li> 
 	
-	
-		<textarea id="burp-edit" class="textarea" placeholder="Enter text ..." style="width: 98%; height: 98%"></textarea>
-		</div>
-		</div>
-	        </div>		
-		<!-- bottom bar-->
-		<div id="bottombar"><div id="_bottombar">
-		<!-- leftbrain view icon -->
-		<li id="leftbrain"><img id="_leftbrain" src="image/leftbrain.png" /></li>
-		<!-- rightbrain view icon -->
-		<li id="rightbrain"><img id="_rightbrain" src="image/rightbrain.png" /></li>
-		<!-- 8:4 view icon -->
-		<li id="viewone"><img id="_viewone" src="image/8-4.png" /></li>
-		<!-- 6:6 view icon -->
-		<li id="viewtwo"><img id="_viewtwo" src="image/6-6.png" /></li>
-		<!-- 4:8 view icon -->
-		<li id="viewthree"><img id="_viewthree" src="image/4-8.png" /></li>
-		<!-- edit view icon -->
-		<li id="edit"><img id="_edit" src="image/edit.png" /></li>
-		<!-- run view icon -->
-		<li id="run"><img id="_run" src="image/run.png" /></li>
+      </div>
+    </div>
+      <div id="infoburp"> 
+	<div class="html">
+	</div> 
+      </div> 
+    <!-- bottom highlight-->			 
+    <div id="bottomhighlight">
+      <div id="_bottomhighlight">
+      </div>
+    </div> 
+    <div id="bottomhighlight2">
+      <div id="_bottomhighlight2">
+      </div>
+    </div> 
 		
-		<!-- normal text icon -->
-		<li id="normaltext"><img id="_normaltext" src="image/normaltext.png" /></li>
-		<!-- h1 text icon -->
-		<li id="headerone"><img id="_headerone" src="image/headerone.png" /></li>
-		<!-- h2 text icon -->
-		<li id="headertwo"><img id="_headertwo" src="image/headertwo.png" /></li>
-		<!-- bold text icon -->
-		<li id="bold"><img id="_bold" src="image/bold.png" /></li>
-		<!-- italic text icon -->
-		<li id="italic"><img id="_italic" src="image/italic.png" /></li>
-		<!-- underline text icon -->
-		<li id="underline"><img id="_underline" src="image/underline.png" /></li>
-		<!-- unordered list text icon -->
-		<li id="unorderedlist"><img id="_unorderedlist" src="image/unorderedlist.png" /></li>
-		<!-- ordered list text icon -->
-		<li id="orderedlist"><img id="_orderedlist" src="image/orderedlist.png" /></li>
-		<!-- outdent text icon -->
-		<li id="outdent"><img id="_outdent" src="image/outdent.png" /></li>
-		<!-- indent text icon -->
-		<li id="indent"><img id="_indent" src="image/indent.png" /></li>
-		<!-- link text icon -->
-		<li id="link"><img id="_link" src="image/link.png" /></li>
-		<!-- insert image text icon -->
-		<li id="insertimage"><img id="_insertimage" src="image/insertimage.png" /></li>
-		
-		</div></div>
-		<div id="infoburp">
-  		<div class="html"></div>
-		</div>
-		<!-- bottom highlight-->			
-		<div id="bottomhighlight"><div id="_bottomhighlight"></div></div>
-		<div id="bottomhighlight2"><div id="_bottomhighlight2"></div></div>
-		<div id="bottomhighlight3"><div id="_bottomhighlight3"></div></div>
-		<div id="bottomhighlight4"><div id="_bottomhighlight4"></div></div>
-	</body>
-</html>
+    <div id="bottomhighlight3">
+      <div id="_bottomhighlight3">
+      </div>
+    </div> 
+    
+    <div id="bottomhighlight4">
+      <div id="_bottomhighlight4">
+      </div>
+    </div> 
+  </body> 
+</html> 

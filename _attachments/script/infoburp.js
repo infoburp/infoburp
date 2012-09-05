@@ -177,7 +177,7 @@ function add_new_node(source_data,X,Y){
 	
 	var new_node=new NEW_NODE_TEMPLATE(source_data.nodehtml);
 	
-	new_node.x=X; // We move new node sligthly
+	new_node.x=X; 
 	new_node.y=Y;
 	global_data.nodes.push(new_node);
 	global_data.links.push({source:source_data,target:new_node});
