@@ -28,7 +28,12 @@ function getBurpController(input){
 	start_edit:function(original_data){
 
 	    
+	    // TODO remove this fast hack
+
+	    global_data.nodes.forEach(function(d){d.selected=false;});
+	    
 	    original_data.selected=true;
+	    
 	    
 	    this.burp_data=[{original_data:original_data}];
 
