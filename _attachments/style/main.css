@@ -136,7 +136,7 @@ html, body {
 }
 #signin img{
     position: absolute;
-    right:117px;
+    right:61px;
     top:4px;
     z-index: 1;
 }
@@ -152,15 +152,7 @@ html, body {
     z-index: 1;
 }
 
-#google {
-    width: 28px;
-}
-#google img{
-    position: absolute;
-    right:61px;
-    top:6px;
-    z-index: 1;
-}
+
 #facebook {
     width: 28px;
 }
@@ -170,15 +162,7 @@ html, body {
     top:6px;
     z-index: 1;
 }
-#yahoo {
-    width: 28px;
-}
-#yahoo img{
-    position: absolute;
-    right:89px;
-    top:6px;
-    z-index: 1;
-}
+
 
 #logoIB {
     width: 175px;
