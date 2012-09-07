@@ -198,7 +198,7 @@ a:hover {
 }
 
 .row {
-  margin-left: -20px;
+  margin-left: 0px;
   *zoom: 1;
 }
 
@@ -357,12 +357,12 @@ a:hover {
 }
 
 .row-fluid [class*="span"]:first-child {
-  margin-left: 0;border-right: 4px solid #005b00;
+  margin-left: 0;border-right: 0px solid #005b00;
   
 }
 
 .row-fluid [class*="span"]:last-child {
-  margin-left: 0;border-left: 4px solid #194593; 
+  margin-left: 0;border-left: 0px solid #194593; 
   
 }
 
@@ -5589,8 +5589,8 @@ a.badge:hover {
 }
 
 .hero-unit {
-  padding: 60px;
-  margin-bottom: 30px;
+  padding: 0px;
+  margin-bottom: 0px;
   background-color: #000000;
   -webkit-border-radius: 6px;
      -moz-border-radius: 6px;
