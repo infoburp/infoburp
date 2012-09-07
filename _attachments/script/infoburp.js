@@ -414,7 +414,7 @@ function restart() {
 	.transition()
 	.duration(NODE_APPEARANCE_DURATION)
 	.attr("r", NODE_RADIUS);
-
+	.on("click",function(d){BurpController.start_edit(d);d.editorActive=true; d.selected=true;
 
 
     nodeEnter.call(node_drag);	
