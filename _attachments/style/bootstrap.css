@@ -5590,7 +5590,7 @@ a.badge:hover {
 
 .hero-unit {
   padding: 0px;
-  margin-bottom: 0px;
+  margin-bottom: 28px;
   background-color: #000000;
   -webkit-border-radius: 6px;
      -moz-border-radius: 6px;
