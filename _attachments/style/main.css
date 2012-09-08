@@ -285,12 +285,12 @@ html, body {
     bottom:8px;
     z-index: 1;
 }
-#run {
+#caution {
     width: 28px;
 }
-#run img{
+#caution img{
     position: absolute;
-    right:370px;
+    left:6px;
     bottom:8px;
     z-index: 1;
 }
