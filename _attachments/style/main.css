@@ -294,6 +294,16 @@ html, body {
     bottom:8px;
     z-index: 1;
 }
+#logintosave {
+    width: 112px;
+}
+#logintosave img{
+    position: absolute;
+    left:34px;
+    bottom:8px;
+    z-index: 1;
+}
+
 /*
 #normaltext {
     width: 28px;
