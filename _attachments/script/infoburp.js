@@ -103,18 +103,18 @@ var BurpController = null;
 $.getScript("script/burp.js",function(){
 
 		// Setting up GraphController to this visualisation
-		BurpController=getBurpController(document.getElementById("burp-edit"));
+		BurpController = getBurpController(document.getElementById("burp-edit"));
 
 	});
 
 
-var GraphController=null;
+var GraphController = null;
 
 // loading GraphController generator
 $.getScript("script/graph-controller.js",function()
 	{
 		// Setting up GraphController to this visualisation
-		GraphController=get_graph_controller(vis);
+		GraphController = get_graph_controller(vis);
 		restart();
 	});
 
@@ -140,14 +140,16 @@ function select_nearest_node(source_data,source_event){
 			     );
 
     // making nearest node yellow if it insider radius of linking
-    
-    var node_is_near=(nodes_distances[0].distance<linkingradius);
-    var nodes_are_different=(nodes_distances[0].node.index !== source_data.index);
+ 
+    var nearest_node=nodes_distances[0];
+    var node_is_near=(nearest_node.distance<linkingradius);
+    var nodes_are_different=(nearest_node.node.index !== source_data.index);
 
     if (node_is_near && nodes_are_different ){
 
-	nodes_distances[0].node.selected=true;
-	GraphController.snap=nodes_distances[0].node;
+	nearest_node.node.selected = true;
+ 
+ 	GraphController.snap=nearest_node.node;
 
     }
     else{
@@ -209,7 +211,7 @@ function add_new_node(source_data,X,Y){
 
     if (GraphController.distance_to_temporal_node(source_data.x,source_data.y)>noderadius){
 
-	var new_node=new nodetemplate(source_data.nodehtml);
+	var new_node = new nodetemplate(source_data.nodehtml);
 
 	new_node.x = X; 
 	new_node.y = Y;
@@ -356,7 +358,8 @@ function restart(){
      See for example https://github.com/mbostock/d3/issues/252
      So here we creating pool of unused lines with two classe that created before any circles
      */
-    var empty_array=[];
+
+    var empty_array = [];
     
 
     for (var i=0;i<unusedlinks;i++){
@@ -384,7 +387,7 @@ function restart(){
 	.attr("y2", function(d) { return d.target.y; });
     
 
-    var nodeSelection=vis.selectAll("g.node")
+    var nodeSelection = vis.selectAll("g.node")
 	.data(global_data.nodes);
     
 
@@ -392,7 +395,7 @@ function restart(){
 	.attr("class", "node");
     
 
-    var circles=nodeEnter.append("svg:circle")
+    var circles = nodeEnter.append("svg:circle")
 	.attr("class",function (d){
 		  if (d.selected){
 		      return "node selected_node";
@@ -409,7 +412,7 @@ function restart(){
 
     nodeEnter.call(node_drag);	
 
-    var new_nodes=nodeEnter.append("foreignObject")
+    var new_nodes = nodeEnter.append("foreignObject")
 	.attr("class", "node")
 	.attr("height",FOREIGN_OBJECT_SIDE)
 	.attr("width",FOREIGN_OBJECT_SIDE)
@@ -420,7 +423,7 @@ function restart(){
     nodeSelection.exit().remove();
 
 
-    var nodehtmls=new_nodes.append("xhtml:div")
+    var nodehtmls = new_nodes.append("xhtml:div")
 	.attr("class","nodehtml blockdragging")
 	.style("display",function(d){
 		   if ( d.showHtml){
