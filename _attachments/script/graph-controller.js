@@ -228,4 +228,3 @@ function get_graph_controller(vis){
 
     };
 }
-
