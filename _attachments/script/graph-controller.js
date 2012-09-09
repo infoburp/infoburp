@@ -1,3 +1,4 @@
+
 TEMPORARY NODE CIRCLE RADIUS=20;
 function get graph controller(vis)
 	{   
@@ -220,4 +221,3 @@ function get graph controller(vis)
 
     };
 }
-
