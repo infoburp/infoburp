@@ -1,10 +1,10 @@
-var linkstrength=0.1;
-var charge =-2000;
-var gravity=0.0001;
+var linkstrength = 0.1;
+var charge = -2000;
+var gravity = 0.0001;
 var nodetemplate;
 
 
-nodetemplate=function(node_html)
+nodetemplate = function(node_html)
 	{
     		return {
 				nodehtml:node_html,
@@ -15,42 +15,50 @@ nodetemplate=function(node_html)
 	}; // Making just {} makes awesome bug.
 
 
-linkingradius=128; // Defines linking distance 
-NODE_APPEARANCE_DURATION=128; // ms Time for animation of new node appearance
-nodeinitradius=20;    // px Animation starts from that radius to noderadius
-noderadius=64;              // Node radius
-BOTTOM_BUMP_X=noderadius*0.866; //sqrt(3)/2 ~ 0.866
-BOTTOM_BUMP_Y=noderadius/2;
-FOREIGN_OBJECT_SIDE=noderadius*1.4142;
-FOREIGN_OBJECT_SHIFT=-noderadius/1.4142;
-unusedlinks=100; // This is workaround for z order of links. This should be greater than maximum number of links that are displayed.
-dragged_node_number=null;
-dragged_link_number=null;
+linkingradius = 128; // Defines linking distance 
+NODE_APPEARANCE_DURATION = 128; // ms Time for animation of new node appearance
+nodeinitradius = 20;    // px Animation starts from that radius to noderadius
+noderadius = 64;              // Node radius
+BOTTOM_BUMP_X = noderadius*0.866; //sqrt(3)/2 ~ 0.866
+BOTTOM_BUMP_Y = noderadius/2;
+FOREIGN_OBJECT_SIDE = noderadius*1.4142;
+FOREIGN_OBJECT_SHIFT = -noderadius/1.4142;
+unusedlinks = 100; // This is workaround for z order of links. This should be greater than maximum number of links that are displayed.
+dragged_node_number = null;
+dragged_link_number = null;
 
 
-var burp_data=[{
-		original_data:	
-			{
-				showHtml:true,
-				nodehtml:"Hello,world"
-    			}
-	}];
+var burp_data = [{
+		     original_data:{
+			 showHtml:true,
+			 nodehtml:"Hello,world"
+    		     }
+		 }];
+
 var fill = d3.scale.category20();
 
 
-global_data={
-    nodes:[], links:[]
+global_data = {
+
+    nodes:[], 
+    links:[]
+
 };
 
 
 if (COUCHDB){
+
     var previous_graph_state = restore_graph_state();// persistence/basic_persistence.js
+
     global_data.nodes = previous_graph_state.nodes;
     global_data.links = restore_links(previous_graph_state);
+
 }
 else{
+
     global_data.nodes = DEBUG_DATASET.nodes;
     global_data.links = DEBUG_DATASET.links;
+
 }
 
 
@@ -64,20 +72,21 @@ var vis = d3.select("#graph").append("svg")
 
 
 vis.append("rect").attr("width", "100%").attr("height", "100%").
-    	on("click", function (e)
-		{
-	   		console.log(d3.event,GraphController.blockdragging);
-	   	    if (!GraphController.blockdragging){
-	       					global_data.nodes.forEach	
-							(function(d,i)
-								{
-									d.selected=false;
-									// Refreshing view
-									tick_fu();
-								}
-							);
-	   				}
-		});
+    	on("click", function (e){
+	       
+	       //console.log(d3.event,GraphController.blockdragging);
+	   	 
+	       if (!GraphController.blockdragging){
+	       	   global_data.nodes.forEach(function(d,i){
+
+						 d.selected = false;
+
+						 // Refreshing view
+						 tick_fu();
+
+					     });
+	       }
+	   });
 
 
 // Standard force layout see https://github.com/mbostock/d3/wiki/Force-Layout for documentation
@@ -89,12 +98,13 @@ var force = d3.layout.force()
 	.links(global_data.links);
 
 
-var BurpController=null;
+var BurpController = null;
 
-$.getScript("script/burp.js",function()
-	{
+$.getScript("script/burp.js",function(){
+
 		// Setting up GraphController to this visualisation
 		BurpController=getBurpController(document.getElementById("burp-edit"));
+
 	});
 
 
@@ -108,39 +118,59 @@ $.getScript("script/graph-controller.js",function()
 		restart();
 	});
 
+
 function get_selected_nodes(){
     // Finding selected nodes.
     // TODO use d3.js instead of jquery for filter
     return $.grep(global_data.nodes,function(d,n){
 		      return d.selected;
-		  }
-		 );
+		  });
 };
 
 function select_nearest_node(source_data,source_event){
+
     //Calculating distances to nodes
+
     var nodes_distances=GraphController.nodes_distances(source_event.x,source_event.y);
+
     // making all nodes green
-    global_data.nodes.forEach
-    (function(d){
-	 d.selected=false;
-     }
-    );
+    global_data.nodes.forEach(function(d){
+				  d.selected=false;
+			      }
+			     );
+
     // making nearest node yellow if it insider radius of linking
-    if ((nodes_distances[0].distance<linkingradius) && (nodes_distances[0].node.index !== source_data.index)){
+    
+    var node_is_near=(nodes_distances[0].distance<linkingradius);
+    var nodes_are_different=(nodes_distances[0].node.index !== source_data.index);
+
+    if (node_is_near && nodes_are_different ){
+
 	nodes_distances[0].node.selected=true;
 	GraphController.snap=nodes_distances[0].node;
+
     }
     else{
+
 	GraphController.snap=null;
+
     }
 }
 
 
 function link_not_redundant(source_index,target_index){
+
     var test_function=function(d){
-	return (d.source.index == source_index) && (d.target.index == target_index)||(d.target.index == source_index) && (d.source.index == target_index);
+	
+	var same_s_index=(d.source.index == source_index);
+	var same_t_index=(d.target.index == target_index);
+	var same_t_s_index=(d.target.index == source_index);
+	var same_s_t_index=(d.source.index == target_index);
+
+	return  same_source_index && same_target_index || same_s_t_index && same_t_s_index;
+
     };
+
     return !((global_data.links.filter(test_function)).length >0);
 }
 
@@ -150,17 +180,24 @@ function add_new_link(source_data){
     var yellow_nodes=get_selected_nodes();
     // If there are selected nodes we get first one and make a link to it
 
+
     var there_where_selected_nodes=yellow_nodes.length>0;
+
 
     if (there_where_selected_nodes){
 
-	target=yellow_nodes[0];	    
-	if ((source_data.index !== target.index) && (link_not_redundant(source_data.index,target.index)) ){
+	var target = yellow_nodes[0];	    
+
+	var nodes_are_different=source_data.index !== target.index;
+	var link_not_redundant=link_not_redundant(source_data.index,target.index);
+
+	if ( nodes_are_different && link_not_redundant ){
+
 	    global_data.links.push({source:source_data,target:target});
 
 	}
 
-	target.selected=false;
+	target.selected = false;
     }
 
     return there_where_selected_nodes;
@@ -174,11 +211,15 @@ function add_new_node(source_data,X,Y){
 
 	var new_node=new nodetemplate(source_data.nodehtml);
 
-	new_node.x=X; 
-	new_node.y=Y;
+	new_node.x = X; 
+	new_node.y = Y;
 
-	global_data.nodes.push(new_node);
-	global_data.links.push({source:source_data,target:new_node});
+	global_data.nodes.push( new_node );
+
+	global_data.links.push({
+				    source:source_data,
+				    target:new_node
+				});
 
     }
 }
@@ -201,6 +242,8 @@ function tick_fu(){
     // Moving all g groups according to data
     vis.selectAll("g.node")
 	.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+
+
     // This determines if nodehtml wouldbe hidden when editor appear
     vis.selectAll(".nodehtml")
 	.html(function(d,i){
@@ -215,6 +258,7 @@ function tick_fu(){
 		       return "none";
 		   }
 	       });
+
 
     vis.selectAll("circle.node")
 	.attr("class",function (d){
@@ -374,6 +418,8 @@ function restart(){
     
 
     nodeSelection.exit().remove();
+
+
     var nodehtmls=new_nodes.append("xhtml:div")
 	.attr("class","nodehtml blockdragging")
 	.style("display",function(d){
