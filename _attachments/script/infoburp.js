@@ -169,7 +169,7 @@ function link_not_redundant(source_index,target_index){
 	var same_t_s_index=(d.target.index == source_index);
 	var same_s_t_index=(d.source.index == target_index);
 
-	return  same_source_index && same_target_index || same_s_t_index && same_t_s_index;
+	return  same_s_index && same_t_index || same_s_t_index && same_t_s_index;
 
     };
 
@@ -191,9 +191,9 @@ function add_new_link(source_data){
 	var target = yellow_nodes[0];	    
 
 	var nodes_are_different=source_data.index !== target.index;
-	var link_not_redundant=link_not_redundant(source_data.index,target.index);
+	var is_link_not_redundant=link_not_redundant(source_data.index,target.index);
 
-	if ( nodes_are_different && link_not_redundant ){
+	if ( nodes_are_different && is_link_not_redundant ){
 
 	    global_data.links.push({source:source_data,target:target});
 
