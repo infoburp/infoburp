@@ -24,9 +24,9 @@ $(function() {
         db.view(design + "/recent-items", {
             descending : "true",
             limit : 50,
-            update_seq : true,
+            update seq : true,
             success : function(data) {
-                setupChanges(data.update_seq);
+                setupChanges(data.update seq);
                 var them = $.mustache($("#recent-messages").html(), {
                     items : data.rows.map(function(r) {return r.value;})
                 });
@@ -51,7 +51,7 @@ $(function() {
                     $("#create-message").submit(function(e){
                         e.preventDefault();
                         var form = this, doc = $(form).serializeObject();
-                        doc.created_at = new Date();
+                        doc.created at = new Date();
                         doc.profile = profile;
                         db.saveDoc(doc, {success : function() {form.reset();}});
                         return false;

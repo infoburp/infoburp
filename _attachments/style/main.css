@@ -20,7 +20,7 @@ html, body {
 /*..............BAR */
 #bar {
 	width:100%;
-	height:36px;
+	height:68px;
 	left:0px;
 	top:3px;
 	position:fixed;
@@ -48,20 +48,12 @@ html, body {
 	width:100%;
 	height:3px;
 	left:0px;
-	top:39px;
+	top:71px;
 	position:fixed;
 	background: #005b00;
 	z-index:2;
 }
-#tophighlight2 {
-	width:100%;
-	height:1px;
-	left:0px;
-	top:38px;
-	position:fixed;
-	background: #006e00;
-	z-index:2;
-}
+
 #tophighlight3 {
 	width:100%;
 	height:3px;
@@ -71,22 +63,22 @@ html, body {
 	background: #005b00;
 	z-index:2;
 }
-#tophighlight4 {
-	width:100%;
-	height:1px;
-	left:0px;
-	top:3px;
-	position:fixed;
-	background: #006e00;
-	z-index:2;
-}
 
+#qr {
+    width: 58px;
+}
+#qr img{
+    position: absolute;
+    left:7px;
+    top:7px;
+    z-index: 1;
+}
 /*..............LOGO */
 #logo {
 
 	background:url('/img/logo.png');
-	left:6px;
-	top:3px;
+	left:62px;
+	top:15px;
 	position:fixed;
 }
 
@@ -122,8 +114,8 @@ html, body {
 	padding:0px 2px;
 	width:180px;
 	height:28px;
-	left:190px;
-	top:7px;
+	left:246px;
+	top:20px;
 	position:fixed;
 	font-weight:bold;
 }
@@ -131,6 +123,16 @@ html, body {
 	border:3px solid #c73;
 }
 /*..............SIGNIN */
+
+#ad {
+    width: 87px;
+}
+#ad img{
+    position: absolute;
+    right:61px;
+    top:0px;
+    z-index: 1;
+}
 #signin {
     width: 87px;
 }

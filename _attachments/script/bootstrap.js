@@ -22,7 +22,7 @@
 
   $(function () {
 
-    "use strict"; // jshint ;_;
+    "use strict"; // jshint ; ;
 
 
     /* CSS TRANSITION SUPPORT (http://www.modernizr.com/)
@@ -79,7 +79,7 @@
 
 !function ($) {
 
-  "use strict"; // jshint ;_;
+  "use strict"; // jshint ; ;
 
 
  /* ALERT CLASS DEFINITION
@@ -168,7 +168,7 @@
 
 !function ($) {
 
-  "use strict"; // jshint ;_;
+  "use strict"; // jshint ; ;
 
 
  /* BUTTON PUBLIC CLASS DEFINITION
@@ -263,7 +263,7 @@
 
 !function ($) {
 
-  "use strict"; // jshint ;_;
+  "use strict"; // jshint ; ;
 
 
  /* CAROUSEL CLASS DEFINITION
@@ -438,7 +438,7 @@
 
 !function ($) {
 
-  "use strict"; // jshint ;_;
+  "use strict"; // jshint ; ;
 
 
  /* COLLAPSE PUBLIC CLASS DEFINITION
@@ -595,7 +595,7 @@
 
 !function ($) {
 
-  "use strict"; // jshint ;_;
+  "use strict"; // jshint ; ;
 
 
  /* DROPDOWN CLASS DEFINITION
@@ -744,7 +744,7 @@
 
 !function ($) {
 
-  "use strict"; // jshint ;_;
+  "use strict"; // jshint ; ;
 
 
  /* MODAL CLASS DEFINITION
@@ -983,7 +983,7 @@
 
 !function ($) {
 
-  "use strict"; // jshint ;_;
+  "use strict"; // jshint ; ;
 
 
  /* TOOLTIP PUBLIC CLASS DEFINITION
@@ -1016,7 +1016,7 @@
       }
 
       this.options.selector ?
-        (this._options = $.extend({}, this.options, { trigger: 'manual', selector: '' })) :
+        (this. options = $.extend({}, this.options, { trigger: 'manual', selector: '' })) :
         this.fixTitle()
     }
 
@@ -1034,7 +1034,7 @@
     }
 
   , enter: function (e) {
-      var self = $(e.currentTarget)[this.type](this._options).data(this.type)
+      var self = $(e.currentTarget)[this.type](this. options).data(this.type)
 
       if (!self.options.delay || !self.options.delay.show) return self.show()
 
@@ -1046,7 +1046,7 @@
     }
 
   , leave: function (e) {
-      var self = $(e.currentTarget)[this.type](this._options).data(this.type)
+      var self = $(e.currentTarget)[this.type](this. options).data(this.type)
 
       if (this.timeout) clearTimeout(this.timeout)
       if (!self.options.delay || !self.options.delay.hide) return self.hide()
@@ -1257,7 +1257,7 @@
 
 !function ($) {
 
-  "use strict"; // jshint ;_;
+  "use strict"; // jshint ; ;
 
 
  /* POPOVER PUBLIC CLASS DEFINITION
@@ -1359,7 +1359,7 @@
 
 !function ($) {
 
-  "use strict"; // jshint ;_;
+  "use strict"; // jshint ; ;
 
 
  /* SCROLLSPY CLASS DEFINITION
@@ -1509,7 +1509,7 @@
 
 !function ($) {
 
-  "use strict"; // jshint ;_;
+  "use strict"; // jshint ; ;
 
 
  /* TAB CLASS DEFINITION
@@ -1643,7 +1643,7 @@
 
 !function($){
 
-  "use strict"; // jshint ;_;
+  "use strict"; // jshint ; ;
 
 
  /* TYPEAHEAD PUBLIC CLASS DEFINITION
@@ -1943,7 +1943,7 @@
 
 !function ($) {
 
-  "use strict"; // jshint ;_;
+  "use strict"; // jshint ; ;
 
 
  /* AFFIX CLASS DEFINITION
