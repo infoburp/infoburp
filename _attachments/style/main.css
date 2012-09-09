@@ -22,7 +22,7 @@ html, body {
 	width:100%;
 	height:68px;
 	left:0px;
-	top:3px;
+	top:0px;
 	position:fixed;
 	background:#007b02;
 	z-index:2;
@@ -43,42 +43,23 @@ html, body {
 	padding:4px 0px;
 
 }
-/*..............BAR */
-#tophighlight {
-	width:100%;
-	height:3px;
-	left:0px;
-	top:71px;
-	position:fixed;
-	background: #005b00;
-	z-index:2;
-}
 
-#tophighlight3 {
-	width:100%;
-	height:3px;
-	left:0px;
-	top:0px;
-	position:fixed;
-	background: #005b00;
-	z-index:2;
-}
 
 #qr {
-    width: 58px;
+    width: 53px;
 }
 #qr img{
     position: absolute;
-    left:7px;
-    top:7px;
+    left:4px;
+    top:8px;
     z-index: 1;
 }
 /*..............LOGO */
 #logo {
 
 	background:url('/img/logo.png');
-	left:62px;
-	top:15px;
+	left:61px;
+	top:16px;
 	position:fixed;
 }
 
@@ -114,7 +95,7 @@ html, body {
 	padding:0px 2px;
 	width:180px;
 	height:28px;
-	left:246px;
+	left:241px;
 	top:20px;
 	position:fixed;
 	font-weight:bold;
@@ -127,7 +108,7 @@ html, body {
 #ad {
     width: 87px;
 }
-#ad img{
+#_ad{
     position: absolute;
     right:61px;
     top:0px;
@@ -139,7 +120,7 @@ html, body {
 #signin img{
     position: absolute;
     right:61px;
-    top:4px;
+    top:20px;
     z-index: 1;
 }
 
@@ -150,7 +131,7 @@ html, body {
 #twitter img{
     position: absolute;
     right:5px;
-    top:6px;
+    top:20px;
     z-index: 1;
 }
 
@@ -161,23 +142,20 @@ html, body {
 #facebook img{
     position: absolute;
     right:33px;
-    top:6px;
+    top:20px;
     z-index: 1;
 }
 
 
-#logoIB {
-    width: 175px;
-}
 
 /*..............BAR */
 #bottombar {
 	width:100%;
-	height:39px;
+	height:32px;
 	left:0px;
-	bottom:3px;
+	bottom:0px;
 	position:fixed;
-	background:#424242;
+	background:#848484;
 	z-index:2;
 }
 #_bottombar {
@@ -196,104 +174,13 @@ html, body {
 
 }
 
-/*..............BAR */
-#bottomhighlight {
-	width:100%;
-	height:3px;
-	left:0px;
-	bottom:41px;
-	position:fixed;
-	background:#0b0b0b;
-	z-index:2;
-}
-#bottomhighlight2 {
-	width:100%;
-	height:1px;
-	left:0px;
-	bottom:44px;
-	position:fixed;
-	background:#040404;
-	z-index:2;
-}
-#bottomhighlight3 {
-	width:100%;
-	height:3px;
-	left:0px;
-	bottom:1px;
-	position:fixed;
-	background:#646464;
-	z-index:2;
-}
-#bottomhighlight4 {
-	width:100%;
-	height:1px;
-	left:0px;
-	bottom:0px;
-	position:fixed;
-	background:#aaaaaa;
-	z-index:2;
-}
-#leftbrain {
-    width: 28px;
-}
-#leftbrain img{
-    position: absolute;
-    left:6px;
-    bottom:8px;
-    z-index: 1;
-}
-#rightbrain {
-    width: 28px;
-}
-#rightbrain img{
-    position: absolute;
-    left:34px;
-    bottom:8px;
-    z-index: 1;
-}
-#viewone {
-    width: 28px;
-}
-#viewone img{
-    position: absolute;
-    left:90px;
-    bottom:8px;
-    z-index: 1;
-}
-#viewtwo {
-    width: 28px;
-}
-#viewtwo img{
-    position: absolute;
-    left:118px;
-    bottom:8px;
-    z-index: 1;
-}
-#viewthree {
-    width: 28px;
-}
-#viewthree img{
-    position: absolute;
-    left:146px;
-    bottom:8px;
-    z-index: 1;
-}
-#edit {
-    width: 28px;
-}
-#edit img{
-    position: absolute;
-    right:398px;
-    bottom:8px;
-    z-index: 1;
-}
 #caution {
     width: 28px;
 }
 #caution img{
     position: absolute;
     left:6px;
-    bottom:8px;
+    bottom:6px;
     z-index: 1;
 }
 #logintosave {
@@ -302,121 +189,10 @@ html, body {
 #logintosave img{
     position: absolute;
     left:34px;
-    bottom:8px;
+    bottom:6px;
     z-index: 1;
 }
 
-/*
-#normaltext {
-    width: 28px;
-}
-#normaltext img{
-    position: absolute;
-    right:314px;
-    bottom:8px;
-    z-index: 1;
-}
-#headerone {
-    width: 28px;
-}
-#headerone img{
-    position: absolute;
-    right:286px;
-    bottom:8px;
-    z-index: 1;
-}
-#headertwo {
-    width: 28px;
-}
-#headertwo img{
-    position: absolute;
-    right:258px;
-    bottom:8px;
-    z-index: 1;
-}
-#bold {
-    width: 28px;
-}
-#bold img{
-    position: absolute;
-    right:230px;
-    bottom:8px;
-    z-index: 1;
-}
-#italic {
-    width: 28px;
-}
-#italic img{
-    position: absolute;
-    right:202px;
-    bottom:8px;
-    z-index: 1;
-}
-#underline {
-    width: 28px;
-}
-#underline img{
-    position: absolute;
-    right:174px;
-    bottom:8px;
-    z-index: 1;
-}
-#unorderedlist {
-    width: 28px;
-}
-#unorderedlist img{
-    position: absolute;
-    right:146px;
-    bottom:8px;
-    z-index: 1;
-}
-
-#orderedlist {
-    width: 28px;
-}
-#orderedlist img{
-    position: absolute;
-    right:118px;
-    bottom:8px;
-    z-index: 1;
-}
-#outdent {
-    width: 28px;
-}
-#outdent img{
-    position: absolute;
-    right:90px;
-    bottom:8px;
-    z-index: 1;
-}
-#indent {
-    width: 28px;
-}
-#indent img{
-    position: absolute;
-    right:62px;
-    bottom:8px;
-    z-index: 1;
-}
-#link {
-    width: 28px;
-}
-#link img{
-    position: absolute;
-    right:34px;
-    bottom:8px;
-    z-index: 1;
-}
-#insertimage {
-    width: 28px;
-}
-#insertimage img{
-    position: absolute;
-    right:6px;
-    bottom:8px;
-    z-index: 1;
-}
-*/
 
 /*..............INFOBURP */
 #searchbox {
