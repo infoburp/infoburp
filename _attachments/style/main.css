@@ -46,19 +46,19 @@ html, body {
 
 
 #qr {
-    width: 53px;
+    width: 68px;
 }
 #qr img{
     position: absolute;
-    left:4px;
-    top:8px;
+    left:0px;
+    top:0px;
     z-index: 1;
 }
 /*..............LOGO */
 #logo {
 
 	background:url('/img/logo.png');
-	left:61px;
+	left:91px;
 	top:16px;
 	position:fixed;
 }
@@ -95,7 +95,7 @@ html, body {
 	padding:0px 2px;
 	width:180px;
 	height:28px;
-	left:241px;
+	left:271px;
 	top:20px;
 	position:fixed;
 	font-weight:bold;
