@@ -295,7 +295,6 @@ function tick_fu(){
 		})
 	.html(function(d,i){
 		  //marking that we refreshed this html
-		  console.log("We refreshed html",d);
 		  d.html_need_refresh=false;
 		  return d.nodehtml;
 		  
@@ -303,17 +302,18 @@ function tick_fu(){
 
     vis.selectAll(".nodehtml")
 	.filter(function(d){
-		    // we are taking only thoose nodes that have html edited
+		    // we are taking only thoose nodes that have html edited and is youtube video
 		    return d.html_need_refresh && (d.is_youtube_video);
 		})
 	.each(function(d,i){
 		  //marking that we refreshed this html
 		  d.html_need_refresh=false;
-		  console.log("we selected something",d);
 	      })
     .append("img")
     .attr("src",function (d){
-	      
+
+	      // We get thumbnail for that video
+
 	      return "http://img.youtube.com/vi/"+d.youtube_id+"/0.jpg";
 
 	  });
