@@ -28,9 +28,6 @@ BOTTOM_BUMP_Y = NODERADIUS/2;
 FOREIGN_OBJECT_SIDE = NODERADIUS*1.4142;
 FOREIGN_OBJECT_SHIFT = -NODERADIUS/1.4142;
 unusedlinks = 100; // This is workaround for z order of links. This should be greater than maximum number of links that are displayed.
-dragged_node_number = null;
-dragged_link_number = null;
-
 
 var burp_data = [{
 		     original_data:{
@@ -417,9 +414,9 @@ function dragend(d, i){
 
 function restart(){
     /* 
-     There are some problems with z-order in svg.
-     See for example https://github.com/mbostock/d3/issues/252
-     So here we creating pool of unused lines with two classe that created before any circles
+     * There are some problems with z-order in svg.
+     * See for example https://github.com/mbostock/d3/issues/252
+     * So here we creating pool of unused lines with two classes that created before any circles
      */
 
     var empty_array = [];
@@ -522,9 +519,9 @@ function restart(){
 }
 
 
-function redraw() 
-	{
-		console.log("here", d3.event.translate, d3.event.scale);
+function redraw(){
+    
+    //console.log("here", d3.event.translate, d3.event.scale);
  		vis.attr("transform", "translate(" + d3.event.translate + ")" + " scale(" + d3.event.scale + ")");
 	}
 
