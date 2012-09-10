@@ -4,16 +4,16 @@ var gravity = 0.0001;
 var nodetemplate;
 
 
-nodetemplate = function(node_html)
+nodetemplate = function(node_data)
 	{
     	    return {
-		nodehtml:node_html,
-		html_need_refresh:false,
+		nodehtml:node_data.nodehtml,
+		html_need_refresh:true,
 		showHtml:true,
 		editorActive:false,
 		selected:false,
-		is_youtube_video:false,
-		youtube_id:""
+		is_youtube_video:node_data.is_youtube_video,
+		youtube_id:node_data.youtube_id
 	    };
 	    
 	}; // Making just {} makes awesome bug.
@@ -241,7 +241,7 @@ function add_new_node(source_data,X,Y){
 
     if (GraphController.distance_to_temporal_node(source_data.x,source_data.y)>noderadius){
 
-	var new_node = new nodetemplate(source_data.nodehtml);
+	var new_node = new nodetemplate(source_data);
 
 	new_node.x = X; 
 	new_node.y = Y;
