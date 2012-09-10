@@ -12,3 +12,9 @@ DEBUG_DATASET=
     		links:[ ]
     
 	};
+
+function run_node(){
+
+    document.getElementById("run-node").innerHTML = document.getElementById("burp-edit").value;
+  
+};
