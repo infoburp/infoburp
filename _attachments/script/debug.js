@@ -15,6 +15,17 @@ DEBUG_DATASET=
 
 function run_node(){
 
-    document.getElementById("run-node").innerHTML = document.getElementById("burp-edit").value;
+   var valedit= document.getElementById("burp-edit").value;
+
+    if (guessNodeType(valedit)=="ytvideo-link"){
+
+	console.log(testIfYTLink(valedit)[1]);
+	render_youtube_video_to_div(document.getElementById("run-node"),testIfYTLink(valedit)[1],400,400);
+	
+    }else{
+	document.getElementById("run-node").innerHTML = valedit;
+    };
+
+
   
 };
