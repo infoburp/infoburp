@@ -15,6 +15,12 @@ DEBUG_DATASET=
 
 function run_node(){
 
+/* It is a stub function that only tries to guess if in editor is link to youtube video and if that
+ * the case then it renders it via swfobject. Otherwise it's just writes it plain to run-node div
+ * 
+ */
+
+
    var valedit= document.getElementById("burp-edit").value;
 
     if (guessNodeType(valedit)=="ytvideo-link"){

@@ -21,12 +21,12 @@ nodetemplate = function(node_data)
 
 linkingradius = 128; // Defines linking distance 
 NODE_APPEARANCE_DURATION = 128; // ms Time for animation of new node appearance
-nodeinitradius = 20;    // px Animation starts from that radius to noderadius
-noderadius = 464;              // Node radius
-BOTTOM_BUMP_X = noderadius*0.866; //sqrt(3)/2 ~ 0.866
-BOTTOM_BUMP_Y = noderadius/2;
-FOREIGN_OBJECT_SIDE = noderadius*1.4142;
-FOREIGN_OBJECT_SHIFT = -noderadius/1.4142;
+NODEINITRADIUS = 20;    // px Animation starts from that radius to noderadius
+NODERADIUS = 46;              // Node radius
+BOTTOM_BUMP_X = NODERADIUS*0.866; //sqrt(3)/2 ~ 0.866
+BOTTOM_BUMP_Y = NODERADIUS/2;
+FOREIGN_OBJECT_SIDE = NODERADIUS*1.4142;
+FOREIGN_OBJECT_SHIFT = -NODERADIUS/1.4142;
 unusedlinks = 100; // This is workaround for z order of links. This should be greater than maximum number of links that are displayed.
 dragged_node_number = null;
 dragged_link_number = null;
@@ -105,7 +105,11 @@ var force = d3.layout.force()
 
 
 function render_youtube_video_to_div(div_object,videoId,width,height){
-    
+    /*
+     * Renders youtube video with video Id to given div 
+     */
+
+
     var params = { allowScriptAccess: "always" };
 
     // TODO generate unique id
@@ -239,7 +243,7 @@ function add_new_link(source_data){
 
 function add_new_node(source_data,X,Y){
 
-    if (GraphController.distance_to_temporal_node(source_data.x,source_data.y)>noderadius){
+    if (GraphController.distance_to_temporal_node(source_data.x,source_data.y)>NODERADIUS){
 
 	var new_node = new nodetemplate(source_data);
 
@@ -463,10 +467,10 @@ function restart(){
 		      return "node unselected_node";
 		  }
 	      })
-	.attr("r",nodeinitradius)
+	.attr("r",NODEINITRADIUS)
 	.transition()
 	.duration(NODE_APPEARANCE_DURATION)
-	.attr("r", noderadius);
+	.attr("r", NODERADIUS);
     
 
     nodeEnter.call(node_drag);	
