@@ -409,7 +409,7 @@ function restart(){
 	.duration(NODE_APPEARANCE_DURATION)
 	.attr("r", noderadius);
     
-
+    // Applying modified drag behaviour to nodes
     nodeEnter.call(node_drag);	
 
     var new_nodes = nodeEnter.append("foreignObject")
