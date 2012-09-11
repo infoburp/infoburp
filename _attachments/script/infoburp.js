@@ -4,29 +4,30 @@ var gravity = 0.0001;
 var nodetemplate;
 
 
-nodetemplate = function(node_html)
+nodetemplate = function(node_data)
 	{
-    		return {
-				nodehtml:node_html,
-				showHtml:true,
-				editorActive:false,
-				selected:false
-			};
+    	    return {
+		nodehtml:node_data.nodehtml,
+		html_need_refresh:true,
+		showHtml:true,
+		editorActive:false,
+		selected:false,
+		is_youtube_video:node_data.is_youtube_video,
+		youtube_id:node_data.youtube_id
+	    };
+	    
 	}; // Making just {} makes awesome bug.
 
 
 linkingradius = 128; // Defines linking distance 
 NODE_APPEARANCE_DURATION = 128; // ms Time for animation of new node appearance
-nodeinitradius = 20;    // px Animation starts from that radius to noderadius
-noderadius = 64;              // Node radius
-BOTTOM_BUMP_X = noderadius*0.866; //sqrt(3)/2 ~ 0.866
-BOTTOM_BUMP_Y = noderadius/2;
-FOREIGN_OBJECT_SIDE = noderadius*1.4142;
-FOREIGN_OBJECT_SHIFT = -noderadius/1.4142;
+NODEINITRADIUS = 20;    // px Animation starts from that radius to noderadius
+NODERADIUS = 46;              // Node radius
+BOTTOM_BUMP_X = NODERADIUS*0.866; //sqrt(3)/2 ~ 0.866
+BOTTOM_BUMP_Y = NODERADIUS/2;
+FOREIGN_OBJECT_SIDE = NODERADIUS*1.4142;
+FOREIGN_OBJECT_SHIFT = -NODERADIUS/1.4142;
 unusedlinks = 100; // This is workaround for z order of links. This should be greater than maximum number of links that are displayed.
-dragged_node_number = null;
-dragged_link_number = null;
-
 
 var burp_data = [{
 		     original_data:{
@@ -46,7 +47,7 @@ global_data = {
 };
 
 
-if (COUCHDB){
+if (COUCHDB) {
 
     var previous_graph_state = restore_graph_state();// persistence/basic_persistence.js
 
@@ -54,7 +55,7 @@ if (COUCHDB){
     global_data.links = restore_links(previous_graph_state);
 
 }
-else{
+else {
 
     global_data.nodes = DEBUG_DATASET.nodes;
     global_data.links = DEBUG_DATASET.links;
@@ -63,12 +64,13 @@ else{
 
 
 var vis = d3.select("#graph").append("svg")
-    	.attr("width", "100%")
-    	.attr("height", "100%")
-    	.attr("pointer-events", "all")
-    	.append('svg:g')
-    	.call(d3.behavior.zoom().on("zoom", redraw))
-    	.append('svg:g');
+    .attr("width", "100%")
+    .attr("height", "100%")
+    .attr("pointer-events", "all")
+    .append('svg:g')
+    .style("vievport-fill","white")
+    .call(d3.behavior.zoom().on("zoom", redraw))
+    .append('svg:g');
 
 
 vis.append("rect").attr("width", "100%").attr("height", "100%").
@@ -153,7 +155,7 @@ function select_nearest_node(source_data,source_event){
 
     }
     else{
-
+	// Removing snapping to the node
 	GraphController.snap=null;
 
     }
@@ -209,9 +211,9 @@ function add_new_link(source_data){
 
 function add_new_node(source_data,X,Y){
 
-    if (GraphController.distance_to_temporal_node(source_data.x,source_data.y)>noderadius){
+    if (GraphController.distance_to_temporal_node(source_data.x,source_data.y)>NODERADIUS){
 
-	var new_node = new nodetemplate(source_data.nodehtml);
+	var new_node = new nodetemplate(source_data);
 
 	new_node.x = X; 
 	new_node.y = Y;
@@ -248,9 +250,6 @@ function tick_fu(){
 
     // This determines if nodehtml wouldbe hidden when editor appear
     vis.selectAll(".nodehtml")
-	.html(function(d,i){
-		  return d.nodehtml;
-	      })
 	.style("display",function(d){
 	
 	   if (d.showHtml){
@@ -261,6 +260,16 @@ function tick_fu(){
 		   }
 	       });
 
+    vis.selectAll(".nodehtml")
+	.filter(function(d){
+		    // we are taking only thoose nodes that have html edited and is youtube video
+		    return d.html_need_refresh;
+		})
+	.each(function(d,i){
+		  //marking that we refreshed this html
+		  d.contentWrapper.summary(this);
+		  d.html_need_refresh=false;
+	      });
 
     vis.selectAll("circle.node")
 	.attr("class",function (d){
@@ -354,9 +363,9 @@ function dragend(d, i){
 
 function restart(){
     /* 
-     There are some problems with z-order in svg.
-     See for example https://github.com/mbostock/d3/issues/252
-     So here we creating pool of unused lines with two classe that created before any circles
+     * There are some problems with z-order in svg.
+     * See for example https://github.com/mbostock/d3/issues/252
+     * So here we creating pool of unused lines with two classes that created before any circles
      */
 
     var empty_array = [];
@@ -404,12 +413,12 @@ function restart(){
 		      return "node unselected_node";
 		  }
 	      })
-	.attr("r",nodeinitradius)
+	.attr("r",NODEINITRADIUS)
 	.transition()
 	.duration(NODE_APPEARANCE_DURATION)
-	.attr("r", noderadius);
+	.attr("r", NODERADIUS);
     
-
+    // Applying modified drag behaviour to nodes
     nodeEnter.call(node_drag);	
 
     var new_nodes = nodeEnter.append("foreignObject")
@@ -436,15 +445,15 @@ function restart(){
 		   };
 	       })
     
-	.html(function(d,i){
-		  
-		  return d.nodehtml;
-		  
-	      })
+	.each(function(d,i){
+		  attachRender(d);
+		  d.contentWrapper.summary(this);}
+	     )
     	.on("click",function(d){
 		
-			BurpController.start_edit(d);d.editorActive=true; d.selected=true;
-		
+		BurpController.start_edit(d);
+		d.selected=true; 
+				
 	    });
     
 
@@ -458,9 +467,9 @@ function restart(){
 }
 
 
-function redraw() 
-	{
-		console.log("here", d3.event.translate, d3.event.scale);
-		vis.attr("transform", "translate(" + d3.event.translate + ")" + " scale(" + d3.event.scale + ")");
+function redraw(){
+    
+    console.log("here", d3.event.translate, d3.event.scale);
+ 		vis.attr("transform", "translate(" + d3.event.translate + ")" + " scale(" + d3.event.scale + ")");
 	}
 
