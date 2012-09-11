@@ -294,33 +294,22 @@ function tick_fu(){
 
     vis.selectAll(".nodehtml")
 	.filter(function(d){
-		    // we are taking only thoose nodes that have html edited
-		    return d.html_need_refresh && (!d.is_youtube_video);
-		})
-	.html(function(d,i){
-		  //marking that we refreshed this html
-		  d.html_need_refresh=false;
-		  return d.nodehtml;
-		  
-	      });
-
-    vis.selectAll(".nodehtml")
-	.filter(function(d){
 		    // we are taking only thoose nodes that have html edited and is youtube video
-		    return d.html_need_refresh && (d.is_youtube_video);
+		    return d.html_need_refresh;
 		})
 	.each(function(d,i){
 		  //marking that we refreshed this html
+		  d.contentWrapper.summary(this);
 		  d.html_need_refresh=false;
-	      })
-    .append("img")
+	      });
+  /*  .append("img")
     .attr("src",function (d){
 
 	      // We get thumbnail for that video
 
 	      return "http://img.youtube.com/vi/"+d.youtube_id+"/0.jpg";
 
-	  });
+	  });*/
 //	.each(process_video_div);
 
 
@@ -499,16 +488,7 @@ function restart(){
 		   };
 	       })
     
-	.html(function(d,i){
-		  if (!d.is_youtube_video){
-		      return d.nodehtml;     
-		  }
-		  else{
-		      return "";
-		  }
-		 
-		  
-	      })
+	.each(function(d,i){attachRender(d);d.contentWrapper.summary(this);})
     	.on("click",function(d){
 		
 		BurpController.start_edit(d);
