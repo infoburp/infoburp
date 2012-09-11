@@ -1,56 +1,85 @@
-function getBurpController(input)
-	{
-		return {
-			burp_data:[],
-			input_object:input,
-			node_edit_end_handle: function(d)
-				{
-					var txt = this.end_edit();
-					console.log(txt);
-	    				d.editorActive=false;
-	    				if (txt)
-	    					{      
-							d.nodehtml = txt;
-	    					}
-	    	    			d.showHtml = true;
-	    				d.selected=false;
-				},
-	start_edit:function(original_data)
-		{
-  	    // TODO remove this fast hack
-	    global_data.nodes.forEach(function(d){d.selected=false;});
-	    original_data.selected=true;
-	    this.burp_data=[{original_data:original_data}];
-	    console.log(this.burp_data);
+function getBurpController(input){
+    return {
+	burp_data:[],
+	input_object:input,
+
+	node_edit_end_handle: function(d){
+	    if (d.selected){
+		
+
+		var txt = this.input_object.value;
+		this.input_object.value="";
+
+
+		if (txt) {      
+		    d.nodehtml = txt;
+		}
+
+		// Trying to guess WAT is that and attach correct render
+		attachRender(d);
+
+		// Marking node to be refreshed and deselecting it.
+		d.html_need_refresh=true;
+		d.selected=false;
+
+		//Refreshing view TODO consider refactoring
+	        tick_fu();
+
+		this.burp_data=[];
+		this.reset_input_object_state();
+	    }
+	    else {
+		console.log("trying to edit unselected node",d);
+	    }
+	},
+
+	reset_input_object_state:function(){
+
 	    var that=this;
 	    var input_object_selection= d3.select(input)
 		.data(this.burp_data)
-		.on("blur", function(d)
-			{
-				that.node_edit_end_handle(d.original_data);
+		.on("blur", function(d){
+			if (d.original_data.selected){
+			    
 			
-		    	})
-		.on("keypress", function(d) 
-			{
-			var e = d3.event;
-			if (e.keyCode == 13)
-				{
-					if (e.stopPropagation)	e.stopPropagation();
-			    		e.preventDefault();
-					//  console.log("enter",d);
-					BurpController.node_edit_end_handle(d.original_data);			    
-				}
-		    	});
-	    this.input_object.value=original_data.nodehtml;
+			that.node_edit_end_handle(d.original_data);}
+			
+		    })
+		.on("keypress", function(d){
+
+			if (d.original_data.selected){
+			    
+
+			    var e = d3.event;
+			    if (e.keyCode == 13){
+
+				if (e.stopPropagation)	e.stopPropagation();
+				e.preventDefault();
+
+
+				BurpController.node_edit_end_handle(d.original_data);			    
+			    }
+			}
+
+		    });
+
+	    
 	},
-	end_edit:function()
-		{
-			//console.log("inner text",this.input_object.innerText);
-	    		// TODO Refactor next line
-	    		force.start();
-			to_return=this.input_object.value;
-			this.input_object.value="";
-			return to_return;
-		}
+	
+	start_edit:function(original_data){
+	    
+	    
+  	    // TODO remove this fast hack for resetting selected nodes.
+	    global_data.nodes.forEach(function(d){d.selected=false;});
+	    original_data.selected=true;
+
+	    this.burp_data=[{original_data:original_data}];
+	    console.log(this.burp_data);
+
+	    this.reset_input_object_state();
+	    this.input_object.value=original_data.nodehtml;
+
+	}
+
     };
 };
