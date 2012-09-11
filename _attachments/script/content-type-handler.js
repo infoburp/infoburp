@@ -55,16 +55,12 @@ var youtubeLinkHandler= function(div,content){
     
     if (id_array){
 	
-	
-//	d.youtube_id =id_array[1];
-//	console.log("this is youtube video id= ", id_array[1]);
-//	d.is_youtube_video=true;
-//	d.html_need_refresh=true;
-
 	var img=document.createElement("img");
 	img.src="http://img.youtube.com/vi/"+id_array[1]+"/0.jpg";
 
+	// Clearing 	
 	div.innerHTML="";
+
 	div.appendChild(img);
     }
     else{
@@ -95,6 +91,8 @@ registerContentTypeHandler("youtubecontent",
     youtubeLinkHandler
 );
 
+
+// Just simple handler for basic html it should be registered last as it classifier always returns true.
 registerContentTypeHandler("htmlContent",
 		      
 		      function(content){
@@ -109,7 +107,7 @@ registerContentTypeHandler("htmlContent",
 		      });
 
 
-
+// TODO consider consistent renaming render/wrapper summary primary doesn't seems to be a good choice.
 function attachRender(d){
 
    /*

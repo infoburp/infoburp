@@ -2,9 +2,7 @@ function getBurpController(input){
     return {
 	burp_data:[],
 	input_object:input,
-	youtube_handle: function(d,txt){
-	    
-	},
+
 	node_edit_end_handle: function(d){
 	    if (d.selected){
 		
@@ -12,41 +10,20 @@ function getBurpController(input){
 		var txt = this.input_object.value;
 		this.input_object.value="";
 
-		console.log(txt);
 
-		//    d.editorActive=false;
 		if (txt) {      
 		    d.nodehtml = txt;
 		}
 
-
+		// Trying to guess WAT is that and attach correct render
 		attachRender(d);
 
-		console.log(d);
-       /*
-	    var   node_type = guessNodeType(txt);
-	    
-	    if ((node_type=="ytvideo-link")||(node_type == "ytvideo-iframe")){
-
-		this.youtube_handle(d,txt);
-	
-	    }
-	    else{
-		
-		d.showHtml = true;
-
+		// Marking node to be refreshed and deselecting it.
 		d.html_need_refresh=true;
-
-		console.log("resetting is ytv flag ",d);
-		d.is_youtube_video=false;
-	    } */
-
-		
-		d.html_need_refresh=true;
-
 		d.selected=false;
-	        tick_fu();
 
+		//Refreshing view TODO consider refactoring
+	        tick_fu();
 
 		this.burp_data=[];
 		this.reset_input_object_state();
@@ -75,9 +52,11 @@ function getBurpController(input){
 
 			    var e = d3.event;
 			    if (e.keyCode == 13){
+
 				if (e.stopPropagation)	e.stopPropagation();
 				e.preventDefault();
-				//  console.log("enter",d);
+
+
 				BurpController.node_edit_end_handle(d.original_data);			    
 			    }
 			}
@@ -90,9 +69,10 @@ function getBurpController(input){
 	start_edit:function(original_data){
 	    
 	    
-  	    // TODO remove this fast hack
+  	    // TODO remove this fast hack for resetting selected nodes.
 	    global_data.nodes.forEach(function(d){d.selected=false;});
 	    original_data.selected=true;
+
 	    this.burp_data=[{original_data:original_data}];
 	    console.log(this.burp_data);
 

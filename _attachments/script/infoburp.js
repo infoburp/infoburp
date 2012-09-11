@@ -70,13 +70,11 @@ var vis = d3.select("#graph").append("svg")
     .append('svg:g')
     .style("vievport-fill","white")
     .call(d3.behavior.zoom().on("zoom", redraw))
-    .call(function(s){s.append("rect").attr("width", "100%").attr("height", "100%")
-		      .attr("fill","#fff000");})
     .append('svg:g');
 
 
 vis.append("rect").attr("width", "100%").attr("height", "100%").
-    	attr("fill","#aff000").on("click", function (e){
+    	on("click", function (e){
 	       
 	       //console.log(d3.event,GraphController.blockdragging);
 	   	 
@@ -101,36 +99,6 @@ var force = d3.layout.force()
 	.nodes(global_data.nodes)
 	.links(global_data.links);
 
-
-/*
-
-function render_youtube_video_to_div(div_object,videoId,width,height){
-    /*
-     * Renders youtube video with video Id to given div 
-     */
-/*
-
-    var params = { allowScriptAccess: "always" };
-
-    // TODO generate unique id
-    var atts = { id: "myytplayer" };
-    
-    swfobject.embedSWF("http://www.youtube.com/v/"+ videoId +"?enablejsapi=1&playerapiid=ytplayer&version=3",
-                       div_object.id,height, width ,"8", null, null, params, atts);
-
-
-}
-
-
-function process_video_div(d,i){
-
-    console.log("call from prvd",this,d,i);
-    //TODO rewrite add algorithm to determining height and width
-    this.id=d.youtube_id;
-    render_youtube_video_to_div(this,d.youtube_id,200,200);
-
-    }
-*/
 
 var BurpController = null;
 
@@ -302,17 +270,6 @@ function tick_fu(){
 		  d.contentWrapper.summary(this);
 		  d.html_need_refresh=false;
 	      });
-  /*  .append("img")
-    .attr("src",function (d){
-
-	      // We get thumbnail for that video
-
-	      return "http://img.youtube.com/vi/"+d.youtube_id+"/0.jpg";
-
-	  });*/
-//	.each(process_video_div);
-
-
 
     vis.selectAll("circle.node")
 	.attr("class",function (d){
@@ -488,7 +445,10 @@ function restart(){
 		   };
 	       })
     
-	.each(function(d,i){attachRender(d);d.contentWrapper.summary(this);})
+	.each(function(d,i){
+		  attachRender(d);
+		  d.contentWrapper.summary(this);}
+	     )
     	.on("click",function(d){
 		
 		BurpController.start_edit(d);
