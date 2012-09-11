@@ -4,29 +4,30 @@ var gravity = 0.0001;
 var nodetemplate;
 
 
-nodetemplate = function(node_html)
+nodetemplate = function(node_data)
 	{
-    		return {
-				nodehtml:node_html,
-				showHtml:true,
-				editorActive:false,
-				selected:false
-			};
+    	    return {
+		nodehtml:node_data.nodehtml,
+		html_need_refresh:true,
+		showHtml:true,
+		editorActive:false,
+		selected:false,
+		is_youtube_video:node_data.is_youtube_video,
+		youtube_id:node_data.youtube_id
+	    };
+	    
 	}; // Making just {} makes awesome bug.
 
 
 linkingradius = 128; // Defines linking distance 
 NODE_APPEARANCE_DURATION = 128; // ms Time for animation of new node appearance
-nodeinitradius = 20;    // px Animation starts from that radius to noderadius
-noderadius = 64;              // Node radius
-BOTTOM_BUMP_X = noderadius*0.866; //sqrt(3)/2 ~ 0.866
-BOTTOM_BUMP_Y = noderadius/2;
-FOREIGN_OBJECT_SIDE = noderadius*1.4142;
-FOREIGN_OBJECT_SHIFT = -noderadius/1.4142;
+NODEINITRADIUS = 20;    // px Animation starts from that radius to noderadius
+NODERADIUS = 46;              // Node radius
+BOTTOM_BUMP_X = NODERADIUS*0.866; //sqrt(3)/2 ~ 0.866
+BOTTOM_BUMP_Y = NODERADIUS/2;
+FOREIGN_OBJECT_SIDE = NODERADIUS*1.4142;
+FOREIGN_OBJECT_SHIFT = -NODERADIUS/1.4142;
 unusedlinks = 100; // This is workaround for z order of links. This should be greater than maximum number of links that are displayed.
-dragged_node_number = null;
-dragged_link_number = null;
-
 
 var burp_data = [{
 		     original_data:{
@@ -46,7 +47,7 @@ global_data = {
 };
 
 
-if (COUCHDB){
+if (COUCHDB) {
 
     var previous_graph_state = restore_graph_state();// persistence/basic_persistence.js
 
@@ -54,7 +55,7 @@ if (COUCHDB){
     global_data.links = restore_links(previous_graph_state);
 
 }
-else{
+else {
 
     global_data.nodes = DEBUG_DATASET.nodes;
     global_data.links = DEBUG_DATASET.links;
@@ -96,6 +97,36 @@ var force = d3.layout.force()
 	.charge(charge)
 	.nodes(global_data.nodes)
 	.links(global_data.links);
+
+
+
+
+function render_youtube_video_to_div(div_object,videoId,width,height){
+    /*
+     * Renders youtube video with video Id to given div 
+     */
+
+
+    var params = { allowScriptAccess: "always" };
+
+    // TODO generate unique id
+    var atts = { id: "myytplayer" };
+    
+    swfobject.embedSWF("http://www.youtube.com/v/"+ videoId +"?enablejsapi=1&playerapiid=ytplayer&version=3",
+                       div_object.id,height, width ,"8", null, null, params, atts);
+
+
+}
+
+
+function process_video_div(d,i){
+
+    console.log("call from prvd",this,d,i);
+    //TODO rewrite add algorithm to determining height and width
+    this.id=d.youtube_id;
+    render_youtube_video_to_div(this,d.youtube_id,200,200);
+
+    }
 
 
 var BurpController = null;
@@ -153,7 +184,7 @@ function select_nearest_node(source_data,source_event){
 
     }
     else{
-
+	// Removing snapping to the node
 	GraphController.snap=null;
 
     }
@@ -209,9 +240,9 @@ function add_new_link(source_data){
 
 function add_new_node(source_data,X,Y){
 
-    if (GraphController.distance_to_temporal_node(source_data.x,source_data.y)>noderadius){
+    if (GraphController.distance_to_temporal_node(source_data.x,source_data.y)>NODERADIUS){
 
-	var new_node = new nodetemplate(source_data.nodehtml);
+	var new_node = new nodetemplate(source_data);
 
 	new_node.x = X; 
 	new_node.y = Y;
@@ -248,9 +279,6 @@ function tick_fu(){
 
     // This determines if nodehtml wouldbe hidden when editor appear
     vis.selectAll(".nodehtml")
-	.html(function(d,i){
-		  return d.nodehtml;
-	      })
 	.style("display",function(d){
 	
 	   if (d.showHtml){
@@ -260,6 +288,38 @@ function tick_fu(){
 		       return "none";
 		   }
 	       });
+
+    vis.selectAll(".nodehtml")
+	.filter(function(d){
+		    // we are taking only thoose nodes that have html edited
+		    return d.html_need_refresh && (!d.is_youtube_video);
+		})
+	.html(function(d,i){
+		  //marking that we refreshed this html
+		  d.html_need_refresh=false;
+		  return d.nodehtml;
+		  
+	      });
+
+    vis.selectAll(".nodehtml")
+	.filter(function(d){
+		    // we are taking only thoose nodes that have html edited and is youtube video
+		    return d.html_need_refresh && (d.is_youtube_video);
+		})
+	.each(function(d,i){
+		  //marking that we refreshed this html
+		  d.html_need_refresh=false;
+	      })
+    .append("img")
+    .attr("src",function (d){
+
+	      // We get thumbnail for that video
+
+	      return "http://img.youtube.com/vi/"+d.youtube_id+"/0.jpg";
+
+	  });
+//	.each(process_video_div);
+
 
 
     vis.selectAll("circle.node")
@@ -278,7 +338,7 @@ function tick_fu(){
 
 
 force.on("tick",tick_fu);
-force.start();
+//force.start();
 
 
 var node_drag = d3.behavior.drag()
@@ -307,7 +367,7 @@ function dragmove(d, i){
     select_nearest_node(d,d3.event);
     
     //Making force simulation
-    tick_fu();
+//    tick_fu();
 }
 
 
@@ -354,9 +414,9 @@ function dragend(d, i){
 
 function restart(){
     /* 
-     There are some problems with z-order in svg.
-     See for example https://github.com/mbostock/d3/issues/252
-     So here we creating pool of unused lines with two classe that created before any circles
+     * There are some problems with z-order in svg.
+     * See for example https://github.com/mbostock/d3/issues/252
+     * So here we creating pool of unused lines with two classes that created before any circles
      */
 
     var empty_array = [];
@@ -404,10 +464,10 @@ function restart(){
 		      return "node unselected_node";
 		  }
 	      })
-	.attr("r",nodeinitradius)
+	.attr("r",NODEINITRADIUS)
 	.transition()
 	.duration(NODE_APPEARANCE_DURATION)
-	.attr("r", noderadius);
+	.attr("r", NODERADIUS);
     
     // Applying modified drag behaviour to nodes
     nodeEnter.call(node_drag);	
@@ -443,8 +503,9 @@ function restart(){
 	      })
     	.on("click",function(d){
 		
-			BurpController.start_edit(d);d.editorActive=true; d.selected=true;
-		
+		BurpController.start_edit(d);
+		d.editorActive=true; d.selected=true; 
+				
 	    });
     
 
@@ -458,9 +519,9 @@ function restart(){
 }
 
 
-function redraw() 
-	{
-		console.log("here", d3.event.translate, d3.event.scale);
-		vis.attr("transform", "translate(" + d3.event.translate + ")" + " scale(" + d3.event.scale + ")");
+function redraw(){
+    
+    //console.log("here", d3.event.translate, d3.event.scale);
+ 		vis.attr("transform", "translate(" + d3.event.translate + ")" + " scale(" + d3.event.scale + ")");
 	}
 
