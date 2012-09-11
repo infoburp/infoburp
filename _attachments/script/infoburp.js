@@ -64,16 +64,19 @@ else {
 
 
 var vis = d3.select("#graph").append("svg")
-    	.attr("width", "100%")
-    	.attr("height", "100%")
-    	.attr("pointer-events", "all")
-    	.append('svg:g')
-    	.call(d3.behavior.zoom().on("zoom", redraw))
-    	.append('svg:g');
+    .attr("width", "100%")
+    .attr("height", "100%")
+    .attr("pointer-events", "all")
+    .append('svg:g')
+    .style("vievport-fill","white")
+    .call(d3.behavior.zoom().on("zoom", redraw))
+    .call(function(s){s.append("rect").attr("width", "100%").attr("height", "100%")
+		      .attr("fill","#fff000");})
+    .append('svg:g');
 
 
 vis.append("rect").attr("width", "100%").attr("height", "100%").
-    	on("click", function (e){
+    	attr("fill","#aff000").on("click", function (e){
 	       
 	       //console.log(d3.event,GraphController.blockdragging);
 	   	 
@@ -99,13 +102,13 @@ var force = d3.layout.force()
 	.links(global_data.links);
 
 
-
+/*
 
 function render_youtube_video_to_div(div_object,videoId,width,height){
     /*
      * Renders youtube video with video Id to given div 
      */
-
+/*
 
     var params = { allowScriptAccess: "always" };
 
@@ -127,7 +130,7 @@ function process_video_div(d,i){
     render_youtube_video_to_div(this,d.youtube_id,200,200);
 
     }
-
+*/
 
 var BurpController = null;
 
@@ -338,7 +341,7 @@ function tick_fu(){
 
 
 force.on("tick",tick_fu);
-//force.start();
+force.start();
 
 
 var node_drag = d3.behavior.drag()
@@ -367,7 +370,7 @@ function dragmove(d, i){
     select_nearest_node(d,d3.event);
     
     //Making force simulation
-//    tick_fu();
+    tick_fu();
 }
 
 
@@ -497,14 +500,19 @@ function restart(){
 	       })
     
 	.html(function(d,i){
-		  
-		  return d.nodehtml;
+		  if (!d.is_youtube_video){
+		      return d.nodehtml;     
+		  }
+		  else{
+		      return "";
+		  }
+		 
 		  
 	      })
     	.on("click",function(d){
 		
 		BurpController.start_edit(d);
-		d.editorActive=true; d.selected=true; 
+		d.selected=true; 
 				
 	    });
     
@@ -521,7 +529,7 @@ function restart(){
 
 function redraw(){
     
-    //console.log("here", d3.event.translate, d3.event.scale);
+    console.log("here", d3.event.translate, d3.event.scale);
  		vis.attr("transform", "translate(" + d3.event.translate + ")" + " scale(" + d3.event.scale + ")");
 	}
 

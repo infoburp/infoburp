@@ -25,8 +25,8 @@ function run_node(){
 
     if (guessNodeType(valedit)=="ytvideo-link"){
 
-	console.log(testIfYTLink(valedit)[1]);
-	render_youtube_video_to_div(document.getElementById("run-node"),testIfYTLink(valedit)[1],400,400);
+	console.log("Yes this is a youtube-link",testIfYTLink(valedit)[1]);
+//	render_youtube_video_to_div(document.getElementById("run-node"),testIfYTLink(valedit)[1],400,400);
 	
     }else{
 	document.getElementById("run-node").innerHTML = valedit;
