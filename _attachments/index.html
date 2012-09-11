@@ -123,35 +123,49 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
      <h1>
 edit node<h1>
     </div></div>
-	  	 <div class="row-fluid">
-  <div class="span1"><!-- normal text icon --> 
-	<img id="_normaltext" src="image/normaltext.png" /></img> </div>
-  <div class="span1"><!-- h1 text icon --> 
-	<img id="_headerone" src="image/headerone.png" /></img> </div>
-  <div class="span1"><!-- h2 text icon --> 
-        <img id="_headertwo" src="image/headertwo.png" /></img> </div>
-  <div class="span1"><!-- bold text icon --> 
-	<img id="_bold" src="image/bold.png" /></img> </div>
-  <div class="span1">	<!-- italic text icon --> 
-	<img id="_italic" src="image/italic.png" /></img> </div>
-  <div class="span1">	<!-- underline text icon --> 
-	<img id="_underline" src="image/underline.png" /></img> </div>
-  <div class="span1"><!-- unordered list text icon --> 
-	<img id="_unorderedlist" src="image/unorderedlist.png" /></img> </div>
-  <div class="span1">	<!-- ordered list text icon --> 
-<img id="_orderedlist" src="image/orderedlist.png" /></img> </div>
-  <div class="span1"><!-- outdent text icon --> 
-	<img id="_outdent" src="image/outdent.png" /></img> </div>
-  <div class="span1"><!-- indent text icon --> 
-	<img id="_indent" src="image/indent.png" /></img> </div>
-  <div class="span1">
-	<!-- link text icon --> 
-	<img id="_link" src="image/link.png" /></img> </div>
-  <div class="span1"><!-- insert image text icon --> 
-	<img id="_insertimage" src="image/insertimage.png" /></img> </div>
- </div>
+	  	 
 <div class="row-fluid">
     <div class="span12">
+<div id="toolbar" style="display: block;">
+    <a data-wysihtml5-command="bold" title="CTRL+B"><img id="_bold" src="image/bold.png" /></img> </a> |
+    <a data-wysihtml5-command="italic" title="CTRL+I"><img id="_italic" src="image/italic.png" /></img></a> |
+    <a data-wysihtml5-command="createLink"><img id="_link" src="image/link.png" /></img></a> |
+    <a data-wysihtml5-command="insertImage"><img id="_insertimage" src="image/insertimage.png" /></img></a> |
+    <a data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h1"><img id="_headerone" src="image/headerone.png" /></img></a> |
+    <a data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h2"> <img id="_headertwo" src="image/headertwo.png" /></img> </a> |
+    <a data-wysihtml5-command="insertUnorderedList"><img id="_unorderedlist" src="image/unorderedlist.png" /></img></a> |
+    <a data-wysihtml5-command="insertOrderedList"><img id="_orderedlist" src="image/orderedlist.png" /></img></a> |
+  
+    <a data-wysihtml5-command="undo">undo</a> |
+    <a data-wysihtml5-command="redo">redo</a> |
+    
+    <a data-wysihtml5-action="change_view">switch to html view</a>
+    
+    <div data-wysihtml5-dialog="createLink" style="display: none;">
+      <label>
+        Link:
+        <input data-wysihtml5-dialog-field="href" value="http://">
+      </label>
+      <a data-wysihtml5-dialog-action="save">OK</a>&nbsp;<a data-wysihtml5-dialog-action="cancel">Cancel</a>
+    </div>
+    
+    <div data-wysihtml5-dialog="insertImage" style="display: none;">
+      <label>
+        Image:
+        <input data-wysihtml5-dialog-field="src" value="http://">
+      </label>
+      <label>
+        Align:
+        <select data-wysihtml5-dialog-field="className">
+          <option value="">default</option>
+          <option value="wysiwyg-float-left">left</option>
+          <option value="wysiwyg-float-right">right</option>
+        </select>
+      </label>
+      <a data-wysihtml5-dialog-action="save">OK</a>&nbsp;<a data-wysihtml5-dialog-action="cancel">Cancel</a>
+    </div>
+    
+  </div>
       <textarea id="burp-edit" class="textarea" placeholder="click a node to select it, drag from node to link or make new nodes..." style="width: 55%; height: 62%">
 	    </textarea> 
     </div></div>
