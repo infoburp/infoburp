@@ -47,9 +47,7 @@ function registerContentTypeHandler(typeName,typeClassifier,summaryRender,primar
 }
 
 
-
-
-var youtubeLinkHandler= function(div,content){
+var youtubeLinkHandler= function(div,content,generate_link){
 
     var id_array = testIfYTLink(content) || testIfYTIframe(content);
     
@@ -64,17 +62,40 @@ var youtubeLinkHandler= function(div,content){
 	// Clearing 	
 	div.innerHTML="";
 
+	if (generate_link){
+
+	    var anchor=document.createElement("a");
+	    anchor.href="http://www.youtube.com/watch?v="+id_array[1];
+	    anchor.target="blank";
+	    anchor.appendChild(img);
+	    div.appendChild(anchor);
+	    
+	}
+	else{
+
 	div.appendChild(img);
+	}
     }
     else{
 	console.log("Failed to find youtube link");
-    }
-    
-    
-
-;
-
+    };
 };
+
+
+var youtubePrimaryRender= function(div,content){
+
+    youtubeLinkHandler(div,content,true);
+
+    
+};
+
+var youtubeSummaryRender= function(div,content){
+
+    youtubeLinkHandler(div,content,false);
+
+    
+};
+
 
 
 registerContentTypeHandler("youtubecontent",
@@ -90,9 +111,10 @@ registerContentTypeHandler("youtubecontent",
 	
     },
     
-    youtubeLinkHandler,
-    
-    youtubeLinkHandler
+    youtubeSummaryRender,
+
+    youtubePrimaryRender
+
 );
 
 
