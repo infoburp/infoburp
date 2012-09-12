@@ -3,18 +3,17 @@ var charge = -2000;
 var gravity = 0.0001;
 var nodetemplate;
 
-nodetemplate = function(node_data)
-	{
-    	    return {
-		nodehtml:node_data.nodehtml,
-		html_need_refresh:true,
-		editorActive:false,
-		selected:false,
-		is_youtube_video:node_data.is_youtube_video,
-		youtube_id:node_data.youtube_id
-	    };
-	    
-	}; // Making just {} makes awesome bug.
+nodetemplate = function(node_data){
+    return {
+	nodehtml:node_data.nodehtml,
+	html_need_refresh:true,
+	editorActive:false,
+	selected:false,
+	is_youtube_video:node_data.is_youtube_video,
+	youtube_id:node_data.youtube_id
+    };
+    
+}; // Making just {} makes awesome bug.
 
 
 linkingradius = 128; // Defines linking distance 
@@ -87,11 +86,12 @@ vis.append("rect").attr("width", "100%").attr("height", "100%").
  * So here we creating pool of unused lines with two classes that created before any circles
  */
 
-var empty_array=[];
+var empty_array = [];
  
 for (var i=0;i<unusedlinks;i++){
-    empty_array.push({source:{x:0,y:0},
-		      target:{x:0,y:0}
+    empty_array.push({
+			 source:{ x:0,  y:0 },
+			 target:{ x:0,  y:0 }
 		     });
 };
 
@@ -226,6 +226,7 @@ function dragend(d, i){
 	
 	
 	// Adding new link if necessary (function checks if source and target are distinct). 
+	//TODO refactor
 	if (add_new_link(d)){
 	}
 	else{
@@ -233,7 +234,8 @@ function dragend(d, i){
 	    /* And if there where no internode links added then we adding new 
 	     * node only if temporal node is far from source
 	     */
-
+	    
+	    //TODO Refactor.
 	    add_new_node(d,X,Y);
 	}
 
@@ -330,5 +332,5 @@ function redraw(){
     
     console.log("here", d3.event.translate, d3.event.scale);
     vis.attr("transform", "translate(" + d3.event.translate + ")" + " scale(" + d3.event.scale + ")");
-	}
+}
 
