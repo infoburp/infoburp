@@ -179,56 +179,6 @@ function link_not_redundant(source_index,target_index){
 }
 
 
-function add_new_link(source_data){
-
-    var yellow_nodes=get_selected_nodes();
-    // If there are selected nodes we get first one and make a link to it
-
-
-    var there_where_selected_nodes=yellow_nodes.length>0;
-
-
-    if (there_where_selected_nodes){
-
-	var target = yellow_nodes[0];	    
-
-	var nodes_are_different=source_data.index !== target.index;
-	var is_link_not_redundant=link_not_redundant(source_data.index,target.index);
-
-	if ( nodes_are_different && is_link_not_redundant ){
-
-	    global_data.links.push({source:source_data,target:target});
-
-	}
-
-	target.selected = false;
-    }
-
-    return there_where_selected_nodes;
-
-}
-
-
-function add_new_node(source_data,X,Y){
-
-    if (GraphController.distance_to_temporal_node(source_data.x,source_data.y)>NODERADIUS){
-
-	var new_node = new nodetemplate(source_data);
-
-	new_node.x = X; 
-	new_node.y = Y;
-
-	global_data.nodes.push( new_node );
-
-	global_data.links.push({
-				    source:source_data,
-				    target:new_node
-				});
-
-    }
-}
-
-
 function tick_fu(){
 
     vis.selectAll("line.link")
