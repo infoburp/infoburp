@@ -8,7 +8,6 @@ nodetemplate = function(node_data)
     	    return {
 		nodehtml:node_data.nodehtml,
 		html_need_refresh:true,
-		showHtml:true,
 		editorActive:false,
 		selected:false,
 		is_youtube_video:node_data.is_youtube_video,
@@ -71,7 +70,7 @@ vis.append("rect").attr("width", "100%").attr("height", "100%").
 	   	 
 	       if (!GraphController.blockdragging){
 	       	   global_data.nodes.forEach(function(d,i){
-
+						 
 						 d.selected = false;
 
 						 // Refreshing view
@@ -151,18 +150,6 @@ function tick_fu(){
 	.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
 
 
-    // This determines if nodehtml wouldbe hidden when editor appear
-    vis.selectAll(".nodehtml")
-	.style("display",function(d){
-	
-	   if (d.showHtml){
-		       return "block";
-		   }
-		   else{
-		       return "none";
-		   }
-	       });
-
     vis.selectAll(".nodehtml")
 	.filter(function(d){
 		    // we are taking only thoose nodes that have html edited 
@@ -177,7 +164,7 @@ function tick_fu(){
 
     vis.selectAll("circle.node")
 	.attr("class",function (d){
-		  if (d.selected || !d.showHtml){
+		  if (d.selected){
 		      
 		      return "node selected_node";
 		  
@@ -317,17 +304,6 @@ function restart(){
 
     var nodehtmls = new_nodes.append("xhtml:div")
 	.attr("class","nodehtml blockdragging")
-	.style("display",function(d){
-		   if ( d.showHtml){
-		       
-		       return "block";
-		   }
-		
-		   else{
-		       return "none";
-		   };
-	       })
-    
 	.each(function(d,i){
 		  attachRender(d);
 		  d.contentWrapper.summary(this);}
