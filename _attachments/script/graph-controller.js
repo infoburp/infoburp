@@ -18,13 +18,23 @@ function add_new_link(source_data){
 	var nodes_are_different=source_data.index !== target.index;
 	var is_link_not_redundant=link_not_redundant(source_data.index,target.index);
 
-	if ( nodes_are_different && is_link_not_redundant ){
+	if ( nodes_are_different && is_link_not_redundant && (GraphController.distance_to_temporal_node(target.x,target.y)<NODERADIUS) ){
 
 	    global_data.links.push({source:source_data,target:target});
 
+	    target.selected = false;
+	}
+	else{
+	    global_data.nodes.forEach(function(d,i){
+			      
+					  console.log("Deselecting all nodes");
+					  
+					  d.selected = false;});
+	    target.selected=!nodes_are_different;
+
 	}
 
-	target.selected = false;
+
     }
 
     return there_where_selected_nodes;
@@ -34,7 +44,7 @@ function add_new_link(source_data){
 
 function add_new_node(source_data,X,Y){
 
-    if (GraphController.distance_to_temporal_node(source_data.x,source_data.y)>NODERADIUS){
+    if (GraphController.distance_to_temporal_node(source_data.x,source_data.y)>NODERADIUS ){
 
 	var new_node = new nodetemplate(source_data);
 
@@ -48,7 +58,14 @@ function add_new_node(source_data,X,Y){
 				    target:new_node
 				});
 
+	return true;
+
     }
+    else{
+
+	return false;
+
+    };
 }
 
 
@@ -59,6 +76,8 @@ function select_nearest_node(source_data,source_event){
     var nodes_distances=GraphController.nodes_distances(source_event.x,source_event.y);
 
     // making all nodes green
+
+    console.log("Deselecting all node from select nearest node");
     global_data.nodes.forEach(function(d){
 				  d.selected=false;
 			      }
@@ -67,10 +86,12 @@ function select_nearest_node(source_data,source_event){
     // making nearest node yellow if it insider radius of linking
  
     var nearest_node=nodes_distances[0];
-    var node_is_near=(nearest_node.distance<linkingradius);
-    var nodes_are_different=(nearest_node.node.index !== source_data.index);
 
-    if (node_is_near && nodes_are_different ){
+    console.log(nodes_distances);
+    var node_is_near=(nearest_node.distance<linkingradius );
+   // var nodes_are_different=(nearest_node.node.index !== source_data.index);
+
+    if (node_is_near ){
 
 	nearest_node.node.selected = true;
  
@@ -114,34 +135,24 @@ function get_graph_controller(vis){
 	    },
 
 
-	blockdragging:false,
 	temporal_link_array:[],
 	temporal_node_array:[],
-
+	
+	dragging_now:false,
 
 	state:{
 	    dragged_node_number:null
 	},
 
-	dragstart_handler:function(d,ev){
+	dragstart_handler:function(d){
 
-	    // Handle dragstart event and return result if event comes from element that blocking dragging i.e. inner node html.
+	    console.log("dragstart handler" ,d,d.selected);
 
-	    if ($(ev.sourceEvent.srcElement).hasClass("blockdragging")){
-
-		// Flag if event come from blockdragging source
-		this.blockdragging=true;
-
-	    }
-	    else{
-
-		//Add new temporary node
-
-		this.add_temporal_node(d.x,d.y);
-		this.add_temporal_link(d,this.temporal_node_array[0]);
-	    }
-
-	    return this.blockdragging;
+	    this.add_temporal_node(d.x,d.y);
+	    this.add_temporal_link(d,this.temporal_node_array[0]);
+	    this.dragging_now=true;
+	    this.refresh_temporal_state();
+	    
 
 
 	},
@@ -155,40 +166,23 @@ function get_graph_controller(vis){
 					      showCircle:true
 				     });
 
-	    this.refresh_temporal_state();
+
 
 	},
-	remove_temporal_node_and_link:function(){
 
+	add_temporal_link:function(source,target){
 
-	    // Dissapearing temporary circle
-	    this.svg_vis.selectAll("circle.temporal_node")
-		.transition()
-		.duration(NODE_APPEARANCE_DURATION/10)
-		.style("opacity",0);
+	    // This function adds one line between source and target expecting source and target has x y fields
 
-	    // Dissapearing and changing color temporary link
-
-	    this.svg_vis.selectAll("line.temporal_link")
-		.transition()
-		.duration(NODE_APPEARANCE_DURATION/2)
-	        .style("stroke-opacity",0);
-
-
-	    // setTimeout work with global context, so this workaround
-
-	    var that =this;
-
-	    setTimeout(function(){
-			   that.temporal_node_array=[];
-			   that.temporal_link_array=[];
-			   this.snap=null;
-			   that.refresh_temporal_state();
-		       },NODE_APPEARANCE_DURATION);
+	    this.temporal_link_array.push({
+				     source:source,
+				     target:target
+				     });
 
 
 
 	},
+
 	refresh_temporal_state:function(){
 
 	    // Refreshing view for temporary elements
@@ -221,19 +215,42 @@ function get_graph_controller(vis){
 
 	},
 
-	add_temporal_link:function(source,target){
+	remove_temporal_node_and_link:function(){
 
-	    // This function adds one line between source and target expecting source and target has x y fields
 
-	    this.temporal_link_array.push({
-				     source:source,
-				     target:target
-				     });
+	    // Dissapearing temporary circle
+	    this.svg_vis.selectAll("circle.temporal_node")
+		.transition()
+		.duration(NODE_APPEARANCE_DURATION/10)
+		.style("opacity",0);
 
-	   this.refresh_temporal_state();
+	    // Dissapearing and changing color temporary link
+
+	    this.svg_vis.selectAll("line.temporal_link")
+		.transition()
+		.duration(NODE_APPEARANCE_DURATION/2)
+	        .style("stroke-opacity",0);
+
+
+	    // setTimeout work with global context, so using this workaround
+
+	    var that = this;
+
+	    setTimeout(function(){
+
+			   that.temporal_node_array=[];
+			   that.temporal_link_array=[];
+			   that.snap=null;
+			   that.dragging_now=false;
+			   that.refresh_temporal_state();
+
+		       },NODE_APPEARANCE_DURATION);
+
 
 
 	},
+
+
 	temporal_tick:function(x,y){
 
 	    // Updating position for temporal node circle and  link line
