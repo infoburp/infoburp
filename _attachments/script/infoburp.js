@@ -3,20 +3,17 @@ var charge = -2000;
 var gravity = 0.0001;
 var nodetemplate;
 
-
-nodetemplate = function(node_data)
-	{
-    	    return {
-		nodehtml:node_data.nodehtml,
-		html_need_refresh:true,
-		showHtml:true,
-		editorActive:false,
-		selected:false,
-		is_youtube_video:node_data.is_youtube_video,
-		youtube_id:node_data.youtube_id
-	    };
-	    
-	}; // Making just {} makes awesome bug.
+nodetemplate = function(node_data){
+    return {
+	nodehtml:node_data.nodehtml,
+	html_need_refresh:true,
+	editorActive:false,
+	selected:false,
+	is_youtube_video:node_data.is_youtube_video,
+	youtube_id:node_data.youtube_id
+    };
+    
+}; // Making just {} makes awesome bug.
 
 
 linkingradius = 128; // Defines linking distance 
@@ -28,13 +25,6 @@ BOTTOM_BUMP_Y = NODERADIUS/2;
 FOREIGN_OBJECT_SIDE = NODERADIUS*1.4142;
 FOREIGN_OBJECT_SHIFT = -NODERADIUS/1.4142;
 unusedlinks = 100; // This is workaround for z order of links. This should be greater than maximum number of links that are displayed.
-
-var burp_data = [{
-		     original_data:{
-			 showHtml:true,
-			 nodehtml:"Hello,world"
-    		     }
-		 }];
 
 var fill = d3.scale.category20();
 
@@ -68,7 +58,6 @@ var vis = d3.select("#graph").append("svg")
     .attr("height", "100%")
     .attr("pointer-events", "all")
     .append('svg:g')
-    .style("vievport-fill","white")
     .call(d3.behavior.zoom().on("zoom", redraw))
     .append('svg:g');
 
@@ -80,7 +69,7 @@ vis.append("rect").attr("width", "100%").attr("height", "100%").
 	   	 
 	       if (!GraphController.blockdragging){
 	       	   global_data.nodes.forEach(function(d,i){
-
+						 
 						 d.selected = false;
 
 						 // Refreshing view
@@ -90,6 +79,27 @@ vis.append("rect").attr("width", "100%").attr("height", "100%").
 	       }
 	   });
 
+
+/* 
+ * There are some problems with z-order in svg.
+ * See for example https://github.com/mbostock/d3/issues/252
+ * So here we creating pool of unused lines with two classes that created before any circles
+ */
+
+var empty_array = [];
+ 
+for (var i=0;i<unusedlinks;i++){
+    empty_array.push({
+			 source:{ x:0,  y:0 },
+			 target:{ x:0,  y:0 }
+		     });
+};
+
+vis.selectAll("line.unused_link")
+    .data(empty_array)
+    .enter()
+    .insert("line")
+    .attr("class","link unused_link");
 
 // Standard force layout see https://github.com/mbostock/d3/wiki/Force-Layout for documentation
 var force = d3.layout.force()
@@ -121,114 +131,6 @@ $.getScript("script/graph-controller.js",function()
 	});
 
 
-function get_selected_nodes(){
-    // Finding selected nodes.
-    // TODO use d3.js instead of jquery for filter
-    return $.grep(global_data.nodes,function(d,n){
-		      return d.selected;
-		  });
-};
-
-function select_nearest_node(source_data,source_event){
-
-    //Calculating distances to nodes
-
-    var nodes_distances=GraphController.nodes_distances(source_event.x,source_event.y);
-
-    // making all nodes green
-    global_data.nodes.forEach(function(d){
-				  d.selected=false;
-			      }
-			     );
-
-    // making nearest node yellow if it insider radius of linking
- 
-    var nearest_node=nodes_distances[0];
-    var node_is_near=(nearest_node.distance<linkingradius);
-    var nodes_are_different=(nearest_node.node.index !== source_data.index);
-
-    if (node_is_near && nodes_are_different ){
-
-	nearest_node.node.selected = true;
- 
- 	GraphController.snap=nearest_node.node;
-
-    }
-    else{
-	// Removing snapping to the node
-	GraphController.snap=null;
-
-    }
-}
-
-
-function link_not_redundant(source_index,target_index){
-
-    var test_function=function(d){
-	
-	var same_s_index=(d.source.index == source_index);
-	var same_t_index=(d.target.index == target_index);
-	var same_t_s_index=(d.target.index == source_index);
-	var same_s_t_index=(d.source.index == target_index);
-
-	return  same_s_index && same_t_index || same_s_t_index && same_t_s_index;
-
-    };
-
-    return !((global_data.links.filter(test_function)).length >0);
-}
-
-
-function add_new_link(source_data){
-
-    var yellow_nodes=get_selected_nodes();
-    // If there are selected nodes we get first one and make a link to it
-
-
-    var there_where_selected_nodes=yellow_nodes.length>0;
-
-
-    if (there_where_selected_nodes){
-
-	var target = yellow_nodes[0];	    
-
-	var nodes_are_different=source_data.index !== target.index;
-	var is_link_not_redundant=link_not_redundant(source_data.index,target.index);
-
-	if ( nodes_are_different && is_link_not_redundant ){
-
-	    global_data.links.push({source:source_data,target:target});
-
-	}
-
-	target.selected = false;
-    }
-
-    return there_where_selected_nodes;
-
-}
-
-
-function add_new_node(source_data,X,Y){
-
-    if (GraphController.distance_to_temporal_node(source_data.x,source_data.y)>NODERADIUS){
-
-	var new_node = new nodetemplate(source_data);
-
-	new_node.x = X; 
-	new_node.y = Y;
-
-	global_data.nodes.push( new_node );
-
-	global_data.links.push({
-				    source:source_data,
-				    target:new_node
-				});
-
-    }
-}
-
-
 function tick_fu(){
 
     vis.selectAll("line.link")
@@ -248,32 +150,21 @@ function tick_fu(){
 	.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
 
 
-    // This determines if nodehtml wouldbe hidden when editor appear
-    vis.selectAll(".nodehtml")
-	.style("display",function(d){
-	
-	   if (d.showHtml){
-		       return "block";
-		   }
-		   else{
-		       return "none";
-		   }
-	       });
-
     vis.selectAll(".nodehtml")
 	.filter(function(d){
-		    // we are taking only thoose nodes that have html edited and is youtube video
+		    // we are taking only thoose nodes that have html edited 
 		    return d.html_need_refresh;
 		})
 	.each(function(d,i){
-		  //marking that we refreshed this html
+
 		  d.contentWrapper.summary(this);
+		  //marking that we refreshed this html
 		  d.html_need_refresh=false;
 	      });
 
     vis.selectAll("circle.node")
 	.attr("class",function (d){
-		  if (d.selected || !d.showHtml){
+		  if (d.selected){
 		      
 		      return "node selected_node";
 		  
@@ -287,8 +178,8 @@ function tick_fu(){
 
 
 force.on("tick",tick_fu);
-force.start();
 
+force.start();
 
 var node_drag = d3.behavior.drag()
 		.on("dragstart", dragstart)
@@ -335,6 +226,7 @@ function dragend(d, i){
 	
 	
 	// Adding new link if necessary (function checks if source and target are distinct). 
+	//TODO refactor
 	if (add_new_link(d)){
 	}
 	else{
@@ -342,7 +234,8 @@ function dragend(d, i){
 	    /* And if there where no internode links added then we adding new 
 	     * node only if temporal node is far from source
 	     */
-
+	    
+	    //TODO Refactor.
 	    add_new_node(d,X,Y);
 	}
 
@@ -362,27 +255,6 @@ function dragend(d, i){
 
 
 function restart(){
-    /* 
-     * There are some problems with z-order in svg.
-     * See for example https://github.com/mbostock/d3/issues/252
-     * So here we creating pool of unused lines with two classes that created before any circles
-     */
-
-    var empty_array = [];
-    
-
-    for (var i=0;i<unusedlinks;i++){
-	empty_array.push({source:{x:0,y:0},
-			  target:{x:0,y:0}
-			 });
-    }
-    
-
-    vis.selectAll("line.unused_link")
-	.data(empty_array)
-	.enter()
-	.insert("line")
-	.attr("class","link unused_link");
     
 
     // Normal links which would reuse pool of unused_links
@@ -428,23 +300,12 @@ function restart(){
 	.attr("x",FOREIGN_OBJECT_SHIFT) //so foreign object is inside circle
 	.attr("y",FOREIGN_OBJECT_SHIFT);
     
-
+    // Deleting excessive nodes.
     nodeSelection.exit().remove();
 
 
     var nodehtmls = new_nodes.append("xhtml:div")
 	.attr("class","nodehtml blockdragging")
-	.style("display",function(d){
-		   if ( d.showHtml){
-		       
-		       return "block";
-		   }
-		
-		   else{
-		       return "none";
-		   };
-	       })
-    
 	.each(function(d,i){
 		  attachRender(d);
 		  d.contentWrapper.summary(this);}
@@ -470,6 +331,6 @@ function restart(){
 function redraw(){
     
     console.log("here", d3.event.translate, d3.event.scale);
- 		vis.attr("transform", "translate(" + d3.event.translate + ")" + " scale(" + d3.event.scale + ")");
-	}
+    vis.attr("transform", "translate(" + d3.event.translate + ")" + " scale(" + d3.event.scale + ")");
+}
 

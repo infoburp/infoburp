@@ -1,5 +1,107 @@
 TEMPORARY_NODE_CIRCLE_RADIUS=20;
 
+function add_new_link(source_data){
+
+    var yellow_nodes=global_data.nodes.filter(function(d) {
+						return d.selected;
+					    });
+    // If there are selected nodes we get first one and make a link to it
+
+
+    var there_where_selected_nodes=yellow_nodes.length>0;
+
+
+    if (there_where_selected_nodes){
+
+	var target = yellow_nodes[0];	    
+
+	var nodes_are_different=source_data.index !== target.index;
+	var is_link_not_redundant=link_not_redundant(source_data.index,target.index);
+
+	if ( nodes_are_different && is_link_not_redundant ){
+
+	    global_data.links.push({source:source_data,target:target});
+
+	}
+
+	target.selected = false;
+    }
+
+    return there_where_selected_nodes;
+
+}
+
+
+function add_new_node(source_data,X,Y){
+
+    if (GraphController.distance_to_temporal_node(source_data.x,source_data.y)>NODERADIUS){
+
+	var new_node = new nodetemplate(source_data);
+
+	new_node.x = X; 
+	new_node.y = Y;
+
+	global_data.nodes.push( new_node );
+
+	global_data.links.push({
+				    source:source_data,
+				    target:new_node
+				});
+
+    }
+}
+
+
+function select_nearest_node(source_data,source_event){
+
+    //Calculating distances to nodes
+
+    var nodes_distances=GraphController.nodes_distances(source_event.x,source_event.y);
+
+    // making all nodes green
+    global_data.nodes.forEach(function(d){
+				  d.selected=false;
+			      }
+			     );
+
+    // making nearest node yellow if it insider radius of linking
+ 
+    var nearest_node=nodes_distances[0];
+    var node_is_near=(nearest_node.distance<linkingradius);
+    var nodes_are_different=(nearest_node.node.index !== source_data.index);
+
+    if (node_is_near && nodes_are_different ){
+
+	nearest_node.node.selected = true;
+ 
+ 	GraphController.snap=nearest_node.node;
+
+    }
+    else{
+	// Removing snapping to the node
+	GraphController.snap=null;
+
+    }
+}
+
+
+function link_not_redundant(source_index,target_index){
+
+    var test_function=function(d){
+	
+	var same_s_index=(d.source.index == source_index);
+	var same_t_index=(d.target.index == target_index);
+	var same_t_s_index=(d.target.index == source_index);
+	var same_s_t_index=(d.source.index == target_index);
+
+	return  same_s_index && same_t_index || same_s_t_index && same_t_s_index;
+
+    };
+
+    return !((global_data.links.filter(test_function)).length >0);
+}
+
+
 function get_graph_controller(vis){
     
     return {

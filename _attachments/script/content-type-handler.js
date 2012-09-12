@@ -1,3 +1,8 @@
+YTH_THUMBNAIL_NUMBER=3;
+YTH_THUMBNAIL_HEIGHT=90;
+YTH_THUMBNAIL_WIDTH=120;
+
+
 var registeredContentTypeHandlers=[];
 
 function registerContentTypeHandler(typeName,typeClassifier,summaryRender,primaryRender){
@@ -46,17 +51,15 @@ function registerContentTypeHandler(typeName,typeClassifier,summaryRender,primar
 
 var youtubeLinkHandler= function(div,content){
 
-    var txt=content;
-    console.log(txt);
-    var regex_link = /http\:\/\/www\.youtube\.com\/watch\?v=(.{11})/;
-    var regex_iframe=/<iframe.+http\:\/\/www\.youtube\.com\/embed\/(.{11}).+iframe>/;
-    
-    var id_array = txt.match(regex_link) || txt.match(regex_iframe);
+    var id_array = testIfYTLink(content) || testIfYTIframe(content);
     
     if (id_array){
 	
 	var img=document.createElement("img");
-	img.src="http://img.youtube.com/vi/"+id_array[1]+"/0.jpg";
+
+	img.height=YTH_THUMBNAIL_HEIGHT;
+	img.width=YTH_THUMBNAIL_WIDTH;
+	img.src="http://img.youtube.com/vi/"+id_array[1]+"/"+YTH_THUMBNAIL_NUMBER+".jpg";
 
 	// Clearing 	
 	div.innerHTML="";
@@ -70,6 +73,7 @@ var youtubeLinkHandler= function(div,content){
     
 
 ;
+
 };
 
 
