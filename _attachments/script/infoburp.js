@@ -28,12 +28,13 @@ FOREIGN_OBJECT_SIDE = NODERADIUS*1.4142;
 FOREIGN_OBJECT_SHIFT = -NODERADIUS/1.4142;
 unusedlinks = 100; // This is workaround for z order of links. This should be greater than maximum number of links that are displayed.
 
-var burp_data = [{
+/*var burp_data = [{
 		     original_data:{
 			 showHtml:true,
 			 nodehtml:"Hello,world"
     		     }
 		 }];
+*/
 
 var fill = d3.scale.category20();
 
@@ -198,8 +199,8 @@ function tick_fu(){
 
 
 force.on("tick",tick_fu);
-force.start();
 
+force.start();
 
 var node_drag = d3.behavior.drag()
 		.on("dragstart", dragstart)
