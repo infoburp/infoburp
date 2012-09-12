@@ -68,7 +68,6 @@ var vis = d3.select("#graph").append("svg")
     .attr("height", "100%")
     .attr("pointer-events", "all")
     .append('svg:g')
-    .style("vievport-fill","white")
     .call(d3.behavior.zoom().on("zoom", redraw))
     .append('svg:g');
 
