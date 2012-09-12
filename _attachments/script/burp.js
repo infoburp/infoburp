@@ -29,7 +29,7 @@ function getBurpController(input){
 		this.reset_input_object_state();
 	    }
 	    else {
-		console.log("trying to edit unselected node",d);
+//		console.log("trying to edit unselected node",d);
 	    }
 	},
 
@@ -74,7 +74,7 @@ function getBurpController(input){
 	    original_data.selected=true;
 
 	    this.burp_data=[{original_data:original_data}];
-	    console.log(this.burp_data);
+//	    console.log(this.burp_data);
 
 	    this.reset_input_object_state();
 	    this.input_object.value=original_data.nodehtml;

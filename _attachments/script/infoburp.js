@@ -70,6 +70,8 @@ vis.append("rect").attr("width", "100%").attr("height", "100%").
 	       if (!GraphController.blockdragging){
 	       	   global_data.nodes.forEach(function(d,i){
 						 
+						 //console.log("Deselecting all nodes");
+						 
 						 d.selected = false;
 
 						 // Refreshing view
@@ -189,19 +191,19 @@ var node_drag = d3.behavior.drag()
 
 function dragstart(d, i){
     force.stop(); // stops the force auto positioning before you start dragging
-    GraphController.dragstart_handler(d,d3.event);   
+
+//    console.log("dragstart",d);
+    d.selected=true;
+//    console.log("dragstart end",d,d.selected);
+    GraphController.dragstart_handler(d);   
+//    console.log("dragstart end",d);
+
 }
 
 
 function dragmove(d, i){
-    // We do this things only if click originated on element that dont't block dragging
-    if (!GraphController.blockdragging){
 
-	//Moving temp node;
-	GraphController.temporal_tick(d3.event.x,d3.event.y);
-
-    }
-    
+    GraphController.temporal_tick(d3.event.x,d3.event.y);
 
     // Selecting node nearest to mouse event
     select_nearest_node(d,d3.event);
@@ -212,9 +214,6 @@ function dragmove(d, i){
 
 
 function dragend(d, i){
-    // We do these things only if click originated on element that doesn't block dragging
-    if (!GraphController.blockdragging){
-	
 
 	// Saving last temporal node coordinates before removing
 	var X=GraphController.temporal_node_array[0].x;
@@ -236,21 +235,31 @@ function dragend(d, i){
 	     */
 	    
 	    //TODO Refactor.
-	    add_new_node(d,X,Y);
+	    if(add_new_node(d,X,Y)){
+		
+//		console.log('new node added',d);
+		d.selected=false;
+
+	    }
+	    else{
+		d.selected=true;		
+	    }
+
+	    ;
 	}
+
+    
+    if (d.selected){
+	//TODO refactor
+	run_node();
+	
+	BurpController.start_edit(d);
+    };
 
 	// Refreshing svg after modifying data
 	restart();
 	force.start(); 
-    }
-    else{
-	
-	//Resetting blockdragging state
-	GraphController.blockdragging=false;
 
-	// making one step to color selected node
-	setTimeout(tick_fu,10);
-    }
 };
 
 
@@ -305,23 +314,11 @@ function restart(){
 
 
     var nodehtmls = new_nodes.append("xhtml:div")
-	.attr("class","nodehtml blockdragging")
+	.attr("class","nodehtml")
 	.each(function(d,i){
 		  attachRender(d);
 		  d.contentWrapper.summary(this);}
-	     )
-    	.on("click",function(d){
-		
-
-		d.selected=true; 
-
-		//TODO refactor
-		run_node();
-
-		BurpController.start_edit(d);
-				
-	    });
-    
+	     );
 
     nodehtmls
 	.style("opacity",0)
