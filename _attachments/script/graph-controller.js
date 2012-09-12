@@ -2,7 +2,9 @@ TEMPORARY_NODE_CIRCLE_RADIUS=20;
 
 function add_new_link(source_data){
 
-    var yellow_nodes=get_selected_nodes();
+    var yellow_nodes=global_data.nodes.filter(function(d) {
+						return d.selected;
+					    });
     // If there are selected nodes we get first one and make a link to it
 
 

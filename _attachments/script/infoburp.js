@@ -139,15 +139,6 @@ $.getScript("script/graph-controller.js",function()
 	});
 
 
-function get_selected_nodes(){
-    // Finding selected nodes.
-    // TODO use d3.js instead of jquery for filter
-    return $.grep(global_data.nodes,function(d,n){
-		      return d.selected;
-		  });
-};
-
-
 function tick_fu(){
 
     vis.selectAll("line.link")
