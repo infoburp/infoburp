@@ -312,8 +312,13 @@ function restart(){
 	     )
     	.on("click",function(d){
 		
-		BurpController.start_edit(d);
+
 		d.selected=true; 
+
+		//TODO refactor
+		run_node();
+
+		BurpController.start_edit(d);
 				
 	    });
     
