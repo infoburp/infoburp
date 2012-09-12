@@ -3,7 +3,6 @@ var charge = -2000;
 var gravity = 0.0001;
 var nodetemplate;
 
-
 nodetemplate = function(node_data)
 	{
     	    return {
@@ -89,6 +88,26 @@ vis.append("rect").attr("width", "100%").attr("height", "100%").
 	       }
 	   });
 
+
+/* 
+ * There are some problems with z-order in svg.
+ * See for example https://github.com/mbostock/d3/issues/252
+ * So here we creating pool of unused lines with two classes that created before any circles
+ */
+
+var empty_array=[];
+ 
+for (var i=0;i<unusedlinks;i++){
+    empty_array.push({source:{x:0,y:0},
+		      target:{x:0,y:0}
+		     });
+};
+
+vis.selectAll("line.unused_link")
+    .data(empty_array)
+    .enter()
+    .insert("line")
+    .attr("class","link unused_link");
 
 // Standard force layout see https://github.com/mbostock/d3/wiki/Force-Layout for documentation
 var force = d3.layout.force()
@@ -263,27 +282,6 @@ function dragend(d, i){
 
 
 function restart(){
-    /* 
-     * There are some problems with z-order in svg.
-     * See for example https://github.com/mbostock/d3/issues/252
-     * So here we creating pool of unused lines with two classes that created before any circles
-     */
-
-    var empty_array = [];
-    
-
-    for (var i=0;i<unusedlinks;i++){
-	empty_array.push({source:{x:0,y:0},
-			  target:{x:0,y:0}
-			 });
-    }
-    
-
-    vis.selectAll("line.unused_link")
-	.data(empty_array)
-	.enter()
-	.insert("line")
-	.attr("class","link unused_link");
     
 
     // Normal links which would reuse pool of unused_links
@@ -329,7 +327,7 @@ function restart(){
 	.attr("x",FOREIGN_OBJECT_SHIFT) //so foreign object is inside circle
 	.attr("y",FOREIGN_OBJECT_SHIFT);
     
-
+    // Deleting excessive nodes.
     nodeSelection.exit().remove();
 
 
@@ -371,6 +369,6 @@ function restart(){
 function redraw(){
     
     console.log("here", d3.event.translate, d3.event.scale);
- 		vis.attr("transform", "translate(" + d3.event.translate + ")" + " scale(" + d3.event.scale + ")");
+    vis.attr("transform", "translate(" + d3.event.translate + ")" + " scale(" + d3.event.scale + ")");
 	}
 
