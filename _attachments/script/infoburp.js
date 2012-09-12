@@ -262,12 +262,13 @@ function tick_fu(){
 
     vis.selectAll(".nodehtml")
 	.filter(function(d){
-		    // we are taking only thoose nodes that have html edited and is youtube video
+		    // we are taking only thoose nodes that have html edited 
 		    return d.html_need_refresh;
 		})
 	.each(function(d,i){
-		  //marking that we refreshed this html
+
 		  d.contentWrapper.summary(this);
+		  //marking that we refreshed this html
 		  d.html_need_refresh=false;
 	      });
 
