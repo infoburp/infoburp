@@ -26,12 +26,13 @@ function add_new_link(source_data){
 	}
 	else{
 	    global_data.nodes.forEach(function(d,i){
-			      
-					  console.log("Deselecting all nodes");
+					  
+	//				  console.log("Deselecting all nodes");
 					  
 					  d.selected = false;});
+	
 	    target.selected=!nodes_are_different;
-
+	    
 	}
 
 
@@ -77,7 +78,8 @@ function select_nearest_node(source_data,source_event){
 
     // making all nodes green
 
-    console.log("Deselecting all node from select nearest node");
+//    console.log("Deselecting all node from select nearest node");
+  
     global_data.nodes.forEach(function(d){
 				  d.selected=false;
 			      }
@@ -87,7 +89,9 @@ function select_nearest_node(source_data,source_event){
  
     var nearest_node=nodes_distances[0];
 
-    console.log(nodes_distances);
+//    console.log(nodes_distances);
+
+
     var node_is_near=(nearest_node.distance<linkingradius );
    // var nodes_are_different=(nearest_node.node.index !== source_data.index);
 
@@ -146,7 +150,7 @@ function get_graph_controller(vis){
 
 	dragstart_handler:function(d){
 
-	    console.log("dragstart handler" ,d,d.selected);
+//	    console.log("dragstart handler" ,d,d.selected);
 
 	    this.add_temporal_node(d.x,d.y);
 	    this.add_temporal_link(d,this.temporal_node_array[0]);

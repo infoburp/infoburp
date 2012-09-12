@@ -70,7 +70,7 @@ vis.append("rect").attr("width", "100%").attr("height", "100%").
 	       if (!GraphController.blockdragging){
 	       	   global_data.nodes.forEach(function(d,i){
 						 
-						 console.log("Deselecting all nodes");
+						 //console.log("Deselecting all nodes");
 						 
 						 d.selected = false;
 
@@ -192,11 +192,11 @@ var node_drag = d3.behavior.drag()
 function dragstart(d, i){
     force.stop(); // stops the force auto positioning before you start dragging
 
-    console.log("dragstart",d);
+//    console.log("dragstart",d);
     d.selected=true;
-    console.log("dragstart end",d,d.selected);
+//    console.log("dragstart end",d,d.selected);
     GraphController.dragstart_handler(d);   
-    console.log("dragstart end",d);
+//    console.log("dragstart end",d);
 
 }
 
@@ -237,7 +237,7 @@ function dragend(d, i){
 	    //TODO Refactor.
 	    if(add_new_node(d,X,Y)){
 		
-		console.log('new node added',d);
+//		console.log('new node added',d);
 		d.selected=false;
 
 	    }
@@ -319,18 +319,6 @@ function restart(){
 		  attachRender(d);
 		  d.contentWrapper.summary(this);}
 	     );
-/*    	.on("click",function(d){
-		
-
-		d.selected=true; 
-
-		//TODO refactor
-		run_node();
-
-		BurpController.start_edit(d);
-				
-	    });*/
-    
 
     nodehtmls
 	.style("opacity",0)

@@ -27,7 +27,7 @@ function registerContentTypeHandler(typeName,typeClassifier,summaryRender,primar
 		
 		summary:function (div){
 
-		    console.log(summaryRender,this.typeName);
+//		    console.log(summaryRender,this.typeName);
 		    summaryRender(div,this.wrapped_content);
 		},
 		
@@ -77,7 +77,7 @@ var youtubeLinkHandler= function(div,content,generate_link){
 	}
     }
     else{
-	console.log("Failed to find youtube link");
+//	console.log("Failed to find youtube link");
     };
 };
 
@@ -100,10 +100,10 @@ var youtubeSummaryRender= function(div,content){
 
 registerContentTypeHandler("youtubecontent",
     function youtubeclassifier (content){
-	console.log("content from youtube classifier",content);
+//	console.log("content from youtube classifier",content);
 	if (testIfYTLink(content)||testIfYTIframe(content)){
 	    return true;	
-            console.log("This is youtube video");					 
+//            console.log("This is youtube video");					 
 	}
 	else{
 	    return false;
@@ -152,12 +152,12 @@ function attachRender(d){
     
     var l = registeredContentTypeHandlers.length;
     
-    console.log("registered type handlers",registeredContentTypeHandlers,"data",d);
+//    console.log("registered type handlers",registeredContentTypeHandlers,"data",d);
     for (var i = 0;i < l ;i++){
 
 	if (registeredContentTypeHandlers[i].isThis(d.nodehtml)){
 	    
-	    console.log("Wrapping node as",registeredContentTypeHandlers[i].contentType);
+//	    console.log("Wrapping node as",registeredContentTypeHandlers[i].contentType);
 
 	    d.contentWrapper=registeredContentTypeHandlers[i].wrapContent(d.nodehtml);
 
