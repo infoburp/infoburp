@@ -54,39 +54,30 @@ global_data = {
 
 };
 
-
-
-
-
-var vis_unzoomed=d3.select("#graph").append("svg")
-.on("click", function (e){
+var vis=d3.select("#graph").append("svg")
+    .on("click", function (e){
 	       
-	//console.log(d3.event,GraphController.blockdragging);
-	
-	
-	global_data.nodes.forEach(function(d,i){
-						 
-				      console.log("Deselecting all nodes");
-				      
-				      d.selected = false;
-				      // Refreshing view
-				      //tick_fu();
-				  });
+	    console.log(d3.event,d3.event.target.className);
+	if (!(d3.event.target.className=="nodehtml")){
+	    
 
-	console.log("blurring burp from svg");
-	//deselecting editor when clicked on background
-	document.getElementById("burp-edit").blur();
-	
+	    global_data.nodes.forEach(function(d,i){
+					  
+					  console.log("Deselecting all nodes");
+					  d.selected = false;
+					  
+				      });
+	    
+	    document.getElementById("burp-edit").blur();
+	}
 
     })
     .attr("width", "100%")
     .attr("height", "100%")
-    .attr("pointer-events", "all")    .call(d3.behavior.zoom().on("zoom", redraw))
-;
-
-
-var vis = vis_unzoomed
+    .attr("pointer-events", "all")    
+    .call(d3.behavior.zoom().on("zoom", redraw))
     .append('svg:g');
+    
 
 if (COUCHDB) {
 
@@ -99,6 +90,9 @@ if (COUCHDB) {
 else {
 
     global_data.nodes = DEBUG_DATASET.nodes;
+
+
+    // Putting all nodes around center of svg.
 
     (function() {
 		 global_data.nodes.forEach(function(d){
@@ -165,7 +159,6 @@ $.getScript("script/graph-controller.js",function()
 		// Setting up GraphController to this visualisation
 		GraphController = get_graph_controller(vis);
 		restart();
-	    tick_fu();
 	});
 
 
@@ -228,9 +221,9 @@ var node_drag = d3.behavior.drag()
 function dragstart(d, i){
     force.stop(); // stops the force auto positioning before you start dragging
 
-    console.log("dragstart",d);
+//    console.log("dragstart",d);
     d.selected=true;
-    console.log("dragstart end",d,d.selected);
+//    console.log("dragstart end",d,d.selected);
     GraphController.dragstart_handler(d);   
 //    console.log("dragstart end",d);
 
@@ -281,10 +274,9 @@ function dragend(d, i){
 
 	    }
 	    else{
-		d.selected=true;		
-	    }
 
-	    ;
+		d.selected=true;		
+	    };
 	}
      console.log("dragend",d,d.selected);
     
@@ -317,7 +309,16 @@ function restart(){
     
 
     var nodeSelection = vis.selectAll("g.node")
-	.data(global_data.nodes);
+	.data(global_data.nodes)
+	.on("click",function (e){
+
+		/* Stopping propagation of click event so it wouldn't messs with
+		 * svg onclick node deselecting
+		 */
+		d3.event.stopPropagation();
+	    }
+	    
+	   );
     
 
     var nodeEnter = nodeSelection.enter().append("svg:g")
@@ -355,7 +356,11 @@ function restart(){
     var nodehtmls = new_nodes.append("xhtml:div")
 	.attr("class","nodehtml")
 	.each(function(d,i){
+		  
+		  // Initializing render for data
 		  attachRender(d);
+		  
+		  // Rendering data summary to this div
 		  d.contentWrapper.summary(this);}
 	     );
 
