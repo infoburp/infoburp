@@ -28,7 +28,6 @@ function getBurpController(input){
 
 	        // Resetting on blur callback
 	        d3.select(this.input_object).on("blur",function(){});
-		console.log("trying to edit unselected node",d);
 
 	},
 
