@@ -57,22 +57,14 @@ global_data = {
 var vis=d3.select("#graph").append("svg")
     .on("click", function (e){
 	       
-	//console.log(d3.event,GraphController.blockdragging);
-	
-	
 	global_data.nodes.forEach(function(d,i){
 						 
 				      console.log("Deselecting all nodes");
-				      
 				      d.selected = false;
-				      // Refreshing view
-				      //tick_fu();
+
 				  });
 
-	console.log("blurring burp from svg");
-	//deselecting editor when clicked on background
 	document.getElementById("burp-edit").blur();
-	
 
     })
     .attr("width", "100%")
@@ -162,7 +154,6 @@ $.getScript("script/graph-controller.js",function()
 		// Setting up GraphController to this visualisation
 		GraphController = get_graph_controller(vis);
 		restart();
-	    tick_fu();
 	});
 
 

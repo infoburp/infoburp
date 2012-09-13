@@ -23,9 +23,6 @@ function getBurpController(input){
 		d.html_need_refresh=true;
 		d.selected=false;
 
-		//Refreshing view TODO consider refactoring
-	        tick_fu();
-
 		this.burp_data=[];
 		this.reset_input_object_state();
 
