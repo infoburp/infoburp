@@ -73,6 +73,10 @@ vis.append("rect").attr("width", "100%").attr("height", "100%").
 						 //console.log("Deselecting all nodes");
 						 
 						 d.selected = false;
+						 
+						 //deselecting editor when clicked on background
+						 document.getElementById("burp-edit").blur();
+						 
 
 						 // Refreshing view
 						 tick_fu();
