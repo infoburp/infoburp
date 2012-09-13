@@ -54,12 +54,8 @@ global_data = {
 
 };
 
-
-
-
-
-var vis_unzoomed=d3.select("#graph").append("svg")
-.on("click", function (e){
+var vis=d3.select("#graph").append("svg")
+    .on("click", function (e){
 	       
 	//console.log(d3.event,GraphController.blockdragging);
 	
@@ -81,12 +77,10 @@ var vis_unzoomed=d3.select("#graph").append("svg")
     })
     .attr("width", "100%")
     .attr("height", "100%")
-    .attr("pointer-events", "all")    .call(d3.behavior.zoom().on("zoom", redraw))
-;
-
-
-var vis = vis_unzoomed
+    .attr("pointer-events", "all")    
+    .call(d3.behavior.zoom().on("zoom", redraw))
     .append('svg:g');
+    
 
 if (COUCHDB) {
 
@@ -99,6 +93,9 @@ if (COUCHDB) {
 else {
 
     global_data.nodes = DEBUG_DATASET.nodes;
+
+
+    // Putting all nodes around center of svg.
 
     (function() {
 		 global_data.nodes.forEach(function(d){
@@ -228,9 +225,9 @@ var node_drag = d3.behavior.drag()
 function dragstart(d, i){
     force.stop(); // stops the force auto positioning before you start dragging
 
-    console.log("dragstart",d);
+//    console.log("dragstart",d);
     d.selected=true;
-    console.log("dragstart end",d,d.selected);
+//    console.log("dragstart end",d,d.selected);
     GraphController.dragstart_handler(d);   
 //    console.log("dragstart end",d);
 
@@ -282,9 +279,7 @@ function dragend(d, i){
 	    }
 	    else{
 		d.selected=true;		
-	    }
-
-	    ;
+	    };
 	}
      console.log("dragend",d,d.selected);
     
@@ -355,7 +350,11 @@ function restart(){
     var nodehtmls = new_nodes.append("xhtml:div")
 	.attr("class","nodehtml")
 	.each(function(d,i){
+		  
+		  // Initializing render for data
 		  attachRender(d);
+		  
+		  // Rendering data summary to this div
 		  d.contentWrapper.summary(this);}
 	     );
 
