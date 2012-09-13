@@ -16,6 +16,24 @@ nodetemplate = function(node_data){
 }; // Making just {} makes awesome bug.
 
 
+DEBUG_DATASET={
+	         nodes:[nodetemplate({
+					
+					nodehtml:"infoburp.com",
+					is_youtube_video:false,
+					youtube_id:""
+				    }
+
+		       )
+
+
+		],
+    		
+    		links:[ ]
+    
+	};
+
+
 linkingradius = 128; // Defines linking distance 
 NODE_APPEARANCE_DURATION = 128; // ms Time for animation of new node appearance
 NODEINITRADIUS = 20;    // px Animation starts from that radius to noderadius
@@ -70,17 +88,18 @@ vis.append("rect").attr("width", "100%").attr("height", "100%").
 	       if (!GraphController.blockdragging){
 	       	   global_data.nodes.forEach(function(d,i){
 						 
-						 //console.log("Deselecting all nodes");
+						 console.log("Deselecting all nodes");
 						 
 						 d.selected = false;
 						 
+						 console.log("blurring burp");
 						 //deselecting editor when clicked on background
 						 document.getElementById("burp-edit").blur();
 						 
 
 						 // Refreshing view
-						 tick_fu();
-
+						 //tick_fu();
+    
 					     });
 	       }
 	   });
@@ -196,9 +215,9 @@ var node_drag = d3.behavior.drag()
 function dragstart(d, i){
     force.stop(); // stops the force auto positioning before you start dragging
 
-//    console.log("dragstart",d);
+    console.log("dragstart",d);
     d.selected=true;
-//    console.log("dragstart end",d,d.selected);
+    console.log("dragstart end",d,d.selected);
     GraphController.dragstart_handler(d);   
 //    console.log("dragstart end",d);
 
@@ -219,6 +238,7 @@ function dragmove(d, i){
 
 function dragend(d, i){
 
+     console.log("dragend",d,d.selected);
 	// Saving last temporal node coordinates before removing
 	var X=GraphController.temporal_node_array[0].x;
 	var Y=GraphController.temporal_node_array[0].y;
@@ -226,11 +246,13 @@ function dragend(d, i){
 	
 	// Removing temporal link and node
 	GraphController.remove_temporal_node_and_link();
-	
+	     console.log("dragend",d,d.selected);
 	
 	// Adding new link if necessary (function checks if source and target are distinct). 
 	//TODO refactor
 	if (add_new_link(d)){
+
+	    console.log("dragend after add new link",d,d.selected);
 	}
 	else{
 
@@ -251,12 +273,12 @@ function dragend(d, i){
 
 	    ;
 	}
-
+     console.log("dragend",d,d.selected);
     
     if (d.selected){
 	//TODO refactor
 	run_node();
-	
+	document.getElementById("burp-edit").focus();
 	BurpController.start_edit(d);
     };
 

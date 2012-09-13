@@ -2,18 +2,14 @@ TEMPORARY_NODE_CIRCLE_RADIUS=20;
 
 function add_new_link(source_data){
 
-    var yellow_nodes=global_data.nodes.filter(function(d) {
-						return d.selected;
-					    });
     // If there are selected nodes we get first one and make a link to it
 
 
-    var there_where_selected_nodes=yellow_nodes.length>0;
 
 
-    if (there_where_selected_nodes){
+    if (GraphController.snap){
 
-	var target = yellow_nodes[0];	    
+	var target = GraphController.snap;	    
 
 	var nodes_are_different=source_data.index !== target.index;
 	var is_link_not_redundant=link_not_redundant(source_data.index,target.index);
@@ -22,7 +18,7 @@ function add_new_link(source_data){
 	 * node which is temporary link snapped to.
 	 */
 
-	if ( nodes_are_different && is_link_not_redundant && GraphController.snap ){
+	if ( nodes_are_different && is_link_not_redundant ){
 
 	    global_data.links.push({source:source_data,target:target});
 
@@ -38,11 +34,16 @@ function add_new_link(source_data){
 	    target.selected=!nodes_are_different;
 	    
 	}
-
+	
+	return true;
 
     }
+    else{
+    
+	return false;
 
-    return there_where_selected_nodes;
+    }
+ 
 
 }
 
