@@ -71,17 +71,8 @@ else {
 }
 
 
-var vis = d3.select("#graph").append("svg")
-    .attr("width", "100%")
-    .attr("height", "100%")
-    .attr("pointer-events", "all")
-    .append('svg:g')
-    .call(d3.behavior.zoom().on("zoom", redraw))
-    .append('svg:g');
-
-
-vis.append("rect").attr("width", "100%").attr("height", "100%").
-    	on("click", function (e){
+var vis_unzoomed=d3.select("#graph").append("svg")
+.on("click", function (e){
 	       
 	       //console.log(d3.event,GraphController.blockdragging);
 	   	 
@@ -102,8 +93,14 @@ vis.append("rect").attr("width", "100%").attr("height", "100%").
     
 					     });
 	       }
-	   });
+	   })
+    .attr("width", "100%")
+    .attr("height", "100%")
+    .attr("pointer-events", "all")    .call(d3.behavior.zoom().on("zoom", redraw))
+;
 
+var vis = vis_unzoomed
+    .append('svg:g');
 
 /* 
  * There are some problems with z-order in svg.
