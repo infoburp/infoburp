@@ -16,6 +16,24 @@ nodetemplate = function(node_data){
 }; // Making just {} makes awesome bug.
 
 
+DEBUG_DATASET={
+	         nodes:[nodetemplate({
+					
+					nodehtml:"infoburp.com",
+					is_youtube_video:false,
+					youtube_id:""
+				    }
+
+		       )
+
+
+		],
+    		
+    		links:[ ]
+    
+	};
+
+
 linkingradius = 128; // Defines linking distance 
 NODE_APPEARANCE_DURATION = 128; // ms Time for animation of new node appearance
 NODEINITRADIUS = 20;    // px Animation starts from that radius to noderadius
@@ -37,6 +55,41 @@ global_data = {
 };
 
 
+
+
+
+var vis_unzoomed=d3.select("#graph").append("svg")
+.on("click", function (e){
+	       
+	       //console.log(d3.event,GraphController.blockdragging);
+	   	 
+	       if (!GraphController.blockdragging){
+	       	   global_data.nodes.forEach(function(d,i){
+						 
+						 console.log("Deselecting all nodes");
+						 
+						 d.selected = false;
+						 
+						 console.log("blurring burp");
+						 //deselecting editor when clicked on background
+						 document.getElementById("burp-edit").blur();
+						 
+
+						 // Refreshing view
+						 //tick_fu();
+    
+					     });
+	       }
+	   })
+    .attr("width", "100%")
+    .attr("height", "100%")
+    .attr("pointer-events", "all")    .call(d3.behavior.zoom().on("zoom", redraw))
+;
+
+
+var vis = vis_unzoomed
+    .append('svg:g');
+
 if (COUCHDB) {
 
     var previous_graph_state = restore_graph_state();// persistence/basic_persistence.js
@@ -48,38 +101,22 @@ if (COUCHDB) {
 else {
 
     global_data.nodes = DEBUG_DATASET.nodes;
+
+    (function() {
+		 global_data.nodes.forEach(function(d){
+					       var Y=vis.node().viewportElement.clientHeight/2;
+					       var X=vis.node().viewportElement.clientWidth/2;
+					       d.x=X+Math.round(Math.random()*10 -5);
+					       d.y=Y+Math.round(Math.random()*10 -5);
+					       console.log(X,Y,d,vis.node().viewportElement.clientWidth);
+					   });
+		
+		})();
+
+
     global_data.links = DEBUG_DATASET.links;
 
 }
-
-
-var vis = d3.select("#graph").append("svg")
-    .attr("width", "100%")
-    .attr("height", "100%")
-    .attr("pointer-events", "all")
-    .append('svg:g')
-    .call(d3.behavior.zoom().on("zoom", redraw))
-    .append('svg:g');
-
-
-vis.append("rect").attr("width", "100%").attr("height", "100%").
-    	on("click", function (e){
-	       
-	       //console.log(d3.event,GraphController.blockdragging);
-	   	 
-	       if (!GraphController.blockdragging){
-	       	   global_data.nodes.forEach(function(d,i){
-						 
-						 //console.log("Deselecting all nodes");
-						 
-						 d.selected = false;
-
-						 // Refreshing view
-						 tick_fu();
-
-					     });
-	       }
-	   });
 
 
 /* 
@@ -192,9 +229,9 @@ var node_drag = d3.behavior.drag()
 function dragstart(d, i){
     force.stop(); // stops the force auto positioning before you start dragging
 
-//    console.log("dragstart",d);
+    console.log("dragstart",d);
     d.selected=true;
-//    console.log("dragstart end",d,d.selected);
+    console.log("dragstart end",d,d.selected);
     GraphController.dragstart_handler(d);   
 //    console.log("dragstart end",d);
 
@@ -215,6 +252,7 @@ function dragmove(d, i){
 
 function dragend(d, i){
 
+     console.log("dragend",d,d.selected);
 	// Saving last temporal node coordinates before removing
 	var X=GraphController.temporal_node_array[0].x;
 	var Y=GraphController.temporal_node_array[0].y;
@@ -222,11 +260,13 @@ function dragend(d, i){
 	
 	// Removing temporal link and node
 	GraphController.remove_temporal_node_and_link();
-	
+	     console.log("dragend",d,d.selected);
 	
 	// Adding new link if necessary (function checks if source and target are distinct). 
 	//TODO refactor
 	if (add_new_link(d)){
+
+	    console.log("dragend after add new link",d,d.selected);
 	}
 	else{
 
@@ -247,12 +287,12 @@ function dragend(d, i){
 
 	    ;
 	}
-
+     console.log("dragend",d,d.selected);
     
     if (d.selected){
 	//TODO refactor
 	run_node();
-	
+	document.getElementById("burp-edit").focus();
 	BurpController.start_edit(d);
     };
 

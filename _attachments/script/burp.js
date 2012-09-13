@@ -7,6 +7,8 @@ function getBurpController(input){
 	    if (d.selected){
 		
 
+		console.log("resetting input_object value");
+
 		var txt = this.input_object.value;
 		this.input_object.value="";
 
