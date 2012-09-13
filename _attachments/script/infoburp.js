@@ -55,20 +55,7 @@ global_data = {
 };
 
 
-if (COUCHDB) {
 
-    var previous_graph_state = restore_graph_state();// persistence/basic_persistence.js
-
-    global_data.nodes = previous_graph_state.nodes;
-    global_data.links = restore_links(previous_graph_state);
-
-}
-else {
-
-    global_data.nodes = DEBUG_DATASET.nodes;
-    global_data.links = DEBUG_DATASET.links;
-
-}
 
 
 var vis_unzoomed=d3.select("#graph").append("svg")
@@ -99,8 +86,38 @@ var vis_unzoomed=d3.select("#graph").append("svg")
     .attr("pointer-events", "all")    .call(d3.behavior.zoom().on("zoom", redraw))
 ;
 
+
 var vis = vis_unzoomed
     .append('svg:g');
+
+if (COUCHDB) {
+
+    var previous_graph_state = restore_graph_state();// persistence/basic_persistence.js
+
+    global_data.nodes = previous_graph_state.nodes;
+    global_data.links = restore_links(previous_graph_state);
+
+}
+else {
+
+    global_data.nodes = DEBUG_DATASET.nodes;
+
+    (function() {
+		 global_data.nodes.forEach(function(d){
+					       var Y=vis.node().viewportElement.clientHeight/2;
+					       var X=vis.node().viewportElement.clientWidth/2;
+					       d.x=X+Math.round(Math.random()*10 -5);
+					       d.y=Y+Math.round(Math.random()*10 -5);
+					       console.log(X,Y,d,vis.node().viewportElement.clientWidth);
+					   });
+		
+		})();
+
+
+    global_data.links = DEBUG_DATASET.links;
+
+}
+
 
 /* 
  * There are some problems with z-order in svg.
