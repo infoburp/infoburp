@@ -23,15 +23,11 @@ function getBurpController(input){
 		d.html_need_refresh=true;
 		d.selected=false;
 
-		//Refreshing view TODO consider refactoring
-	        tick_fu();
-
 		this.burp_data=[];
 		this.reset_input_object_state();
 
 	        // Resetting on blur callback
 	        d3.select(this.input_object).on("blur",function(){});
-		console.log("trying to edit unselected node",d);
 
 	},
 

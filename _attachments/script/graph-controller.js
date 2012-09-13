@@ -5,9 +5,14 @@ function add_new_link(source_data){
     // If there are selected nodes we get first one and make a link to it
 
 
+    console.log("add new link",source_data,GraphController.snap);
 
 
-    if (GraphController.snap){
+    /*  && GraphContorller.snap.index is workaround for some race condition or something.
+     *  TODO Debug it
+     */
+
+    if (GraphController.snap && GraphController.snap.index){
 
 	var target = GraphController.snap;	    
 
