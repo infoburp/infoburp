@@ -17,8 +17,12 @@ function add_new_link(source_data){
 
 	var nodes_are_different=source_data.index !== target.index;
 	var is_link_not_redundant=link_not_redundant(source_data.index,target.index);
+	
+	/* Adding link if nodes are different , link is not duplicate and there is 
+	 * node which is temporary link snapped to.
+	 */
 
-	if ( nodes_are_different && is_link_not_redundant && (GraphController.distance_to_temporal_node(target.x,target.y)<NODERADIUS) ){
+	if ( nodes_are_different && is_link_not_redundant && GraphController.snap ){
 
 	    global_data.links.push({source:source_data,target:target});
 
