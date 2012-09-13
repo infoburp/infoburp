@@ -57,14 +57,19 @@ global_data = {
 var vis=d3.select("#graph").append("svg")
     .on("click", function (e){
 	       
-	global_data.nodes.forEach(function(d,i){
-						 
-				      console.log("Deselecting all nodes");
-				      d.selected = false;
+	    console.log(d3.event,d3.event.target.className);
+	if (!(d3.event.target.className=="nodehtml")){
+	    
 
-				  });
-
-	document.getElementById("burp-edit").blur();
+	    global_data.nodes.forEach(function(d,i){
+					  
+					  console.log("Deselecting all nodes");
+					  d.selected = false;
+					  
+				      });
+	    
+	    document.getElementById("burp-edit").blur();
+	}
 
     })
     .attr("width", "100%")
@@ -269,6 +274,7 @@ function dragend(d, i){
 
 	    }
 	    else{
+
 		d.selected=true;		
 	    };
 	}
@@ -303,7 +309,16 @@ function restart(){
     
 
     var nodeSelection = vis.selectAll("g.node")
-	.data(global_data.nodes);
+	.data(global_data.nodes)
+	.on("click",function (e){
+
+		/* Stopping propagation of click event so it wouldn't messs with
+		 * svg onclick node deselecting
+		 */
+		d3.event.stopPropagation();
+	    }
+	    
+	   );
     
 
     var nodeEnter = nodeSelection.enter().append("svg:g")
