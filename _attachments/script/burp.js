@@ -4,14 +4,13 @@ function getBurpController(input){
 	input_object:input,
 
 	node_edit_end_handle: function(d){
-	    if (d.selected){
-		
 
 		console.log("resetting input_object value");
 
 		var txt = this.input_object.value;
 		this.input_object.value="";
-
+		
+		console.log("txt",txt);
 
 		if (txt) {      
 		    d.nodehtml = txt;
@@ -29,10 +28,11 @@ function getBurpController(input){
 
 		this.burp_data=[];
 		this.reset_input_object_state();
-	    }
-	    else {
-//		console.log("trying to edit unselected node",d);
-	    }
+
+	        // Resetting on blur callback
+	        d3.select(this.input_object).on("blur",function(){});
+		console.log("trying to edit unselected node",d);
+
 	},
 
 	reset_input_object_state:function(){
@@ -41,11 +41,7 @@ function getBurpController(input){
 	    var input_object_selection= d3.select(input)
 		.data(this.burp_data)
 		.on("blur", function(d){
-			if (d.original_data.selected){
-			    
-			
-			that.node_edit_end_handle(d.original_data);}
-			
+			that.node_edit_end_handle(d.original_data);
 		    })
 		.on("keypress", function(d){
 

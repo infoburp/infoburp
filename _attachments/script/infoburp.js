@@ -61,26 +61,24 @@ global_data = {
 var vis_unzoomed=d3.select("#graph").append("svg")
 .on("click", function (e){
 	       
-	       //console.log(d3.event,GraphController.blockdragging);
-	   	 
-	       if (!GraphController.blockdragging){
-	       	   global_data.nodes.forEach(function(d,i){
+	//console.log(d3.event,GraphController.blockdragging);
+	
+	
+	global_data.nodes.forEach(function(d,i){
 						 
-						 console.log("Deselecting all nodes");
-						 
-						 d.selected = false;
-						 
-						 console.log("blurring burp");
-						 //deselecting editor when clicked on background
-						 document.getElementById("burp-edit").blur();
-						 
+				      console.log("Deselecting all nodes");
+				      
+				      d.selected = false;
+				      // Refreshing view
+				      //tick_fu();
+				  });
 
-						 // Refreshing view
-						 //tick_fu();
-    
-					     });
-	       }
-	   })
+	console.log("blurring burp from svg");
+	//deselecting editor when clicked on background
+	document.getElementById("burp-edit").blur();
+	
+
+    })
     .attr("width", "100%")
     .attr("height", "100%")
     .attr("pointer-events", "all")    .call(d3.behavior.zoom().on("zoom", redraw))
@@ -167,6 +165,7 @@ $.getScript("script/graph-controller.js",function()
 		// Setting up GraphController to this visualisation
 		GraphController = get_graph_controller(vis);
 		restart();
+	    tick_fu();
 	});
 
 
