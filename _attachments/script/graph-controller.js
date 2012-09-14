@@ -1,31 +1,276 @@
+goog.provide("infoburp.GraphController");
+
+
+infoburp.GraphController= function (vis) {
+
+	this.svgVis=vis;
+
+        this.snap={
+	    x:null,
+	    y:null
+	};
+
+	this.temporalLinkArray=[];
+	this.temporalNodeArray=[];
+	
+	this.draggingNow=false;
+
+	this.state={
+	    draggedNodeNumber:null
+	};
+};
+
+
+
+infoburp.GraphController.prototype.dragStartHandler=function(d){
+
+    //	    console.log("dragstart handler" ,d,d.selected);
+
+	    this.addTemporalNode(d.x,d.y);
+	    this.addTemporalLink(d,this.temporalNodeArray[0]);
+	    this.draggingNow=true;
+	    this.refreshTemporalState();
+};
+
+
+      
+
+    
+
+infoburp.GraphController.prototype.addTemporalNode=function(x,y){
+    // This function adds one circle on x y 
+    
+    this.temporalNodeArray.push({
+				    x:x,
+				    y:y,
+				    showCircle:true
+				});
+    
+        
+};
+
+
+infoburp.GraphController.prototype.refreshTemporalState=function(){
+    
+    // Refreshing view for temporary elements
+    
+    
+    // Creating circle that is denotes temporary node
+    var temporalNodeSelection=this.svgVis.selectAll("circle.temporal_node")
+	.data(this.temporalNodeArray);
+    
+    temporalNodeSelection.enter().insert("circle")
+	.attr("class","temporal_node")
+	.attr("r",TEMPORARY_NODE_CIRCLE_RADIUS)
+	.attr("transform", function(d) {return "translate(" + d.x + "," + d.y + ")"; });;
+    
+    temporalNodeSelection.exit().remove();
+    
+    //  this.temporalLinkArray[0].target=this.temporal_node_array[0];
+    
+    // Creating temporary link.
+    var temporalLinkSelection=this.svgVis.selectAll("line.temporal_link")
+	.data(this.temporalLinkArray);
+    
+    
+    temporalLinkSelection.enter().insert("line","circle.temporal_node")
+	.attr("class","temporal_link")
+	.call(linkCoordinatesSet);
+	    
+    temporalLinkSelection.exit().remove();
+    
+};
+
+
+
+
+
+
+
+infoburp.GraphController.prototype.nodesDistances= function(x,y){
+
+    // This function calculates for all global_data.nodes objects distance to x,y and returns nearest node
+    
+    var distanceArray=[];
+    
+    var that=this;
+    
+    global_data.nodes.forEach(function(current,num){
+				  
+				  distanceArray.push({
+							  node:current,
+							  index:num,
+							  distance:that.distanceToNode(x,y,current)
+						      }
+						     );
+				  
+				  
+			      });
+    
+    
+    
+	    distanceArray.sort(function(a,b){
+				    
+				    // We are sorting in descending order so nearest node comes first
+				    
+				    return (a.distance - b.distance);
+				    
+				} );
+    
+    return distanceArray;
+    
+};
+
+
+
+
+infoburp.GraphController.prototype.distanceToTemporalNode=function(x,y){
+    
+    return this.distanceToNode(x,y,this.temporalNodeArray[0]);
+};
+
+
+
+
+infoburp.GraphController.prototype.distanceToNode=function(x,y,nodeData){
+
+	    X=x-nodeData.x;
+	    Y=y-nodeData.y;
+
+	    return Math.sqrt(X*X+Y*Y);
+
+	},
+
+
+
+
+infoburp.GraphController.prototype.temporalTick=function(x,y){
+    
+    // Updating position for temporal node circle and  link line
+    
+    this.temporalNodeArray[0].x=x;
+    this.temporalNodeArray[0].y=y;
+    this.svgVis.selectAll("circle.temporal_node")
+	.style("opacity",function(d){
+		   if (d.showCircle){
+		       return 1;
+		   }
+		   else
+		   {
+		       return 0;
+		   }
+
+	       })
+    
+	.attr("transform", function(d) {return "translate(" + d.x + "," + d.y + ")"; });
+    
+    
+	    if (this.snap !== null){
+		
+		
+		this.temporalLinkArray[0].target=this.snap;
+		
+		this.temporalNodeArray[0].showCircle=false;
+		
+	    }else{
+		
+		this.temporalLinkArray[0].target=this.temporalNodeArray[0];
+		this.temporalNodeArray[0].showCircle=true;		
+	    }
+    
+    this.svgVis.selectAll("line.temporal_link")
+	.attr("x1", function(d) { return d.source.x; })
+	.attr("y1", function(d) { return d.source.y; })
+	.attr("x2", function(d) { return d.target.x; })
+	.attr("y2", function(d) { return d.target.y; });
+    
+
+
+};
+
+
+
+
+infoburp.GraphController.prototype.removeTemporalNodeAndLink=function(){
+	    // Dissapearing temporary circle
+	    this.svgVis.selectAll("circle.temporal_node")
+		.transition()
+		.duration(NODE_APPEARANCE_DURATION/10)
+		.style("opacity",0);
+
+	    // Dissapearing and changing color temporary link
+
+	    this.svgVis.selectAll("line.temporal_link")
+		.transition()
+		.duration(NODE_APPEARANCE_DURATION/2)
+	        .style("stroke-opacity",0);
+
+
+	    // setTimeout work with global context, so using this workaround
+
+	    var that = this;
+
+	    setTimeout(function(){
+
+			   that.temporalNodeArray=[];
+			   that.temporalLinkArray=[];
+			   that.snap=null;
+			   that.draggingNow=false;
+			   that.refreshTemporalState();
+			   
+		       },NODE_APPEARANCE_DURATION);
+    
+
+
+};
+
+
+
+
+infoburp.GraphController.prototype.addTemporalLink=function(source,target){
+    
+    // This function adds one line between source and target expecting source and target has x y fields
+    
+    this.temporalLinkArray.push({
+				      source:source,
+				      target:target
+				  });
+  
+};
+
+
+
+
+
+
 TEMPORARY_NODE_CIRCLE_RADIUS=20;
 
-function add_new_link(source_data){
+infoburp.GraphController.prototype.addNewLink=function(sourceData){
 
     // If there are selected nodes we get first one and make a link to it
 
 
-    console.log("add new link",source_data,GraphController.snap);
+    console.log("add new link",sourceData,this.snap);
 
 
     /*  && GraphContorller.snap.index is workaround for some race condition or something.
      *  TODO Debug it
      */
 
-    if (GraphController.snap && GraphController.snap.index){
+    if (this.snap && this.snap.index){
 
-	var target = GraphController.snap;	    
+	var target = this.snap;	    
 
-	var nodes_are_different=source_data.index !== target.index;
-	var is_link_not_redundant=link_not_redundant(source_data.index,target.index);
+	var nodesAreDifferent=sourceData.index !== target.index;
+	var isLinkNotRedundant=this.linkNotRedundant(sourceData.index,target.index);
 	
 	/* Adding link if nodes are different , link is not duplicate and there is 
 	 * node which is temporary link snapped to.
 	 */
 
-	if ( nodes_are_different && is_link_not_redundant ){
+	if ( nodesAreDifferent && isLinkNotRedundant ){
 
-	    global_data.links.push({source:source_data,target:target});
+	    global_data.links.push({source:sourceData,target:target});
 
 	    target.selected = false;
 	}
@@ -36,7 +281,7 @@ function add_new_link(source_data){
 					  
 					  d.selected = false;});
 	
-	    target.selected=!nodes_are_different;
+	    target.selected=!nodesAreDifferent;
 	    
 	}
 	
@@ -50,23 +295,23 @@ function add_new_link(source_data){
     }
  
 
-}
+};
 
 
-function add_new_node(source_data,X,Y){
+infoburp.GraphController.prototype.addNewNode=function(sourceData,X,Y){
 
-    if (GraphController.distance_to_temporal_node(source_data.x,source_data.y)>NODERADIUS ){
+    if (this.distanceToTemporalNode(sourceData.x,sourceData.y)>NODERADIUS ){
 
-	var new_node = new nodetemplate(source_data);
+	var newNode = new nodetemplate(sourceData);
 
-	new_node.x = X; 
-	new_node.y = Y;
+	newNode.x = X; 
+	newNode.y = Y;
 
-	global_data.nodes.push( new_node );
+	global_data.nodes.push( newNode );
 
 	global_data.links.push({
-				    source:source_data,
-				    target:new_node
+				    source:sourceData,
+				    target:newNode
 				});
 
 	return true;
@@ -77,14 +322,14 @@ function add_new_node(source_data,X,Y){
 	return false;
 
     };
-}
+};
 
 
-function select_nearest_node(source_data,source_event){
+infoburp.GraphController.prototype.selectNearestNode = function(sourceData,sourceEvent){
 
     //Calculating distances to nodes
 
-    var nodes_distances=GraphController.nodes_distances(source_event.x,source_event.y);
+    var nodesDistances=this.nodesDistances(sourceEvent.x,sourceEvent.y);
 
     // making all nodes green
 
@@ -97,267 +342,47 @@ function select_nearest_node(source_data,source_event){
 
     // making nearest node yellow if it insider radius of linking
  
-    var nearest_node=nodes_distances[0];
+    var nearestNode=nodesDistances[0];
 
 //    console.log(nodes_distances);
 
 
-    var node_is_near=(nearest_node.distance<linkingradius );
-   // var nodes_are_different=(nearest_node.node.index !== source_data.index);
+    var nodeIsNear=(nearestNode.distance<linkingradius );
+   // var nodesAreDifferent=(nearest_node.node.index !== source_data.index);
 
-    if (node_is_near ){
+    if (nodeIsNear ){
 
-	nearest_node.node.selected = true;
+	nearestNode.node.selected = true;
  
- 	GraphController.snap=nearest_node.node;
+ 	this.snap=nearestNode.node;
 
     }
     else{
 	// Removing snapping to the node
-	GraphController.snap=null;
+	this.snap=null;
 
     }
-}
+;};
 
 
-function link_not_redundant(source_index,target_index){
+infoburp.GraphController.prototype.linkNotRedundant=function (sourceIndex,targetIndex){
 
-    var test_function=function(d){
+    var testFunction=function(d){
 	
-	var same_s_index=(d.source.index == source_index);
-	var same_t_index=(d.target.index == target_index);
-	var same_t_s_index=(d.target.index == source_index);
-	var same_s_t_index=(d.source.index == target_index);
+	// Checking if node we are trying to link is the same as source node.
+	var sameSIndex=(d.source.index == sourceIndex);
+	var sameTIndex=(d.target.index == targetIndex);
 
-	return  same_s_index && same_t_index || same_s_t_index && same_t_s_index;
+	// Checking if exist link that is backward to one we are trying to add
+	var sameTSIndex=(d.target.index == sourceIndex);
+	var sameSTIndex=(d.source.index == targetIndex);
+
+	return  sameSIndex && sameTIndex || sameSTIndex && sameTSIndex;
 
     };
 
-    return !((global_data.links.filter(test_function)).length >0);
-}
+    return !((global_data.links.filter(testFunction)).length >0);
+};
 
 
-function get_graph_controller(vis){
-    
-    return {
 
-	svg_vis:vis,
-
-	snap:{
-	    x:null,
-	    y:null
-	    },
-
-
-	temporal_link_array:[],
-	temporal_node_array:[],
-	
-	dragging_now:false,
-
-	state:{
-	    dragged_node_number:null
-	},
-
-	dragstart_handler:function(d){
-
-//	    console.log("dragstart handler" ,d,d.selected);
-
-	    this.add_temporal_node(d.x,d.y);
-	    this.add_temporal_link(d,this.temporal_node_array[0]);
-	    this.dragging_now=true;
-	    this.refresh_temporal_state();
-	    
-
-
-	},
-
-	add_temporal_node:function(x,y){
-	    // This function adds one circle on x y 
-
-	    this.temporal_node_array.push({
-					      x:x,
-					      y:y,
-					      showCircle:true
-				     });
-
-
-
-	},
-
-	add_temporal_link:function(source,target){
-
-	    // This function adds one line between source and target expecting source and target has x y fields
-
-	    this.temporal_link_array.push({
-				     source:source,
-				     target:target
-				     });
-
-
-
-	},
-
-	refresh_temporal_state:function(){
-
-	    // Refreshing view for temporary elements
-
-
-	    var temporal_node_selection=this.svg_vis.selectAll("circle.temporal_node")
-		.data(this.temporal_node_array);
-
-	    temporal_node_selection.enter().insert("circle")
-		.attr("class","temporal_node")
-		.attr("r",TEMPORARY_NODE_CIRCLE_RADIUS)
-		.attr("transform", function(d) {return "translate(" + d.x + "," + d.y + ")"; });;
-
-	    temporal_node_selection.exit().remove();
-
-	  //  this.temporal_link_array[0].target=this.temporal_node_array[0];
-
-	    var temporal_link_selection=this.svg_vis.selectAll("line.temporal_link")
-		.data(this.temporal_link_array);
-
-
-	    temporal_link_selection.enter().insert("line","circle.temporal_node")
-		.attr("class","temporal_link")
-		.attr("x1", function(d) { return d.source.x; })
-		.attr("y1", function(d) { return d.source.y; })
-		.attr("x2", function(d) { return d.target.x; })
-		.attr("y2", function(d) { return d.target.y; });
-
-	    temporal_link_selection.exit().remove();
-
-	},
-
-	remove_temporal_node_and_link:function(){
-
-
-	    // Dissapearing temporary circle
-	    this.svg_vis.selectAll("circle.temporal_node")
-		.transition()
-		.duration(NODE_APPEARANCE_DURATION/10)
-		.style("opacity",0);
-
-	    // Dissapearing and changing color temporary link
-
-	    this.svg_vis.selectAll("line.temporal_link")
-		.transition()
-		.duration(NODE_APPEARANCE_DURATION/2)
-	        .style("stroke-opacity",0);
-
-
-	    // setTimeout work with global context, so using this workaround
-
-	    var that = this;
-
-	    setTimeout(function(){
-
-			   that.temporal_node_array=[];
-			   that.temporal_link_array=[];
-			   that.snap=null;
-			   that.dragging_now=false;
-			   that.refresh_temporal_state();
-
-		       },NODE_APPEARANCE_DURATION);
-
-
-
-	},
-
-
-	temporal_tick:function(x,y){
-
-	    // Updating position for temporal node circle and  link line
-
-	    this.temporal_node_array[0].x=x;
-	    this.temporal_node_array[0].y=y;
-	    this.svg_vis.selectAll("circle.temporal_node")
-		.style("opacity",function(d){
-			   if (d.showCircle){
-			       return 1;
-			   }
-			   else
-			       {
-				   return 0;
-			       }
-
-		       })
-
-		.attr("transform", function(d) {return "translate(" + d.x + "," + d.y + ")"; });
-
-
-	    if (this.snap !== null){
-
-
-		this.temporal_link_array[0].target=this.snap;
-
-		this.temporal_node_array[0].showCircle=false;
-
-	    }else{
-
-		this.temporal_link_array[0].target=this.temporal_node_array[0];
-		this.temporal_node_array[0].showCircle=true;		
-	    }
-
-	    this.svg_vis.selectAll("line.temporal_link")
-	    	.attr("x1", function(d) { return d.source.x; })
-		.attr("y1", function(d) { return d.source.y; })
-		.attr("x2", function(d) { return d.target.x; })
-		.attr("y2", function(d) { return d.target.y; });
-
-
-
-	},
-
-
-
-	distance_to_node:function(x,y,node_data){
-
-	    X=x-node_data.x;
-	    Y=y-node_data.y;
-
-	    return Math.sqrt(X*X+Y*Y);
-
-	},
-
-	distance_to_temporal_node:function(x,y){
-
-	    return this.distance_to_node(x,y,this.temporal_node_array[0]);
-	}
-	,
-	nodes_distances: function(x,y){
-
-	    // This function calculates for all global_data.nodes objects distance to x,y and returns nearest node
-
-	    var distance_array=[];
-
-	    var that=this;
-
-	    global_data.nodes.forEach(function(current,num){
-
-					  distance_array.push({
-						node:current,
-						index:num,
-						distance:that.distance_to_node(x,y,current)
-							      }
-							     );
-
-
-				      });
-
-
-
-	    distance_array.sort(function(a,b){
-
-				    // We are sorting in descending order so nearest node comes first
-
-				    return (a.distance - b.distance);
-
-				} );
-
-	    return distance_array;
-
-	}
-
-    };
-}

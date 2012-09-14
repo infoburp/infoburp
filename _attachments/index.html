@@ -15,11 +15,21 @@
   <link href="style/bootstrap.css" rel="stylesheet"> 
   <!-- bootstrap-wysihtml5 stylesheet --> 
   <link href="style/bootstrap-wysihtml5.css" rel="stylesheet">  
+
+  <!-- Loading google closure library -->
+ 
+  <script src = "script/google-closure/closure/goog/base.js"></script>
+  <script src = "script/graph-controller.js"></script>
+  <script src = "script/burp.js"></script>
+
+  <!-- SWFObject library --> 
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js"></script>
+
   <script type="text/javascript" src="script/debug.js"></script> 
   <script type="text/javascript" src="script/content-type-handler.js"></script> 
 
-  <!-- prettify --> 
+
+    <!-- prettify --> 
   <link rel="stylesheet" type="text/css" href="style/prettify.css"></link> 
   <!-- bootstrap --> 
   <script src="script/bootstrap.js"></script> 
@@ -55,7 +65,7 @@
 </head> 
 
 <html> 
-  <body style="overflow:hidden" bgcolor="#000000"> 
+  <body style="overflow:hidden" bgcolor="#000000" onload="startInterface()"> 
     <!-- top bar --> 
     <div id="bar"> 
       <ul id="_bar"> 

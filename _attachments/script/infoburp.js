@@ -1,3 +1,7 @@
+goog.require('infoburp.GraphController');
+goog.require('infoburp.BurpController');
+goog.require('infoburp.Content.ContentTypeHandlersRegistry');
+
 var linkstrength = 0.1;
 var charge = -2000;
 var gravity = 0.0001;
@@ -141,40 +145,40 @@ var force = d3.layout.force()
 	.links(global_data.links);
 
 
-var BurpController = null;
-
-$.getScript("script/burp.js",function(){
-
-		// Setting up GraphController to this visualisation
-		BurpController = getBurpController(document.getElementById("burp-edit"));
-
-	});
+console.log(document.getElementById("burp-edit"));
 
 
-var GraphController = null;
+function linkCoordinatesSet(linkSelection){
 
-// loading GraphController generator
-$.getScript("script/graph-controller.js",function()
-	{
-		// Setting up GraphController to this visualisation
-		GraphController = get_graph_controller(vis);
-		restart();
-	});
+    linkSelection.attr("x1", function(d) { return d.source.x; })
+	.attr("y1", function(d) { return d.source.y; })
+	.attr("x2", function(d) { return d.target.x; })
+	.attr("y2", function(d) { return d.target.y; });
+}
+
+function colorCircles(circlesSelection){
+    
+    circlesSelection.attr("class",function (d){
+			      if (d.selected){
+				  
+				  return "node selected_node";
+				  
+			      }
+			      else{
+		    
+				  return "node unselected_node";
+			      }
+			  });
+}
 
 
 function tick_fu(){
 
     vis.selectAll("line.link")
-	.attr("x1", function(d) { return d.source.x; })
-	.attr("y1", function(d) { return d.source.y; })
-	.attr("x2", function(d) { return d.target.x; })
-	.attr("y2", function(d) { return d.target.y; });
+        .call(linkCoordinatesSet);
 
     vis.selectAll("line.temporal_link")
-	.attr("x1", function(d) { return d.source.x; })
-	.attr("y1", function(d) { return d.source.y; })
-	.attr("x2", function(d) { return d.target.x; })
-	.attr("y2", function(d) { return d.target.y; });
+        .call(linkCoordinatesSet);
 
     // Moving all g groups according to data
     vis.selectAll("g.node")
@@ -193,18 +197,7 @@ function tick_fu(){
 		  d.html_need_refresh=false;
 	      });
 
-    vis.selectAll("circle.node")
-	.attr("class",function (d){
-		  if (d.selected){
-		      
-		      return "node selected_node";
-		  
-		  }
-		  else{
-		    
-		      return "node unselected_node";
-		  }
-	      });
+    vis.selectAll("circle.node").call(colorCircles);
 };
 
 
@@ -224,7 +217,7 @@ function dragstart(d, i){
 //    console.log("dragstart",d);
     d.selected=true;
 //    console.log("dragstart end",d,d.selected);
-    GraphController.dragstart_handler(d);   
+   infoburpGraphController.dragStartHandler(d);   
 //    console.log("dragstart end",d);
 
 }
@@ -232,10 +225,10 @@ function dragstart(d, i){
 
 function dragmove(d, i){
 
-    GraphController.temporal_tick(d3.event.x,d3.event.y);
+    infoburpGraphController.temporalTick(d3.event.x,d3.event.y);
 
     // Selecting node nearest to mouse event
-    select_nearest_node(d,d3.event);
+    infoburpGraphController.selectNearestNode(d,d3.event);
     
     //Making force simulation
     tick_fu();
@@ -246,17 +239,17 @@ function dragend(d, i){
 
      console.log("dragend",d,d.selected);
 	// Saving last temporal node coordinates before removing
-	var X=GraphController.temporal_node_array[0].x;
-	var Y=GraphController.temporal_node_array[0].y;
+	var X=infoburpGraphController.temporalNodeArray[0].x;
+	var Y=infoburpGraphController.temporalNodeArray[0].y;
 	
 	
 	// Removing temporal link and node
-	GraphController.remove_temporal_node_and_link();
+	infoburpGraphController.removeTemporalNodeAndLink();
 	     console.log("dragend",d,d.selected);
 	
 	// Adding new link if necessary (function checks if source and target are distinct). 
 	//TODO refactor
-	if (add_new_link(d)){
+	if (infoburpGraphController.addNewLink(d)){
 
 	    console.log("dragend after add new link",d,d.selected);
 	}
@@ -267,7 +260,7 @@ function dragend(d, i){
 	     */
 	    
 	    //TODO Refactor.
-	    if(add_new_node(d,X,Y)){
+	    if(infoburpGraphController.addNewNode(d,X,Y)){
 		
 //		console.log('new node added',d);
 		d.selected=false;
@@ -284,7 +277,7 @@ function dragend(d, i){
 	//TODO refactor
 	run_node();
 	document.getElementById("burp-edit").focus();
-	BurpController.start_edit(d);
+	infoBurpController.startEdit(d);
     };
 
 	// Refreshing svg after modifying data
@@ -302,10 +295,9 @@ function restart(){
 	.data(global_data.links)
 	.enter().insert("line")
 	.attr("class", "link")
-	.attr("x1", function(d) { return d.source.x; })
-	.attr("y1", function(d) { return d.source.y; })
-	.attr("x2", function(d) { return d.target.x; })
-	.attr("y2", function(d) { return d.target.y; });
+        .call(linkCoordinatesSet);
+
+
     
 
     var nodeSelection = vis.selectAll("g.node")
@@ -326,14 +318,7 @@ function restart(){
     
 
     var circles = nodeEnter.append("svg:circle")
-	.attr("class",function (d){
-		  if (d.selected){
-		      return "node selected_node";
-		  }
-		  else{
-		      return "node unselected_node";
-		  }
-	      })
+	.call(colorCircles)
 	.attr("r",NODEINITRADIUS)
 	.transition()
 	.duration(NODE_APPEARANCE_DURATION)
@@ -358,13 +343,11 @@ function restart(){
 	.each(function(d,i){
 		  
 		  // Initializing render for data
-		  attachRender(d);
+		  infoburpContentTypeHandlerRegistry.attachRender(d);
 		  
 		  // Rendering data summary to this div
 		  d.contentWrapper.summary(this);}
-	     );
-
-    nodehtmls
+	     )
 	.style("opacity",0)
 	.transition()
 	.duration(NODE_APPEARANCE_DURATION)
@@ -380,3 +363,20 @@ function redraw(){
     vis.attr("transform", "translate(" + d3.event.translate + ")" + " scale(" + d3.event.scale + ")");
 }
 
+
+var infoBurpController=null;
+var infoburpGraphController=null;
+var infoburpContentTypeHandlerRegistry=null;
+
+function startInterface(){
+    
+
+    infoBurpController = new infoburp.BurpController(document.getElementById("burp-edit"));
+    infoburpGraphController= new infoburp.GraphController(vis);
+
+    infoburpContentTypeHandlerRegistry=new infoburp.Content.ContentTypeHandlersRegistry();
+    infoburpContentTypeHandlerRegistry.defaultInit();
+
+
+    restart();
+};
