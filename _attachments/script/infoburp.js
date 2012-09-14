@@ -1,3 +1,5 @@
+goog.require('infoburp.GraphController');
+
 var linkstrength = 0.1;
 var charge = -2000;
 var gravity = 0.0001;
@@ -151,15 +153,20 @@ $.getScript("script/burp.js",function(){
 	});
 
 
-var GraphController = null;
+//var GraphController = null;
 
 // loading GraphController generator
-$.getScript("script/graph-controller.js",function()
+/*$.getScript("script/graph-controller.js",function()
 	{
 		// Setting up GraphController to this visualisation
 		GraphController = get_graph_controller(vis);
 		restart();
 	});
+
+*/
+
+infoburpGraphController= new infoburp.GraphController(vis);
+
 
 
 function tick_fu(){
@@ -224,7 +231,7 @@ function dragstart(d, i){
 //    console.log("dragstart",d);
     d.selected=true;
 //    console.log("dragstart end",d,d.selected);
-    GraphController.dragstart_handler(d);   
+   infoburpGraphController.dragStartHandler(d);   
 //    console.log("dragstart end",d);
 
 }
@@ -232,10 +239,10 @@ function dragstart(d, i){
 
 function dragmove(d, i){
 
-    GraphController.temporal_tick(d3.event.x,d3.event.y);
+    infoburpGraphController.temporalTick(d3.event.x,d3.event.y);
 
     // Selecting node nearest to mouse event
-    select_nearest_node(d,d3.event);
+    infoburpGraphController.selectNearestNode(d,d3.event);
     
     //Making force simulation
     tick_fu();
@@ -246,17 +253,17 @@ function dragend(d, i){
 
      console.log("dragend",d,d.selected);
 	// Saving last temporal node coordinates before removing
-	var X=GraphController.temporal_node_array[0].x;
-	var Y=GraphController.temporal_node_array[0].y;
+	var X=infoburpGraphController.temporalNodeArray[0].x;
+	var Y=infoburpGraphController.temporalNodeArray[0].y;
 	
 	
 	// Removing temporal link and node
-	GraphController.remove_temporal_node_and_link();
+	infoburpGraphController.removeTemporalNodeAndLink();
 	     console.log("dragend",d,d.selected);
 	
 	// Adding new link if necessary (function checks if source and target are distinct). 
 	//TODO refactor
-	if (add_new_link(d)){
+	if (infoburpGraphController.addNewLink(d)){
 
 	    console.log("dragend after add new link",d,d.selected);
 	}
@@ -267,7 +274,7 @@ function dragend(d, i){
 	     */
 	    
 	    //TODO Refactor.
-	    if(add_new_node(d,X,Y)){
+	    if(infoburpGraphController.addNewNode(d,X,Y)){
 		
 //		console.log('new node added',d);
 		d.selected=false;
@@ -380,3 +387,5 @@ function redraw(){
     vis.attr("transform", "translate(" + d3.event.translate + ")" + " scale(" + d3.event.scale + ")");
 }
 
+
+restart();
