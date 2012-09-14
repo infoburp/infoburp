@@ -8,7 +8,7 @@ function run_node(){
 
    var valedit= document.getElementById("burp-edit").value;
 
-    if (guessNodeType(valedit)=="ytvideo-link"){
+    if (heuristicEngine.guessNodeType(valedit)=="ytvideo-link"){
 
 //	console.log("Yes this is a youtube-link",testIfYTLink(valedit)[1]);
 //	render_youtube_video_to_div(document.getElementById("run-node"),testIfYTLink(valedit)[1],400,400);
