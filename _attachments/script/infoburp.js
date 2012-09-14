@@ -148,21 +148,37 @@ var force = d3.layout.force()
 console.log(document.getElementById("burp-edit"));
 
 
+function linkCoordinatesSet(linkSelection){
+
+    linkSelection.attr("x1", function(d) { return d.source.x; })
+	.attr("y1", function(d) { return d.source.y; })
+	.attr("x2", function(d) { return d.target.x; })
+	.attr("y2", function(d) { return d.target.y; });
+}
+
+function colorCircles(circlesSelection){
+    
+    circlesSelection.attr("class",function (d){
+			      if (d.selected){
+				  
+				  return "node selected_node";
+				  
+			      }
+			      else{
+		    
+				  return "node unselected_node";
+			      }
+			  });
+}
 
 
 function tick_fu(){
 
     vis.selectAll("line.link")
-	.attr("x1", function(d) { return d.source.x; })
-	.attr("y1", function(d) { return d.source.y; })
-	.attr("x2", function(d) { return d.target.x; })
-	.attr("y2", function(d) { return d.target.y; });
+        .call(linkCoordinatesSet);
 
     vis.selectAll("line.temporal_link")
-	.attr("x1", function(d) { return d.source.x; })
-	.attr("y1", function(d) { return d.source.y; })
-	.attr("x2", function(d) { return d.target.x; })
-	.attr("y2", function(d) { return d.target.y; });
+        .call(linkCoordinatesSet);
 
     // Moving all g groups according to data
     vis.selectAll("g.node")
@@ -181,18 +197,7 @@ function tick_fu(){
 		  d.html_need_refresh=false;
 	      });
 
-    vis.selectAll("circle.node")
-	.attr("class",function (d){
-		  if (d.selected){
-		      
-		      return "node selected_node";
-		  
-		  }
-		  else{
-		    
-		      return "node unselected_node";
-		  }
-	      });
+    vis.selectAll("circle.node").call(colorCircles);
 };
 
 
@@ -290,10 +295,9 @@ function restart(){
 	.data(global_data.links)
 	.enter().insert("line")
 	.attr("class", "link")
-	.attr("x1", function(d) { return d.source.x; })
-	.attr("y1", function(d) { return d.source.y; })
-	.attr("x2", function(d) { return d.target.x; })
-	.attr("y2", function(d) { return d.target.y; });
+        .call(linkCoordinatesSet);
+
+
     
 
     var nodeSelection = vis.selectAll("g.node")
@@ -314,14 +318,7 @@ function restart(){
     
 
     var circles = nodeEnter.append("svg:circle")
-	.attr("class",function (d){
-		  if (d.selected){
-		      return "node selected_node";
-		  }
-		  else{
-		      return "node unselected_node";
-		  }
-	      })
+	.call(colorCircles)
 	.attr("r",NODEINITRADIUS)
 	.transition()
 	.duration(NODE_APPEARANCE_DURATION)
@@ -350,9 +347,7 @@ function restart(){
 		  
 		  // Rendering data summary to this div
 		  d.contentWrapper.summary(this);}
-	     );
-
-    nodehtmls
+	     )
 	.style("opacity",0)
 	.transition()
 	.duration(NODE_APPEARANCE_DURATION)

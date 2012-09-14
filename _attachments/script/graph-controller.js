@@ -55,6 +55,7 @@ infoburp.GraphController.prototype.refreshTemporalState=function(){
     // Refreshing view for temporary elements
     
     
+    // Creating circle that is denotes temporary node
     var temporalNodeSelection=this.svgVis.selectAll("circle.temporal_node")
 	.data(this.temporalNodeArray);
     
@@ -67,17 +68,15 @@ infoburp.GraphController.prototype.refreshTemporalState=function(){
     
     //  this.temporalLinkArray[0].target=this.temporal_node_array[0];
     
+    // Creating temporary link.
     var temporalLinkSelection=this.svgVis.selectAll("line.temporal_link")
 	.data(this.temporalLinkArray);
     
     
     temporalLinkSelection.enter().insert("line","circle.temporal_node")
 	.attr("class","temporal_link")
-	.attr("x1", function(d) { return d.source.x; })
-	.attr("y1", function(d) { return d.source.y; })
-	.attr("x2", function(d) { return d.target.x; })
-	.attr("y2", function(d) { return d.target.y; });
-    
+	.call(linkCoordinatesSet);
+	    
     temporalLinkSelection.exit().remove();
     
 };
@@ -296,7 +295,7 @@ infoburp.GraphController.prototype.addNewLink=function(sourceData){
     }
  
 
-}
+};
 
 
 infoburp.GraphController.prototype.addNewNode=function(sourceData,X,Y){
@@ -370,8 +369,11 @@ infoburp.GraphController.prototype.linkNotRedundant=function (sourceIndex,target
 
     var testFunction=function(d){
 	
+	// Checking if node we are trying to link is the same as source node.
 	var sameSIndex=(d.source.index == sourceIndex);
 	var sameTIndex=(d.target.index == targetIndex);
+
+	// Checking if exist link that is backward to one we are trying to add
 	var sameTSIndex=(d.target.index == sourceIndex);
 	var sameSTIndex=(d.source.index == targetIndex);
 
