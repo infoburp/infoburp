@@ -1,4 +1,5 @@
 goog.require('infoburp.GraphController');
+goog.require('infoburp.BurpController');
 
 var linkstrength = 0.1;
 var charge = -2000;
@@ -143,29 +144,8 @@ var force = d3.layout.force()
 	.links(global_data.links);
 
 
-var BurpController = null;
+console.log(document.getElementById("burp-edit"));
 
-$.getScript("script/burp.js",function(){
-
-		// Setting up GraphController to this visualisation
-		BurpController = getBurpController(document.getElementById("burp-edit"));
-
-	});
-
-
-//var GraphController = null;
-
-// loading GraphController generator
-/*$.getScript("script/graph-controller.js",function()
-	{
-		// Setting up GraphController to this visualisation
-		GraphController = get_graph_controller(vis);
-		restart();
-	});
-
-*/
-
-infoburpGraphController= new infoburp.GraphController(vis);
 
 
 
@@ -291,7 +271,7 @@ function dragend(d, i){
 	//TODO refactor
 	run_node();
 	document.getElementById("burp-edit").focus();
-	BurpController.start_edit(d);
+	infoBurpController.startEdit(d);
     };
 
 	// Refreshing svg after modifying data
@@ -388,4 +368,14 @@ function redraw(){
 }
 
 
-restart();
+var infoBurpController=null;
+var infoburpGraphController=null;
+
+function startInterface(){
+    
+
+    infoBurpController = new infoburp.BurpController(document.getElementById("burp-edit"));
+    infoburpGraphController= new infoburp.GraphController(vis);
+
+    restart();
+};
