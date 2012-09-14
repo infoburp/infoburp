@@ -1,6 +1,5 @@
 goog.provide("infoburp.BurpController");
 
-
 infoburp.BurpController = function(input){
 
     this.burpData=[];
@@ -23,7 +22,7 @@ infoburp.BurpController.prototype.nodeEditEndHandle=function(d){
     }
     
     // Trying to guess WAT is that and attach correct render
-    attachRender(d);
+    infoburpContentTypeHandlerRegistry.attachRender(d);
     
     // Marking node to be refreshed and deselecting it.
     d.html_need_refresh=true;

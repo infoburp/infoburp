@@ -1,5 +1,6 @@
 goog.require('infoburp.GraphController');
 goog.require('infoburp.BurpController');
+goog.require('infoburp.Content.ContentTypeHandlersRegistry');
 
 var linkstrength = 0.1;
 var charge = -2000;
@@ -345,7 +346,7 @@ function restart(){
 	.each(function(d,i){
 		  
 		  // Initializing render for data
-		  attachRender(d);
+		  infoburpContentTypeHandlerRegistry.attachRender(d);
 		  
 		  // Rendering data summary to this div
 		  d.contentWrapper.summary(this);}
@@ -370,12 +371,17 @@ function redraw(){
 
 var infoBurpController=null;
 var infoburpGraphController=null;
+var infoburpContentTypeHandlerRegistry=null;
 
 function startInterface(){
     
 
     infoBurpController = new infoburp.BurpController(document.getElementById("burp-edit"));
     infoburpGraphController= new infoburp.GraphController(vis);
+
+    infoburpContentTypeHandlerRegistry=new infoburp.Content.ContentTypeHandlersRegistry();
+    infoburpContentTypeHandlerRegistry.defaultInit();
+
 
     restart();
 };
