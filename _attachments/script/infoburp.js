@@ -68,8 +68,6 @@ FOREIGN_OBJECT_SIDE = NODERADIUS*1.4142;
 FOREIGN_OBJECT_SHIFT = -NODERADIUS/1.4142;
 unusedlinks = 100; // This is workaround for z order of links. This should be greater than maximum number of links that are displayed.
 
-var fill = d3.scale.category20();
-
 
 global_data = {
 
