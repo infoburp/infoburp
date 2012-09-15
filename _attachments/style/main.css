@@ -13,6 +13,7 @@ html, body {
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
+
 }
 
 
@@ -241,6 +242,9 @@ width:100%;
 text-align:center;
 vertical-align:middle;
 font-family:'URW Gothic L',verdana;
+body {color:black;}
+h1 {color:black;}
+h2 {color:black;}
 word-wrap:normal;
 }
 
@@ -257,6 +261,6 @@ display:none;
 
 input.active-editor{
 
-display:block;
+display:none;
 
 }
