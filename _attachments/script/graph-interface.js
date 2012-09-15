@@ -9,6 +9,33 @@ goog.provide('infoburp.GraphInterface');
 goog.require('infoburp.GraphController');
 
 
+// Two helper functions refactor them consider moving to GraphController
+
+function linkCoordinatesSet(linkSelection){
+
+    linkSelection.attr("x1", function(d) { return d.source.x; })
+	.attr("y1", function(d) { return d.source.y; })
+	.attr("x2", function(d) { return d.target.x; })
+	.attr("y2", function(d) { return d.target.y; });
+}
+
+function colorCircles(circlesSelection){
+    
+    circlesSelection.attr("class",function (d){
+			      if (d.selected){
+				  
+				  return "node selected_node";
+				  
+			      }
+			      else{
+		    
+				  return "node unselected_node";
+			      }
+			  });
+}
+
+
+
 
 infoburp.GraphInterface=function(divObject, dataContainer){
 
@@ -152,9 +179,7 @@ infoburp.GraphInterface.prototype.initGraph=function(){
 
     
 	if (d.selected){
-	    //TODO refactor
-	    run_node();
-	    //document.getElementById("burp-edit").focus();
+
 	    infoBurpController.startEdit(d);
 	};
 
