@@ -1,3 +1,7 @@
+goog.provide('infoburp.startInterface');
+goog.provide('infoburp');
+
+
 goog.require('infoburp.GraphController');
 goog.require('infoburp.BurpController');
 
@@ -19,7 +23,6 @@ goog.require('goog.editor.plugins.LinkBubble');
 goog.require('goog.editor.Command');
 goog.require('goog.ui.editor.DefaultToolbar');
 goog.require('goog.ui.editor.ToolbarController');
-
 
 
 
@@ -122,7 +125,7 @@ var myField = null;
 
 
 
-function startInterface(){
+infoburp.startInterface= function startInterface(){
     
     graphInterface=new infoburp.GraphInterface(document.getElementById("graph"),global_data);    
 
