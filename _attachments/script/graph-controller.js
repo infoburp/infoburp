@@ -147,45 +147,46 @@ infoburp.GraphController.prototype.distanceToNode=function(x,y,nodeData){
 infoburp.GraphController.prototype.temporalTick=function(x,y){
     
     // Updating position for temporal node circle and  link line
+    if (this.temporalNodeArray[0]){
+	
+	this.temporalNodeArray[0].x=x;
+	this.temporalNodeArray[0].y=y;
+	this.svgVis.selectAll("circle.temporal_node")
+	    .style("opacity",function(d){
+		       if (d.showCircle){
+			   return 1;
+		       }
+		       else
+		       {
+			   return 0;
+		       }
+		       
+		   })
     
-    this.temporalNodeArray[0].x=x;
-    this.temporalNodeArray[0].y=y;
-    this.svgVis.selectAll("circle.temporal_node")
-	.style("opacity",function(d){
-		   if (d.showCircle){
-		       return 1;
-		   }
-		   else
-		   {
-		       return 0;
-		   }
-
-	       })
+	    .attr("transform", function(d) {return "translate(" + d.x + "," + d.y + ")"; });
+	
     
-	.attr("transform", function(d) {return "translate(" + d.x + "," + d.y + ")"; });
-    
-    
-	    if (this.snap !== null){
+	if (this.snap !== null){
 		
-		
-		this.temporalLinkArray[0].target=this.snap;
-		
-		this.temporalNodeArray[0].showCircle=false;
-		
-	    }else{
-		
-		this.temporalLinkArray[0].target=this.temporalNodeArray[0];
-		this.temporalNodeArray[0].showCircle=true;		
-	    }
-    
-    this.svgVis.selectAll("line.temporal_link")
-	.attr("x1", function(d) { return d.source.x; })
-	.attr("y1", function(d) { return d.source.y; })
-	.attr("x2", function(d) { return d.target.x; })
-	.attr("y2", function(d) { return d.target.y; });
-    
-
-
+	    
+	    this.temporalLinkArray[0].target=this.snap;
+	    
+	    this.temporalNodeArray[0].showCircle=false;
+	    
+	}else{
+	    
+	    this.temporalLinkArray[0].target=this.temporalNodeArray[0];
+	    this.temporalNodeArray[0].showCircle=true;		
+	}
+	
+	this.svgVis.selectAll("line.temporal_link")
+	    .attr("x1", function(d) { return d.source.x; })
+	    .attr("y1", function(d) { return d.source.y; })
+	    .attr("x2", function(d) { return d.target.x; })
+	    .attr("y2", function(d) { return d.target.y; });
+	
+	
+    }
 };
 
 
@@ -254,7 +255,7 @@ infoburp.GraphController.prototype.addNewLink=function(sourceData){
      *  TODO Debug it
      */
 
-    if (this.snap && this.snap.index){
+    if (this.snap && (!(this.snap.index===undefined))){
 
 	var target = this.snap;	    
 

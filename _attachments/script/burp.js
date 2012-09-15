@@ -137,10 +137,11 @@ infoburp.BurpController.prototype.startEdit=function(originalData){
 	    global_data.nodes.forEach(function(d){d.selected=false;});
 	    originalData.selected=true;
              
-            this.inputObject.makeEditable();
-	    this.burpData=[{original_data:originalData}];
+    (this.inputObject.isUneditable())? this.inputObject.makeEditable(): console.log("Trying to make editable already editable field");
+    
+    this.burpData=[{original_data:originalData}];
 
-	    this.inputObject.setHtml(false,originalData.nodehtml);
+    this.inputObject.setHtml(false,originalData.nodehtml);
 
 };
 

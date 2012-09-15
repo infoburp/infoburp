@@ -58,25 +58,21 @@ this.graphController=null;
 
 infoburp.GraphInterface.prototype.initGraph=function(){
 
-    
+    var localGraphInterface=this;   
 
-    var localData=this.dataContainer;
+
+
+
+
 
     this.vis=d3.select(this.renderDiv).append("svg")
 	.on("click", function (e){
 		
 		if (!(d3.event.target.className=="nodehtml")){
 		    
-		    localData.nodes.forEach(function(d,i){					  
-						  d.selected = false;
-					      });
-	    
-		    // Making burp editor inactive; TODO consider Lorem Ipsuming some default text.
-		    myField.setHtml("");
-		    myField.makeUneditable();
-		}
+		    localGraphInterface.flushState();		    
 		
-	    })
+	    }})
 	.attr("width", "100%")
 	.attr("height", "100%")
 	.attr("pointer-events", "all")
@@ -85,6 +81,7 @@ infoburp.GraphInterface.prototype.initGraph=function(){
 
 
     this.graphController=new infoburp.GraphController(this.vis);
+    var localGraphController=this.graphController;
 
     var empty_array = [];
     
@@ -109,13 +106,15 @@ infoburp.GraphInterface.prototype.initGraph=function(){
 	.nodes(this.dataContainer.nodes)
 	.links(this.dataContainer.links);
 
-
-    var localForce=this.force;
-    var localGraphController=this.graphController;
-    var localGraphInterface=this;
+    var localForce=this.force; 
     var localTick=this.tickClosure();
+    var localData=this.dataContainer;
+
+
     
     var dragstart=function(d, i){
+
+	localGraphInterface.flushState();
 	localForce.stop(); // stops the force auto positioning before you start dragging
 	
 	//    console.log("dragstart",d);
@@ -143,6 +142,8 @@ infoburp.GraphInterface.prototype.initGraph=function(){
     var dragend= function dragend(d, i){
 	
 
+	console.log("Dragend",d);
+
 	// Saving last temporal node coordinates before removing
 	var X=localGraphController.temporalNodeArray[0].x;
 	var Y=localGraphController.temporalNodeArray[0].y;
@@ -166,9 +167,6 @@ infoburp.GraphInterface.prototype.initGraph=function(){
 	    
 	    //TODO Refactor.
 	    if(localGraphController.addNewNode(d,X,Y)){
-		
-//		console.log('new node added',d);
-		d.selected=false;
 		
 	    }
 	    else{
@@ -203,6 +201,18 @@ infoburp.GraphInterface.prototype.initGraph=function(){
     this.restart();
     
     
+};
+
+infoburp.GraphInterface.prototype.flushState=function(){
+
+    this.dataContainer.nodes.forEach(function(d,i){					  
+				d.selected = false;
+			    });
+    
+    // Making burp editor inactive; TODO consider Lorem Ipsuming some default text.
+    myField.setHtml("");
+    (!myField.isUneditable())? myField.makeUneditable(): console.log("Trying to make editable already editable field");
+		    
 };
 
 
