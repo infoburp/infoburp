@@ -1,9 +1,9 @@
 goog.provide("infoburp.BurpController");
 
-infoburp.BurpController = function(input){
+infoburp.BurpController = function(inputField){
 
     this.burpData=[];
-    this.inputObject=input;
+    this.inputObject=inputField;
     
 };
 
@@ -12,8 +12,8 @@ infoburp.BurpController.prototype.nodeEditEndHandle=function(d){
     
     console.log("resetting input_object value");
     
-    var txt = this.inputObject.value;
-    this.inputObject.value="";
+    var txt = this.inputObject.getCleanContents();
+    this.inputObject.setHtml("");
     
     console.log("txt",txt);
     
@@ -29,15 +29,15 @@ infoburp.BurpController.prototype.nodeEditEndHandle=function(d){
     d.selected=false;
     
     this.burpData=[];
-    this.resetInputObjectState();
+  //  this.resetInputObjectState();
     
     // Resetting on blur callback
-    d3.select(this.inputObject).on("blur",function(){});
+//    d3.select(this.inputObject).on("blur",function(){});
     
 };
 
 infoburp.BurpController.prototype.resetInputObjectState=function(){
-
+/*
     var that=this;
     var inputObjectSelection= d3.select(this.inputObject)
 	.data(this.burpData)
@@ -62,22 +62,25 @@ infoburp.BurpController.prototype.resetInputObjectState=function(){
 		
 	    });
 
-	    
+*/	    
 };
 
 
 infoburp.BurpController.prototype.startEdit=function(originalData){
 	    
-	    
+    
+        
   	    // TODO remove this fast hack for resetting selected nodes.
 	    global_data.nodes.forEach(function(d){d.selected=false;});
 	    originalData.selected=true;
-
+             
+            this.inputObject.makeEditable();
 	    this.burpData=[{original_data:originalData}];
 //	    console.log(this.burp_data);
 
-	    this.resetInputObjectState();
-	    this.inputObject.value=originalData.nodehtml;
+//	    this.resetInputObjectState();
+
+	    this.inputObject.setHtml(false,originalData.nodehtml);
 
 };
 

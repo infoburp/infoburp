@@ -12,9 +12,7 @@
   <!-- main stylesheet -->		 
   <link type="text/css" rel="stylesheet" href="style/main.css"/> 
   <!-- bootstrap stylesheet --> 
-  <link href="style/bootstrap.css" rel="stylesheet"> 
-  <!-- bootstrap-wysihtml5 stylesheet --> 
-  <link href="style/bootstrap-wysihtml5.css" rel="stylesheet">  
+<!--  <link href="style/bootstrap.css" rel="stylesheet"> 
 
   <!-- Loading google closure library -->
  
@@ -32,7 +30,7 @@
     <!-- prettify --> 
   <link rel="stylesheet" type="text/css" href="style/prettify.css"></link> 
   <!-- bootstrap --> 
-  <script src="script/bootstrap.js"></script> 
+<!--  <script src="script/bootstrap.js"></script> 
   <!-- wysihtml5 --> 
 <!--  <script type="text/javascript" src="script/wysihtml5-0.3.0_rc2.js"></script> 
   <!-- bootstrap-wysihtml5 --> 
@@ -61,6 +59,28 @@
   <!-- Node running infrastructure -->
   <script type="text/javascript" src="script/node-runner.js"></script> 
 
+  <link rel="stylesheet" href="script/google-closure/closure/goog/css/common.css">
+
+  <link rel="stylesheet" href="script/google-closure/closure/goog/css/button.css">
+  <link rel="stylesheet" href="script/google-closure/closure/goog/css/dialog.css">
+  <link rel="stylesheet" href="script/google-closure/closure/goog/css/linkbutton.css">
+  <link rel="stylesheet" href="script/google-closure/closure/goog/css/menu.css">
+  <link rel="stylesheet" href="script/google-closure/closure/goog/css/menuitem.css">
+  <link rel="stylesheet" href="script/google-closure/closure/goog/css/menuseparator.css">
+  <link rel="stylesheet" href="script/google-closure/closure/goog/css/toolbar.css">
+  <link rel="stylesheet" href="script/google-closure/closure/goog/css/editor/bubble.css">
+  <link rel="stylesheet" href="script/google-closure/closure/goog/css/editor/dialog.css">
+  <link rel="stylesheet" href="script/google-closure/closure/goog/css/editor/linkdialog.css">
+  <link rel="stylesheet" href="script/google-closure/closure/goog/css/editortoolbar.css">
+
+  <style>
+    #editMe {
+      width: 600px;
+      height: 300px;
+      background-color: white;
+      border: 1px solid grey;
+    }
+  </style>
 
 </head> 
 
@@ -71,7 +91,7 @@
       <ul id="_bar"> 
 	<!-- qrcode image --> 
 	<li id="qr"><img id="_qr" src="image/qr.png" /></li>
-	<!-- infoburp logo --> 
+	<!-- infoburp logo 
 	<li id="logo"><img id="_logo" src="image/logo.png" /></li> 
 	<!-- search bar --> 
 	<li id="search"><input id="_search" value="alpha" /></li> 
@@ -103,6 +123,7 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 	<!--<li id="yahoo"><img id="_yahoo" src="image/yahoo.png"/></li> -->
       </ul> 
     </div>
+
  
     <!-- top highlight--> 
     <div id="tophighlight">
@@ -126,15 +147,29 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
     </div> 
     <!-- debugging code --> 
     <!-- infoburp --> 
-    <div class="row-fluid">
-      <div class="span6" id="graph">
-      </div> 
+
+<table width="100%"><td><td width="50%" height="1000px">
+<div  id="graph"></div>
+</td>
+<td>
+
+    <div id="toolbar"></div>
+      <iframe id="burpEdit" width="100%"></iframe> 
+    </div>
+<div id='fieldContents'></div>
+<div id='run-node'></div>
+</td></tr></table>
       <script type="text/javascript" src="script/infoburp.js"></script>	 
+<!--
+    <div class="row-fluid">
+
+      </div> 
+
       
       <div class="span6"> 
 	<!--burps --> 
       
-<!--	<script type="text/javascript" src="script/editor.js"></script> -->
+<!--	<script type="text/javascript" src="script/editor.js"></script>
 	<div class="container"> 
 	  <div class="hero-unit"> 
 <div class="row-fluid">
@@ -184,11 +219,7 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
       <a data-wysihtml5-dialog-action="save">OK</a>&nbsp;<a data-wysihtml5-dialog-action="cancel">Cancel</a>
     </div>
     
-  </div>
-      <textarea id="burp-edit" class="textarea" placeholder="click a node to select it, drag from node to link or make new nodes..." style="width: 55%; height: 62%"></textarea> 
-      
-    </div>
-
+  <div>
 
 <input type="button" id="run-node-button" onclick="run_node()" value="Run node"></input>
 <div id="run-node"></div>
@@ -200,6 +231,7 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
       </div>		 
     </div>
     <!-- bottom bar--> 
+
     <div id="bottombar">
       <div id="_bottombar"> 
 	<!-- leftbrain view icon --> 

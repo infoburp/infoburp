@@ -1,6 +1,26 @@
 goog.require('infoburp.GraphController');
 goog.require('infoburp.BurpController');
 goog.require('infoburp.Content.ContentTypeHandlersRegistry');
+goog.require('goog.editor.Field');
+
+goog.require('goog.editor.plugins.BasicTextFormatter');
+goog.require('goog.editor.plugins.RemoveFormatting');
+goog.require('goog.editor.plugins.UndoRedo');
+goog.require('goog.editor.plugins.ListTabHandler');
+goog.require('goog.editor.plugins.SpacesTabHandler');
+goog.require('goog.editor.plugins.EnterHandler');
+goog.require('goog.editor.plugins.HeaderFormatter');
+goog.require('goog.editor.plugins.LoremIpsum');
+goog.require('goog.editor.plugins.LinkDialogPlugin');
+goog.require('goog.editor.plugins.LinkBubble');
+goog.require('goog.editor.Command');
+goog.require('goog.ui.editor.DefaultToolbar');
+goog.require('goog.ui.editor.ToolbarController');
+
+
+
+
+
 
 var linkstrength = 0.1;
 var charge = -2000;
@@ -72,7 +92,10 @@ var vis=d3.select("#graph").append("svg")
 					  
 				      });
 	    
-	    document.getElementById("burp-edit").blur();
+
+	    myField.setHtml("");
+	    myField.makeUneditable();
+	   // document.getElementById("burp-edit").blur();
 	}
 
     })
@@ -276,7 +299,7 @@ function dragend(d, i){
     if (d.selected){
 	//TODO refactor
 	run_node();
-	document.getElementById("burp-edit").focus();
+	//document.getElementById("burp-edit").focus();
 	infoBurpController.startEdit(d);
     };
 
@@ -368,10 +391,110 @@ var infoBurpController=null;
 var infoburpGraphController=null;
 var infoburpContentTypeHandlerRegistry=null;
 
+var myField = null;
+
+function initEditor(){
+
+      
+  function updateFieldContents() {
+
+      
+      var valedit=myField.getCleanContents();
+      goog.dom.getElement('fieldContents').value = valedit;
+
+      global_data.nodes
+	  .filter(function(d,i){
+		      return d.selected;
+		  }).forEach(function(d){
+
+				 d.nodehtml=myField.getCleanContents();
+				 infoburpContentTypeHandlerRegistry.attachRender(d);
+				 d.html_need_refresh=true;
+				 tick_fu();
+				 console.log("refreshing data",d);
+
+			     });
+
+      if (heuristicEngine.guessNodeType(valedit)=="ytvideo-link"){
+	  
+	  //	console.log("Yes this is a youtube-link",testIfYTLink(valedit)[1]);
+	  //	render_youtube_video_to_div(document.getElementById("run-node"),testIfYTLink(valedit)[1],400,400);
+      };	
+      global_data.nodes
+	  .filter(function(d,i){
+		      return d.selected;
+		  })
+	  .forEach(function(d){
+		     
+		       //		     console.log("We found this data of selected node and trying to render it",d);
+		     
+		       d.contentWrapper.primary(document.getElementById("run-node"));
+		       
+		   });
+  }
+
+  // Create an editable field.
+
+  myField=new goog.editor.Field('burpEdit');
+  // Create and register all of the editing plugins you want to use.
+  myField.registerPlugin(new goog.editor.plugins.BasicTextFormatter());
+  myField.registerPlugin(new goog.editor.plugins.RemoveFormatting());
+  myField.registerPlugin(new goog.editor.plugins.UndoRedo());
+  myField.registerPlugin(new goog.editor.plugins.ListTabHandler());
+  myField.registerPlugin(new goog.editor.plugins.SpacesTabHandler());
+  myField.registerPlugin(new goog.editor.plugins.EnterHandler());
+  myField.registerPlugin(new goog.editor.plugins.HeaderFormatter());
+  myField.registerPlugin(
+      new goog.editor.plugins.LoremIpsum('Click here to edit'));
+  myField.registerPlugin(
+      new goog.editor.plugins.LinkDialogPlugin());
+  myField.registerPlugin(new goog.editor.plugins.LinkBubble());
+
+  // Specify the buttons to add to the toolbar, using built in default buttons.
+  var buttons = [
+    goog.editor.Command.BOLD,
+    goog.editor.Command.ITALIC,
+    goog.editor.Command.UNDERLINE,
+    goog.editor.Command.FONT_COLOR,
+    goog.editor.Command.BACKGROUND_COLOR,
+    goog.editor.Command.FONT_FACE,
+    goog.editor.Command.FONT_SIZE,
+    goog.editor.Command.LINK,
+    goog.editor.Command.UNDO,
+    goog.editor.Command.REDO,
+    goog.editor.Command.UNORDERED_LIST,
+    goog.editor.Command.ORDERED_LIST,
+    goog.editor.Command.INDENT,
+    goog.editor.Command.OUTDENT,
+    goog.editor.Command.JUSTIFY_LEFT,
+    goog.editor.Command.JUSTIFY_CENTER,
+    goog.editor.Command.JUSTIFY_RIGHT,
+    goog.editor.Command.SUBSCRIPT,
+    goog.editor.Command.SUPERSCRIPT,
+    goog.editor.Command.STRIKE_THROUGH,
+    goog.editor.Command.REMOVE_FORMAT
+  ];
+  var myToolbar = goog.ui.editor.DefaultToolbar.makeToolbar(buttons,
+      goog.dom.getElement('toolbar'));
+
+  // Hook the toolbar into the field.
+  var myToolbarController =
+      new goog.ui.editor.ToolbarController(myField, myToolbar);
+
+  // Watch for field changes, to display below.
+  goog.events.listen(myField, goog.editor.Field.EventType.DELAYEDCHANGE,
+      updateFieldContents);
+
+  myField.makeEditable();
+  updateFieldContents();
+}
+
+
 function startInterface(){
     
-
-    infoBurpController = new infoburp.BurpController(document.getElementById("burp-edit"));
+    initEditor();
+    myField.makeUneditable();
+    infoBurpController = new infoburp.BurpController(myField);
     infoburpGraphController= new infoburp.GraphController(vis);
 
     infoburpContentTypeHandlerRegistry=new infoburp.Content.ContentTypeHandlersRegistry();

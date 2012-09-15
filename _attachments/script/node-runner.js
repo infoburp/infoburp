@@ -6,7 +6,7 @@ function run_node(){
  */
 
 
-   var valedit= document.getElementById("burp-edit").value;
+   var valedit= myField.getCleanContents();
 
     if (heuristicEngine.guessNodeType(valedit)=="ytvideo-link"){
 
