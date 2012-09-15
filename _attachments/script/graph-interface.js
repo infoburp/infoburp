@@ -4,14 +4,14 @@
  * Point in it's creating is to confine d3.js library usage to this object.
  */
 
-goog.provide(infoburp.GraphInterface);
+goog.provide('infoburp.GraphInterface');
 
 goog.require('infoburp.GraphController');
 
 
 
 infoburp.GraphInterface=function(divObject, dataContainer){
-    
+
 this.dataContainer=dataContainer;
 
 this.renderDiv=divObject;
@@ -22,6 +22,9 @@ this.force=null;
 
 this.nodedrag=null;
 
+this.graphController=null;
+
+
 };
 
 
@@ -29,12 +32,15 @@ this.nodedrag=null;
 infoburp.GraphInterface.prototype.initGraph=function(){
 
     
-    this.vis=d3.select("#graph").append("svg")
+
+    var localData=this.dataContainer;
+
+    this.vis=d3.select(this.renderDiv).append("svg")
 	.on("click", function (e){
 		
 		if (!(d3.event.target.className=="nodehtml")){
 		    
-		    this.dataContainer.nodes.forEach(function(d,i){					  
+		    localData.nodes.forEach(function(d,i){					  
 						  d.selected = false;
 					      });
 	    
@@ -46,9 +52,12 @@ infoburp.GraphInterface.prototype.initGraph=function(){
 	    })
 	.attr("width", "100%")
 	.attr("height", "100%")
-	.attr("pointer-events", "all")    
-	.call(d3.behavior.zoom().on("zoom", redraw))
+	.attr("pointer-events", "all")
+	.call(d3.behavior.zoom().on("zoom", graphInterface.redrawClosure()))
 	.append('svg:g');    
+
+
+    this.graphController=new infoburp.GraphController(this.vis);
 
     var empty_array = [];
     
@@ -59,7 +68,7 @@ infoburp.GraphInterface.prototype.initGraph=function(){
 			 });
     };
 
-    vis.selectAll("line.unused_link")
+    this.vis.selectAll("line.unused_link")
 	.data(empty_array)
 	.enter()
 	.insert("line")
@@ -74,16 +83,18 @@ infoburp.GraphInterface.prototype.initGraph=function(){
 	.links(this.dataContainer.links);
 
 
-
-
+    var localForce=this.force;
+    var localGraphController=this.graphController;
+    var localGraphInterface=this;
+    var localTick=this.tickClosure();
     
     var dragstart=function(d, i){
-	force.stop(); // stops the force auto positioning before you start dragging
+	localForce.stop(); // stops the force auto positioning before you start dragging
 	
 	//    console.log("dragstart",d);
 	d.selected=true;
 	//    console.log("dragstart end",d,d.selected);
-	infoburpGraphController.dragStartHandler(d);   
+	localGraphController.dragStartHandler(d);   
 	//    console.log("dragstart end",d);
 
     };
@@ -91,33 +102,34 @@ infoburp.GraphInterface.prototype.initGraph=function(){
     
     var dragmove = function dragmove(d, i){
 	
-	infoburpGraphController.temporalTick(d3.event.x,d3.event.y);
+	localGraphController.temporalTick(d3.event.x,d3.event.y);
 	
 	// Selecting node nearest to mouse event
-	infoburpGraphController.selectNearestNode(d,d3.event);
+	localGraphController.selectNearestNode(d,d3.event);
 	
 	//Making force simulation
-	tick_fu();
+	localTick();
     };
     
+
     
     var dragend= function dragend(d, i){
 	
-     console.log("dragend",d,d.selected);
+
 	// Saving last temporal node coordinates before removing
-	var X=infoburpGraphController.temporalNodeArray[0].x;
-	var Y=infoburpGraphController.temporalNodeArray[0].y;
+	var X=localGraphController.temporalNodeArray[0].x;
+	var Y=localGraphController.temporalNodeArray[0].y;
 	
 	
 	// Removing temporal link and node
-	infoburpGraphController.removeTemporalNodeAndLink();
-	console.log("dragend",d,d.selected);
+	localGraphController.removeTemporalNodeAndLink();
+
 	
 	// Adding new link if necessary (function checks if source and target are distinct). 
 	//TODO refactor
-	if (infoburpGraphController.addNewLink(d)){
+	if (localGraphController.addNewLink(d)){
 	    
-	    console.log("dragend after add new link",d,d.selected);
+
 	}
 	else{
 	    
@@ -126,7 +138,7 @@ infoburp.GraphInterface.prototype.initGraph=function(){
 	     */
 	    
 	    //TODO Refactor.
-	    if(infoburpGraphController.addNewNode(d,X,Y)){
+	    if(localGraphController.addNewNode(d,X,Y)){
 		
 //		console.log('new node added',d);
 		d.selected=false;
@@ -137,7 +149,7 @@ infoburp.GraphInterface.prototype.initGraph=function(){
 		d.selected=true;		
 	    };
 	}
-	console.log("dragend",d,d.selected);
+
     
 	if (d.selected){
 	    //TODO refactor
@@ -147,8 +159,9 @@ infoburp.GraphInterface.prototype.initGraph=function(){
 	};
 
 	// Refreshing svg after modifying data
-    restart();
-	force.start(); 
+	localGraphInterface.restart();
+	
+	localGraphInterface.force.start(); 
 	
     };
     
@@ -158,15 +171,18 @@ infoburp.GraphInterface.prototype.initGraph=function(){
 	.on("dragend", dragend);
     
     
-    force.on("tick",tick_fu);
+    this.force.on("tick",this.tickClosure());
     
-    force.start();
+    this.force.start();
+
+    this.restart();
     
     
 };
 
 
 infoburp.GraphInterface.prototype.restart=function(){
+
     
     // Normal links which would reuse pool of unused_links
     this.vis.selectAll("line.link")
@@ -234,37 +250,53 @@ infoburp.GraphInterface.prototype.restart=function(){
 };
 
 
-infoburp.GraphInterface.prototype.redraw=function redraw(){
+infoburp.GraphInterface.prototype.redrawClosure=function(){
     
-    console.log("here", d3.event.translate, d3.event.scale);
-    this.vis.attr("transform", "translate(" + d3.event.translate + ")" + " scale(" + d3.event.scale + ")");
+    //var localVis=graph.vis;
+    
+    //console.log(localVis);
+
+    return function redraw(){
+	//	console.log("here we go", d3.event.translate, d3.event.scale,localVis);
+
+	// TODO Fix this dirty hack. Should find a way to refer to this.vis
+	graphInterface.vis.attr("transform", "translate(" + d3.event.translate + ")" + " scale(" + d3.event.scale + ")");
+    };
 };
 
     
-infoburp.GraphInterface.prototype.tick=function tick_fu(){
+infoburp.GraphInterface.prototype.tickClosure=function(){
+    
+    local_vis=this.vis;
 
-    this.vis.selectAll("line.link")
-        .call(linkCoordinatesSet);
-
-    this.vis.selectAll("line.temporal_link")
-        .call(linkCoordinatesSet);
-
-    // Moving all g groups according to data
-    this.vis.selectAll("g.node")
-	.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+    return function tick_fu(){
 
 
-    this.vis.selectAll(".nodehtml")
-	.filter(function(d){
-		    // we are taking only thoose nodes that have html edited 
-		    return d.html_need_refresh;
-		})
-	.each(function(d,i){
 
-		  d.contentWrapper.summary(this);
-		  //marking that we refreshed this html
-		  d.html_need_refresh=false;
-	      });
+	local_vis.selectAll("line.link")
+            .call(linkCoordinatesSet);
+	
+	local_vis.selectAll("line.temporal_link")
+            .call(linkCoordinatesSet);
+	
+	// Moving all g groups according to data
+	local_vis.selectAll("g.node")
+	    .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+	
 
-    this.vis.selectAll("circle.node").call(colorCircles);
+	local_vis.selectAll(".nodehtml")
+	    .filter(function(d){
+			// we are taking only thoose nodes that have html edited 
+			return d.html_need_refresh;
+		    })
+	    .each(function(d,i){
+		      
+		      d.contentWrapper.summary(this);
+		      //marking that we refreshed this html
+		      d.html_need_refresh=false;
+		  });
+
+	local_vis.selectAll("circle.node").call(colorCircles);
+
+ }; 
 };

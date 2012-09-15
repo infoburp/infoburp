@@ -1,5 +1,8 @@
 goog.require('infoburp.GraphController');
 goog.require('infoburp.BurpController');
+
+goog.require('infoburp.GraphInterface');
+
 goog.require('infoburp.Content.ContentTypeHandlersRegistry');
 goog.require('goog.editor.Field');
 
@@ -75,7 +78,7 @@ global_data = {
     links:[]
 
 };
-
+/*
 var vis=d3.select("#graph").append("svg")
     .on("click", function (e){
 	       
@@ -103,7 +106,7 @@ var vis=d3.select("#graph").append("svg")
     .call(d3.behavior.zoom().on("zoom", redraw))
     .append('svg:g');
     
-
+*/
 if (COUCHDB) {
 
     var previous_graph_state = restore_graph_state();// persistence/basic_persistence.js
@@ -121,11 +124,11 @@ else {
 
     (function() {
 		 global_data.nodes.forEach(function(d){
-					       var Y=vis.node().viewportElement.clientHeight/2;
-					       var X=vis.node().viewportElement.clientWidth/2;
+					       var Y=300;//vis.node().viewportElement.clientHeight/2;
+					       var X=200;//vis.node().viewportElement.clientWidth/2;
 					       d.x=X+Math.round(Math.random()*10 -5);
 					       d.y=Y+Math.round(Math.random()*10 -5);
-					       console.log(X,Y,d,vis.node().viewportElement.clientWidth);
+					       //console.log(X,Y,d,vis.node().viewportElement.clientWidth);
 					   });
 		
 		})();
@@ -142,6 +145,7 @@ else {
  * So here we creating pool of unused lines with two classes that created before any circles
  */
 
+/*
 var empty_array = [];
  
 for (var i=0;i<unusedlinks;i++){
@@ -167,7 +171,7 @@ var force = d3.layout.force()
 
 
 console.log(document.getElementById("burp-edit"));
-
+*/
 
 function linkCoordinatesSet(linkSelection){
 
@@ -192,7 +196,7 @@ function colorCircles(circlesSelection){
 			  });
 }
 
-
+/*
 function tick_fu(){
 
     vis.selectAll("line.link")
@@ -221,7 +225,7 @@ function tick_fu(){
     vis.selectAll("circle.node").call(colorCircles);
 };
 
-
+/*
 force.on("tick",tick_fu);
 
 force.start();
@@ -231,7 +235,8 @@ var node_drag = d3.behavior.drag()
 		.on("drag", dragmove)
 		.on("dragend", dragend);
 
-
+*/
+/*
 function dragstart(d, i){
     force.stop(); // stops the force auto positioning before you start dragging
 
@@ -280,7 +285,7 @@ function dragend(d, i){
 	     * node only if temporal node is far from source
 	     */
 	    
-	    //TODO Refactor.
+/*	    //TODO Refactor.
 	    if(infoburpGraphController.addNewNode(d,X,Y)){
 		
 //		console.log('new node added',d);
@@ -328,7 +333,7 @@ function restart(){
 		/* Stopping propagation of click event so it wouldn't messs with
 		 * svg onclick node deselecting
 		 */
-		d3.event.stopPropagation();
+/*		d3.event.stopPropagation();
 	    }
 	    
 	   );
@@ -384,10 +389,11 @@ function redraw(){
     vis.attr("transform", "translate(" + d3.event.translate + ")" + " scale(" + d3.event.scale + ")");
 }
 
-
+*/
 var infoBurpController=null;
 var infoburpGraphController=null;
 var infoburpContentTypeHandlerRegistry=null;
+var graphInterface=null;
 
 var myField = null;
 
@@ -408,8 +414,8 @@ function initEditor(){
 				 d.nodehtml=myField.getCleanContents();
 				 infoburpContentTypeHandlerRegistry.attachRender(d);
 				 d.html_need_refresh=true;
-				 tick_fu();
-				 console.log("refreshing data",d);
+				 graphInterface.tickClosure()();
+
 
 			     });
 
@@ -490,14 +496,17 @@ function initEditor(){
 
 function startInterface(){
     
+    graphInterface=new infoburp.GraphInterface(document.getElementById("graph"),global_data);    
+    
+
     initEditor();
     myField.makeUneditable();
     infoBurpController = new infoburp.BurpController(myField);
-    infoburpGraphController= new infoburp.GraphController(vis);
+//    infoburpGraphController= new infoburp.GraphController(vis);
 
     infoburpContentTypeHandlerRegistry=new infoburp.Content.ContentTypeHandlersRegistry();
     infoburpContentTypeHandlerRegistry.defaultInit();
+    graphInterface.initGraph();
 
-
-    restart();
+//    restart();
 };
