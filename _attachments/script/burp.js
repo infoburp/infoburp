@@ -1,50 +1,53 @@
-goog.provide("infoburp.BurpController");
+goog.provide('infoburp.BurpController');
 
 
 // TODO refactor this function
-function initEditor(){
+function initEditor() {
 
-      
+
   function updateFieldContents() {
 
-      
-      var valedit=myField.getCleanContents();
+
+      var valedit = myField.getCleanContents();
+
+      console.log(valedit, 'cleancontents');
+
       goog.dom.getElement('fieldContents').value = valedit;
 
       global_data.nodes
-	  .filter(function(d,i){
-		      return d.selected;
-		  }).forEach(function(d){
+          .filter(function(d, i) {
+                      return d.selected;
+                  }).forEach(function(d) {
 
-				 d.nodehtml=myField.getCleanContents();
-				 infoburpContentTypeHandlerRegistry.attachRender(d);
-				 d.html_need_refresh=true;
-				 graphInterface.tickClosure()();
+                                 d.nodehtml = myField.getCleanContents();
+                                 infoburpContentTypeHandlerRegistry.attachRender(d);
+                                 d.html_need_refresh = true;
+                                 graphInterface.tickClosure()();
 
 
-			     });
+                             });
 
-      if (heuristicEngine.guessNodeType(valedit)=="ytvideo-link"){
-	  
-	  //	console.log("Yes this is a youtube-link",testIfYTLink(valedit)[1]);
-	  //	render_youtube_video_to_div(document.getElementById("run-node"),testIfYTLink(valedit)[1],400,400);
-      };	
+      if (heuristicEngine.guessNodeType(valedit) == 'ytvideo-link') {
+
+          //    console.log("Yes this is a youtube-link",testIfYTLink(valedit)[1]);
+          //    render_youtube_video_to_div(document.getElementById("run-node"),testIfYTLink(valedit)[1],400,400);
+      }
       global_data.nodes
-	  .filter(function(d,i){
-		      return d.selected;
-		  })
-	  .forEach(function(d){
-		     
-		       //		     console.log("We found this data of selected node and trying to render it",d);
-		     
-		       d.contentWrapper.primary(document.getElementById("run-node"));
-		       
-		   });
+          .filter(function(d, i) {
+                      return d.selected;
+                  })
+          .forEach(function(d) {
+
+                       //                    console.log("We found this data of selected node and trying to render it",d);
+
+                       d.contentWrapper.primary(document.getElementById('run-node'));
+
+                   });
   }
 
   // Create an editable field.
 
-  myField=new goog.editor.Field('burpEdit');
+  myField = new goog.editor.Field('burpEdit');
   // Create and register all of the editing plugins you want to use.
   myField.registerPlugin(new goog.editor.plugins.BasicTextFormatter());
   myField.registerPlugin(new goog.editor.plugins.RemoveFormatting());
@@ -100,50 +103,48 @@ function initEditor(){
 
 
 
-infoburp.BurpController = function(inputField){
+infoburp.BurpController = function(inputField) {
 
-    this.burpData=[];
-    this.inputObject=inputField;
-    
+    this.burpData = [];
+    this.inputObject = inputField;
+
 };
 
 
-infoburp.BurpController.prototype.nodeEditEndHandle=function(d){
-    
+infoburp.BurpController.prototype.nodeEditEndHandle = function(d) {
+
     var txt = this.inputObject.getCleanContents();
-    this.inputObject.setHtml("");
-    
-    console.log("txt",txt);
-    
-    if (txt) {      
-	d.nodehtml = txt;
+    this.inputObject.setHtml('');
+
+    console.log('txt', txt);
+
+    if (txt) {
+        d.nodehtml = txt;
     }
-    
+
     // Trying to guess WAT is that and attach correct render
     infoburpContentTypeHandlerRegistry.attachRender(d);
-    
+
     // Marking node to be refreshed and deselecting it.
-    d.html_need_refresh=true;
-    d.selected=false;
-    
-    this.burpData=[];
-    
-};
+    d.html_need_refresh = true;
+    d.selected = false;
 
-
-infoburp.BurpController.prototype.startEdit=function(originalData){
-        
-  	    // TODO remove this fast hack for resetting selected nodes.
-	    global_data.nodes.forEach(function(d){d.selected=false;});
-	    originalData.selected=true;
-             
-    (this.inputObject.isUneditable())? this.inputObject.makeEditable(): console.log("Trying to make editable already editable field");
-    
-    this.burpData=[{original_data:originalData}];
-
-    this.inputObject.setHtml(false,originalData.nodehtml);
+    this.burpData = [];
 
 };
 
 
+infoburp.BurpController.prototype.startEdit = function(originalData) {
+
+            // TODO remove this fast hack for resetting selected nodes.
+            global_data.nodes.forEach(function(d) {d.selected = false;});
+            originalData.selected = true;
+
+    (this.inputObject.isUneditable()) ? this.inputObject.makeEditable() : console.log('Trying to make editable already editable field');
+
+    this.burpData = [{original_data: originalData}];
+
+    this.inputObject.setHtml(false, originalData.nodehtml);
+
+};
 
