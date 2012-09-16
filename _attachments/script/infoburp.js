@@ -30,7 +30,7 @@ goog.require('goog.ui.editor.ToolbarController');
 
 var linkstrength = 0.1;
 var charge = -2000;
-var gravity = 0.001;
+var gravity = 0;
 var nodetemplate;
 
 nodetemplate = function(node_data){
@@ -72,7 +72,7 @@ BOTTOM_BUMP_X = NODERADIUS*0.866; //sqrt(3)/2 ~ 0.866
 BOTTOM_BUMP_Y = NODERADIUS/2;
 FOREIGN_OBJECT_SIDE = NODERADIUS*1.4142;
 FOREIGN_OBJECT_SHIFT = -NODERADIUS/1.4142;
-unusedlinks = 100; // This is workaround for z order of links. This should be greater than maximum number of links that are displayed.
+unusedlinks = 256; // This is workaround for z order of links. This should be greater than maximum number of links that are displayed.
 
 
 global_data = {
