@@ -118,6 +118,7 @@ else {
 
 
 var infoBurpController=null;
+var infoBurpController2=null;
 var infoburpContentTypeHandlerRegistry=null;
 var graphInterface=null;
 
@@ -130,8 +131,11 @@ infoburp.startInterface= function startInterface(){
     graphInterface=new infoburp.GraphInterface(document.getElementById("graph"),global_data);    
 
     initEditor();
+    initEditor2();
     myField.makeUneditable();
+    myField2.makeUneditable();
     infoBurpController = new infoburp.BurpController(myField);
+    infoBurpController2 = new infoburp.BurpController(myField2);
 
     infoburpContentTypeHandlerRegistry=new infoburp.Content.ContentTypeHandlersRegistry();
     infoburpContentTypeHandlerRegistry.defaultInit();
