@@ -1,0 +1,229 @@
+html, body {
+	width:100%;
+	height:100%;
+	background:black;
+	color:green;
+	margin:0px;
+	padding:0px;
+	cursor:move;
+	color:white;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+
+}
+
+
+
+/*..............BAR */
+#bar {
+	width:100%;
+	height:7px;
+	left:0px;
+	top:0px;
+	position:fixed;
+	background:#002600;
+	z-index:2;
+
+}
+#_bar {
+	width:100%;
+	margin:0px auto;
+	list-style:none inside none;
+	display:table;
+	font-family:arial;
+	font-size:18px;
+	padding:0px 6px;
+}
+#_bar >* {
+	display:table-cell;
+	top:21px;
+	padding:4px 0px;
+
+}
+
+
+#qr {
+    width: 68px;
+}
+#qr img{
+    position: absolute;
+    left:0px;
+    top:0px;
+    z-index: 1;
+}
+/*..............LOGO */
+
+
+#logo {
+    width: 28px;
+}
+#logo img{
+    position: absolute;
+    left:0px;
+    top:0px;
+    z-index: 1;
+}
+/*..............WHUFFIE */
+#whuffie {
+}
+#_whuffie {
+}
+/*..............BAR SPACING */
+#empty {
+	width:0px;
+}
+/*..............SIGNIN */
+
+#signin {
+    width: 87px;
+}
+#signin img{
+    position: absolute;
+    right:104px;
+    top:0px;
+    z-index: 1;
+}
+
+
+#twitter {
+    width: 42px;
+}
+#twitter img{
+    position: absolute;
+    right:0px;
+    top:0px;
+    z-index: 1;
+}
+
+
+#facebook {
+    width: 48px;
+}
+#facebook img{
+    position: absolute;
+    right:49px;
+    top:0px;
+    z-index: 1;
+}
+
+
+
+/*..............BAR */
+#bottombar {
+	width:100%;
+	height:32px;
+	left:0px;
+	bottom:0px;
+	position:fixed;
+	background:#848484;
+	z-index:2;
+}
+#_bottombar {
+	width:100%;
+	margin:0px auto;
+	list-style:none inside none;
+	display:table;
+	font-family:arial;
+	font-size:18px;
+	padding:0px 6px;
+}
+#_bottombar >* {
+	display:table-cell;
+	bottom:3px;
+	padding:4px 0px;
+
+}
+
+#caution {
+    width: 28px;
+}
+#caution img{
+    position: absolute;
+    left:6px;
+    bottom:6px;
+    z-index: 1;
+}
+#logintosave {
+    width: 112px;
+}
+#logintosave img{
+    position: absolute;
+    left:34px;
+    bottom:6px;
+    z-index: 1;
+}
+
+
+/*..............INFOBURP */
+#searchbox {
+	width:160px;
+	border:solid 3px;
+	padding:5px;
+	background:black;
+	color:#174917;
+	margin-left:700px;
+	margin-right:20px;
+	margin-top:10px;
+	vertical-align:middle
+}
+
+circle.node {
+  stroke: #007b02;
+  stroke-width: 8.4px;
+}
+
+circle.unselected_node{
+  fill:black;
+  stroke: #007b02;
+}
+
+circle.selected_node {
+    fill:black;
+     stroke: #ff7e00;
+}
+
+
+line.link {
+  stroke: #007b02;
+  stroke-opacity: 1;
+  stroke-width: 8.4px;
+}
+line.temporal_link {
+  stroke: #ff7e00;
+  stroke-opacity: 1;
+  stroke-width: 8.4px;
+}
+
+div.nodehtml{
+
+height:100%;
+width:100%;
+text-align:center;
+vertical-align:middle;
+font-family:'URW Gothic L',verdana;
+body {color:black;}
+h1 {color:black;}
+h2 {color:black;}
+word-wrap:normal;
+}
+
+circle.temporal_node{
+
+fill: #ff7e00;
+}
+
+input.non-active-editor{
+
+display:none;
+
+}
+
+input.active-editor{
+
+display:none;
+
+}
