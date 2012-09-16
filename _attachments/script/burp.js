@@ -170,10 +170,11 @@ function initEditor2(){
 
 
 
-infoburp.BurpController = function(inputField){
+infoburp.BurpController = function(inputField, inputField2){
 
     this.burpData=[];
     this.inputObject=inputField;
+    this.inputObject2=inputField2;
     
 };
 
@@ -182,11 +183,13 @@ infoburp.BurpController.prototype.nodeEditEndHandle=function(d){
     
     var txt = this.inputObject.getCleanContents();
     this.inputObject.setHtml("");
+    var txt = this.inputObject2.getCleanContents();
+    this.inputObject2.setHtml("");
     
     console.log("txt",txt);
     
     if (txt) {      
-	d.nodehtml = txt;
+    	d.nodehtml = txt;
     }
     
     // Trying to guess WAT is that and attach correct render
@@ -208,10 +211,12 @@ infoburp.BurpController.prototype.startEdit=function(originalData){
 	    originalData.selected=true;
              
     (this.inputObject.isUneditable())? this.inputObject.makeEditable(): console.log("Trying to make editable already editable field");
+    (this.inputObject2.isUneditable())? this.inputObject2.makeEditable(): console.log("Trying to make editable already editable field");
     
     this.burpData=[{original_data:originalData}];
 
     this.inputObject.setHtml(false,originalData.nodehtml);
+    this.inputObject2.setHtml(false,originalData.nodehtml);
 
 };
 

@@ -134,8 +134,7 @@ infoburp.startInterface= function startInterface(){
     initEditor2();
     myField.makeUneditable();
     myField2.makeUneditable();
-    infoBurpController = new infoburp.BurpController(myField);
-    infoBurpController2 = new infoburp.BurpController(myField2);
+    infoBurpController = new infoburp.BurpController(myField, myField2);
 
     infoburpContentTypeHandlerRegistry=new infoburp.Content.ContentTypeHandlersRegistry();
     infoburpContentTypeHandlerRegistry.defaultInit();
