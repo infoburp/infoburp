@@ -12,7 +12,7 @@ infoburp.GraphController= function (vis) {
 
 	this.temporalLinkArray=[];
 	this.temporalNodeArray=[];
-	
+
 	this.draggingNow=false;
 
 	this.state={
@@ -76,7 +76,7 @@ infoburp.GraphController.prototype.refreshTemporalState=function(){
     temporalLinkSelection.enter().insert("line","circle.temporal_node")
 	.attr("class","temporal_link")
 	.call(linkCoordinatesSet);
-	    
+
     temporalLinkSelection.exit().remove();
     
 };
@@ -96,25 +96,25 @@ infoburp.GraphController.prototype.nodesDistances= function(x,y){
     var that=this;
     
     global_data.nodes.forEach(function(current,num){
-				  
+
 				  distanceArray.push({
 							  node:current,
 							  index:num,
 							  distance:that.distanceToNode(x,y,current)
 						      }
 						     );
-				  
-				  
+
+
 			      });
     
     
     
 	    distanceArray.sort(function(a,b){
-				    
+
 				    // We are sorting in descending order so nearest node comes first
-				    
+
 				    return (a.distance - b.distance);
-				    
+
 				} );
     
     return distanceArray;
@@ -147,45 +147,46 @@ infoburp.GraphController.prototype.distanceToNode=function(x,y,nodeData){
 infoburp.GraphController.prototype.temporalTick=function(x,y){
     
     // Updating position for temporal node circle and  link line
-    
-    this.temporalNodeArray[0].x=x;
-    this.temporalNodeArray[0].y=y;
-    this.svgVis.selectAll("circle.temporal_node")
-	.style("opacity",function(d){
-		   if (d.showCircle){
-		       return 1;
-		   }
-		   else
-		   {
-		       return 0;
-		   }
+    if (this.temporalNodeArray[0]){
 
-	       })
+	this.temporalNodeArray[0].x=x;
+	this.temporalNodeArray[0].y=y;
+	this.svgVis.selectAll("circle.temporal_node")
+	    .style("opacity",function(d){
+		       if (d.showCircle){
+			   return 1;
+		       }
+		       else
+		       {
+			   return 0;
+		       }
+
+		   })
     
-	.attr("transform", function(d) {return "translate(" + d.x + "," + d.y + ")"; });
+	    .attr("transform", function(d) {return "translate(" + d.x + "," + d.y + ")"; });
+
     
-    
-	    if (this.snap !== null){
-		
-		
-		this.temporalLinkArray[0].target=this.snap;
-		
-		this.temporalNodeArray[0].showCircle=false;
-		
-	    }else{
-		
-		this.temporalLinkArray[0].target=this.temporalNodeArray[0];
-		this.temporalNodeArray[0].showCircle=true;		
-	    }
-    
-    this.svgVis.selectAll("line.temporal_link")
-	.attr("x1", function(d) { return d.source.x; })
-	.attr("y1", function(d) { return d.source.y; })
-	.attr("x2", function(d) { return d.target.x; })
-	.attr("y2", function(d) { return d.target.y; });
-    
+	if (this.snap !== null){
 
 
+	    this.temporalLinkArray[0].target=this.snap;
+
+	    this.temporalNodeArray[0].showCircle=false;
+
+	}else{
+
+	    this.temporalLinkArray[0].target=this.temporalNodeArray[0];
+	    this.temporalNodeArray[0].showCircle=true;		
+	}
+
+	this.svgVis.selectAll("line.temporal_link")
+	    .attr("x1", function(d) { return d.source.x; })
+	    .attr("y1", function(d) { return d.source.y; })
+	    .attr("x2", function(d) { return d.target.x; })
+	    .attr("y2", function(d) { return d.target.y; });
+
+
+    }
 };
 
 
@@ -217,7 +218,7 @@ infoburp.GraphController.prototype.removeTemporalNodeAndLink=function(){
 			   that.snap=null;
 			   that.draggingNow=false;
 			   that.refreshTemporalState();
-			   
+
 		       },NODE_APPEARANCE_DURATION);
     
 
@@ -254,13 +255,13 @@ infoburp.GraphController.prototype.addNewLink=function(sourceData){
      *  TODO Debug it
      */
 
-    if (this.snap && this.snap.index){
+    if (this.snap && (!(this.snap.index===undefined))){
 
 	var target = this.snap;	    
 
 	var nodesAreDifferent=sourceData.index !== target.index;
 	var isLinkNotRedundant=this.linkNotRedundant(sourceData.index,target.index);
-	
+
 	/* Adding link if nodes are different , link is not duplicate and there is 
 	 * node which is temporary link snapped to.
 	 */
@@ -273,15 +274,15 @@ infoburp.GraphController.prototype.addNewLink=function(sourceData){
 	}
 	else{
 	    global_data.nodes.forEach(function(d,i){
-					  
+
 	//				  console.log("Deselecting all nodes");
-					  
+
 					  d.selected = false;});
-	
+
 	    target.selected=!nodesAreDifferent;
-	    
+
 	}
-	
+
 	return true;
 
     }
@@ -365,7 +366,7 @@ infoburp.GraphController.prototype.selectNearestNode = function(sourceData,sourc
 infoburp.GraphController.prototype.linkNotRedundant=function (sourceIndex,targetIndex){
 
     var testFunction=function(d){
-	
+
 	// Checking if node we are trying to link is the same as source node.
 	var sameSIndex=(d.source.index == sourceIndex);
 	var sameTIndex=(d.target.index == targetIndex);
@@ -380,6 +381,5 @@ infoburp.GraphController.prototype.linkNotRedundant=function (sourceIndex,target
 
     return !((global_data.links.filter(testFunction)).length >0);
 };
-
 
 

@@ -1,3 +1,7 @@
+goog.provide('infoburp.startInterface');
+goog.provide('infoburp');
+
+
 goog.require('infoburp.GraphController');
 goog.require('infoburp.BurpController');
 
@@ -24,10 +28,9 @@ goog.require('goog.ui.editor.ToolbarController');
 
 
 
-
-var linkstrength = 0.025;
-var charge = -500;
-var gravity = 0;
+var linkstrength = 0.1;
+var charge = -2000;
+var gravity = 0.001;
 var nodetemplate;
 
 nodetemplate = function(node_data){
@@ -45,7 +48,7 @@ nodetemplate = function(node_data){
 
 DEBUG_DATASET={
 	         nodes:[nodetemplate({
-					
+
 					nodehtml:"infoburp.com",
 					is_youtube_video:false,
 					youtube_id:""
@@ -62,14 +65,14 @@ DEBUG_DATASET={
 
 
 linkingradius = 128; // Defines linking distance 
-NODE_APPEARANCE_DURATION = 64; // ms Time for animation of new node appearance
+NODE_APPEARANCE_DURATION = 128; // ms Time for animation of new node appearance
 NODEINITRADIUS = 20;    // px Animation starts from that radius to noderadius
 NODERADIUS = 46;              // Node radius
 BOTTOM_BUMP_X = NODERADIUS*0.866; //sqrt(3)/2 ~ 0.866
 BOTTOM_BUMP_Y = NODERADIUS/2;
 FOREIGN_OBJECT_SIDE = NODERADIUS*1.4142;
 FOREIGN_OBJECT_SHIFT = -NODERADIUS/1.4142;
-unusedlinks = 256; // This is workaround for z order of links. This should be greater than maximum number of links that are displayed.
+unusedlinks = 100; // This is workaround for z order of links. This should be greater than maximum number of links that are displayed.
 
 
 global_data = {
@@ -103,7 +106,7 @@ else {
 					       d.y=Y+Math.round(Math.random()*10 -5);
 					       //console.log(X,Y,d,vis.node().viewportElement.clientWidth);
 					   });
-		
+
 		})();
 
 
@@ -122,7 +125,7 @@ var myField = null;
 
 
 
-function startInterface(){
+infoburp.startInterface= function startInterface(){
     
     graphInterface=new infoburp.GraphInterface(document.getElementById("graph"),global_data);    
 

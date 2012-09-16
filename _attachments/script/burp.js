@@ -25,7 +25,7 @@ function initEditor(){
 			     });
 
       if (heuristicEngine.guessNodeType(valedit)=="ytvideo-link"){
-	  
+
 	  //	console.log("Yes this is a youtube-link",testIfYTLink(valedit)[1]);
 	  //	render_youtube_video_to_div(document.getElementById("run-node"),testIfYTLink(valedit)[1],400,400);
       };	
@@ -34,11 +34,11 @@ function initEditor(){
 		      return d.selected;
 		  })
 	  .forEach(function(d){
-		     
+
 		       //		     console.log("We found this data of selected node and trying to render it",d);
-		     
+
 		       d.contentWrapper.primary(document.getElementById("run-node"));
-		       
+
 		   });
   }
 
@@ -137,10 +137,11 @@ infoburp.BurpController.prototype.startEdit=function(originalData){
 	    global_data.nodes.forEach(function(d){d.selected=false;});
 	    originalData.selected=true;
              
-            this.inputObject.makeEditable();
-	    this.burpData=[{original_data:originalData}];
+    (this.inputObject.isUneditable())? this.inputObject.makeEditable(): console.log("Trying to make editable already editable field");
+    
+    this.burpData=[{original_data:originalData}];
 
-	    this.inputObject.setHtml(false,originalData.nodehtml);
+    this.inputObject.setHtml(false,originalData.nodehtml);
 
 };
 

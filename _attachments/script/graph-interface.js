@@ -23,12 +23,12 @@ function colorCircles(circlesSelection){
     
     circlesSelection.attr("class",function (d){
 			      if (d.selected){
-				  
+
 				  return "node selected_node";
-				  
+
 			      }
 			      else{
-		    
+
 				  return "node unselected_node";
 			      }
 			  });
@@ -58,25 +58,21 @@ this.graphController=null;
 
 infoburp.GraphInterface.prototype.initGraph=function(){
 
-    
+    var localGraphInterface=this;   
 
-    var localData=this.dataContainer;
+
+
+
+
 
     this.vis=d3.select(this.renderDiv).append("svg")
 	.on("click", function (e){
-		
+
 		if (!(d3.event.target.className=="nodehtml")){
-		    
-		    localData.nodes.forEach(function(d,i){					  
-						  d.selected = false;
-					      });
-	    
-		    // Making burp editor inactive; TODO consider Lorem Ipsuming some default text.
-		    myField.setHtml("");
-		    myField.makeUneditable();
-		}
-		
-	    })
+
+		    localGraphInterface.flushState();		    
+
+	    }})
 	.attr("width", "100%")
 	.attr("height", "100%")
 	.attr("pointer-events", "all")
@@ -85,6 +81,7 @@ infoburp.GraphInterface.prototype.initGraph=function(){
 
 
     this.graphController=new infoburp.GraphController(this.vis);
+    var localGraphController=this.graphController;
 
     var empty_array = [];
     
@@ -109,15 +106,17 @@ infoburp.GraphInterface.prototype.initGraph=function(){
 	.nodes(this.dataContainer.nodes)
 	.links(this.dataContainer.links);
 
-
-    var localForce=this.force;
-    var localGraphController=this.graphController;
-    var localGraphInterface=this;
+    var localForce=this.force; 
     var localTick=this.tickClosure();
+    var localData=this.dataContainer;
+
+
     
     var dragstart=function(d, i){
+
+	localGraphInterface.flushState();
 	localForce.stop(); // stops the force auto positioning before you start dragging
-	
+
 	//    console.log("dragstart",d);
 	d.selected=true;
 	//    console.log("dragstart end",d,d.selected);
@@ -128,12 +127,12 @@ infoburp.GraphInterface.prototype.initGraph=function(){
 
     
     var dragmove = function dragmove(d, i){
-	
+
 	localGraphController.temporalTick(d3.event.x,d3.event.y);
-	
+
 	// Selecting node nearest to mouse event
 	localGraphController.selectNearestNode(d,d3.event);
-	
+
 	//Making force simulation
 	localTick();
     };
@@ -141,38 +140,37 @@ infoburp.GraphInterface.prototype.initGraph=function(){
 
     
     var dragend= function dragend(d, i){
-	
+
+
+	console.log("Dragend",d);
 
 	// Saving last temporal node coordinates before removing
 	var X=localGraphController.temporalNodeArray[0].x;
 	var Y=localGraphController.temporalNodeArray[0].y;
-	
-	
+
+
 	// Removing temporal link and node
 	localGraphController.removeTemporalNodeAndLink();
 
-	
+
 	// Adding new link if necessary (function checks if source and target are distinct). 
 	//TODO refactor
 	if (localGraphController.addNewLink(d)){
-	    
+
 
 	}
 	else{
-	    
+
 	    /* And if there where no internode links added then we adding new 
 	     * node only if temporal node is far from source
 	     */
-	    
+
 	    //TODO Refactor.
 	    if(localGraphController.addNewNode(d,X,Y)){
-		
-//		console.log('new node added',d);
-		d.selected=false;
-		
+
 	    }
 	    else{
-		
+
 		d.selected=true;		
 	    };
 	}
@@ -185,9 +183,9 @@ infoburp.GraphInterface.prototype.initGraph=function(){
 
 	// Refreshing svg after modifying data
 	localGraphInterface.restart();
-	
+
 	localGraphInterface.force.start(); 
-	
+
     };
     
     this.node_drag = d3.behavior.drag()
@@ -203,6 +201,18 @@ infoburp.GraphInterface.prototype.initGraph=function(){
     this.restart();
     
     
+};
+
+infoburp.GraphInterface.prototype.flushState=function(){
+
+    this.dataContainer.nodes.forEach(function(d,i){					  
+				d.selected = false;
+			    });
+    
+    // Making burp editor inactive; TODO consider Lorem Ipsuming some default text.
+    myField.setHtml("");
+    (!myField.isUneditable())? myField.makeUneditable(): console.log("Trying to make editable already editable field");
+
 };
 
 
@@ -228,7 +238,7 @@ infoburp.GraphInterface.prototype.restart=function(){
 		 */
 		d3.event.stopPropagation();
 	    }
-	    
+
 	   );
     
 
@@ -260,10 +270,10 @@ infoburp.GraphInterface.prototype.restart=function(){
     var nodehtmls = new_nodes.append("xhtml:div")
 	.attr("class","nodehtml")
 	.each(function(d,i){
-		  
+
 		  // Initializing render for data
 		  infoburpContentTypeHandlerRegistry.attachRender(d);
-		  
+
 		  // Rendering data summary to this div
 		  d.contentWrapper.summary(this);}
 	     )
@@ -300,14 +310,14 @@ infoburp.GraphInterface.prototype.tickClosure=function(){
 
 	local_vis.selectAll("line.link")
             .call(linkCoordinatesSet);
-	
+
 	local_vis.selectAll("line.temporal_link")
             .call(linkCoordinatesSet);
-	
+
 	// Moving all g groups according to data
 	local_vis.selectAll("g.node")
 	    .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
-	
+
 
 	local_vis.selectAll(".nodehtml")
 	    .filter(function(d){
@@ -315,7 +325,7 @@ infoburp.GraphInterface.prototype.tickClosure=function(){
 			return d.html_need_refresh;
 		    })
 	    .each(function(d,i){
-		      
+
 		      d.contentWrapper.summary(this);
 		      //marking that we refreshed this html
 		      d.html_need_refresh=false;
