@@ -13,187 +13,13 @@ html, body {
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
-
 }
 
-
-
-/*..............BAR */
-#bar {
-	width:100%;
-	height:32px;
-	left:0px;
-	top:0px;
-	position:fixed;
-	background:#007b02;
-	z-index:2;
-
-}
-#_bar {
-	width:100%;
-	margin:0px auto;
-	list-style:none inside none;
-	display:table;
-	font-family:arial;
-	font-size:18px;
-	padding:0px 6px;
-}
-#_bar >* {
-	display:table-cell;
-	top:21px;
-	padding:4px 0px;
-
-}
-
-
-#qr {
-    width: 68px;
-}
-#qr img{
-    position: absolute;
-    left:0px;
-    top:0px;
-    z-index: 1;
-}
-/*..............LOGO */
-#logo {
-
-	background:url('/img/logo.png');
-	left:0px;
-	top:0px;
-	position:fixed;
-}
-
-}
-#_logo {
-
-	margin-left:-52px;
-
-
-}
-/*..............WHUFFIE */
-#whuffie {
-}
-#_whuffie {
-}
 /*..............BAR SPACING */
+
 #empty {
 	width:0px;
 }
-/*..............SEARCH */
-#search {
-    
-}
-#_search {
-	font-size:18px;
-	font-family: "URW Gothic L",verdana;
-	vertical-align:middle;
-	border-radius:3px;
-	background:black;
-	border:3px solid #005b00;
-	box-shadow: 0px 0px 0px 1px #006e00;
-	color:#ffffff;
-	padding:0px 2px;
-	width:180px;
-	height:28px;
-	left:271px;
-	top:20px;
-	position:fixed;
-	font-weight:bold;
-}
-#_search:focus {
-	border:3px solid #c73;
-}
-/*..............SIGNIN */
-
-#ad {
-    width: 87px;
-}
-#_ad{
-    position: absolute;
-    right:61px;
-    top:0px;
-    z-index: 1;
-}
-#signin {
-    width: 87px;
-}
-#signin img{
-    position: absolute;
-    right:61px;
-    top:3px;
-    z-index: 1;
-}
-
-
-#twitter {
-    width: 28px;
-}
-#twitter img{
-    position: absolute;
-    right:5px;
-    top:5px;
-    z-index: 1;
-}
-
-
-#facebook {
-    width: 28px;
-}
-#facebook img{
-    position: absolute;
-    right:33px;
-    top:5px;
-    z-index: 1;
-}
-
-
-
-/*..............BAR */
-#bottombar {
-	width:100%;
-	height:32px;
-	left:0px;
-	bottom:0px;
-	position:fixed;
-	background:#848484;
-	z-index:2;
-}
-#_bottombar {
-	width:100%;
-	margin:0px auto;
-	list-style:none inside none;
-	display:table;
-	font-family:arial;
-	font-size:18px;
-	padding:0px 6px;
-}
-#_bottombar >* {
-	display:table-cell;
-	bottom:3px;
-	padding:4px 0px;
-
-}
-
-#caution {
-    width: 28px;
-}
-#caution img{
-    position: absolute;
-    left:6px;
-    bottom:6px;
-    z-index: 1;
-}
-#logintosave {
-    width: 112px;
-}
-#logintosave img{
-    position: absolute;
-    left:34px;
-    bottom:6px;
-    z-index: 1;
-}
-
 
 /*..............INFOBURP */
 
@@ -203,19 +29,8 @@ html, body {
 	border-spacing:0px;
 }
 
-#searchbox {
-	width:160px;
-	border:solid 3px;
-	padding:5px;
-	background:black;
-	color:#174917;
-	margin-left:700px;
-	margin-right:20px;
-	margin-top:10px;
-	vertical-align:middle;
-}
-
 /* graph */
+
 #graph {
 }
 
@@ -233,7 +48,6 @@ circle.selected_node {
     fill:black;
      stroke: #ff7e00;
 }
-
 
 line.link {
 	stroke: #007b02;
@@ -254,6 +68,7 @@ div.nodehtml{
 	font-family:'URW Gothic L',verdana;
 	word-wrap:normal;
 }
+
 body {color:black;}
 h1 {color:black;}
 h2 {color:black;}
@@ -261,8 +76,6 @@ h2 {color:black;}
 circle.temporal_node{
 	fill: #ff7e00;
 }
-
-
 
 /* middle bar */
 
@@ -279,6 +92,7 @@ circle.temporal_node{
 	width:49%;
 	height:50px;
 }
+
 #toolbar .goog-toolbar, #toolbar2 .goog-toolbar {
 	height:100%;
 	display:block;
