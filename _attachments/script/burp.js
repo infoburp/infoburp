@@ -1,4 +1,4 @@
-goog.provide('infoburp.BurpController');
+goog.provide('ib.BurpController');
 
 
 // TODO refactor this function
@@ -20,7 +20,7 @@ function initEditor() {
                   }).forEach(function(d) {
 
                                  d.nodehtml = myField.getCleanContents();
-                                 infoburpContentTypeHandlerRegistry.attachRender(d);
+                                 ibContentTypeHandlerRegistry.attachRender(d);
                                  d.html_need_refresh = true;
                                  graphInterface.tickClosure()();
 
@@ -103,7 +103,7 @@ function initEditor() {
 
 
 
-infoburp.BurpController = function(inputField) {
+ib.BurpController = function(inputField) {
 
     this.burpData = [];
     this.inputObject = inputField;
@@ -111,7 +111,7 @@ infoburp.BurpController = function(inputField) {
 };
 
 
-infoburp.BurpController.prototype.nodeEditEndHandle = function(d) {
+ib.BurpController.prototype.nodeEditEndHandle = function(d) {
 
     var txt = this.inputObject.getCleanContents();
     this.inputObject.setHtml('');
@@ -123,7 +123,7 @@ infoburp.BurpController.prototype.nodeEditEndHandle = function(d) {
     }
 
     // Trying to guess WAT is that and attach correct render
-    infoburpContentTypeHandlerRegistry.attachRender(d);
+    ibContentTypeHandlerRegistry.attachRender(d);
 
     // Marking node to be refreshed and deselecting it.
     d.html_need_refresh = true;
@@ -134,7 +134,7 @@ infoburp.BurpController.prototype.nodeEditEndHandle = function(d) {
 };
 
 
-infoburp.BurpController.prototype.startEdit = function(originalData) {
+ib.BurpController.prototype.startEdit = function(originalData) {
 
             // TODO remove this fast hack for resetting selected nodes.
             global_data.nodes.forEach(function(d) {d.selected = false;});

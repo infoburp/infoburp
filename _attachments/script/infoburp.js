@@ -1,5 +1,5 @@
-goog.provide('infoburp');
-goog.provide('infoburp.startInterface');
+goog.provide('ib');
+goog.provide('ib.startInterface');
 
 
 goog.require('goog.editor.Command');
@@ -16,10 +16,10 @@ goog.require('goog.editor.plugins.SpacesTabHandler');
 goog.require('goog.editor.plugins.UndoRedo');
 goog.require('goog.ui.editor.DefaultToolbar');
 goog.require('goog.ui.editor.ToolbarController');
-goog.require('infoburp.BurpController');
-goog.require('infoburp.Content.ContentTypeHandlersRegistry');
-goog.require('infoburp.GraphController');
-goog.require('infoburp.GraphInterface');
+goog.require('ib.BurpController');
+goog.require('ib.ContentTypeHandlersRegistry');
+goog.require('ib.GraphController');
+goog.require('ib.GraphInterface');
 
 var linkstrength = 0.1;
 var charge = -2000;
@@ -116,15 +116,15 @@ var myField = null;
 
 
 
-infoburp.startInterface = function startInterface() {
+ib.startInterface = function startInterface() {
 
-    graphInterface = new infoburp.GraphInterface(document.getElementById('graph'), global_data);
+    graphInterface = new ib.GraphInterface(document.getElementById('graph'), global_data);
 
     initEditor();
     myField.makeUneditable();
-    infoBurpController = new infoburp.BurpController(myField);
+    infoBurpController = new ib.BurpController(myField);
 
-    infoburpContentTypeHandlerRegistry = new infoburp.Content.ContentTypeHandlersRegistry();
+    infoburpContentTypeHandlerRegistry = new ib.ContentTypeHandlersRegistry();
     infoburpContentTypeHandlerRegistry.defaultInit();
 
     graphInterface.initGraph();

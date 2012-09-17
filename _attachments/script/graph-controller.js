@@ -1,7 +1,7 @@
-goog.provide('infoburp.GraphController');
+goog.provide('ib.GraphController');
 
 
-infoburp.GraphController = function(vis) {
+ib.GraphController = function(vis) {
 
     this.svgVis = vis;
 
@@ -19,7 +19,7 @@ infoburp.GraphController = function(vis) {
 
 
 
-infoburp.GraphController.prototype.dragStartHandler = function(d) {
+ib.GraphController.prototype.dragStartHandler = function(d) {
 
     this.addTemporalNode(d.x, d.y);
     this.addTemporalLink(d, this.temporalNodeArray[0]);
@@ -28,7 +28,7 @@ infoburp.GraphController.prototype.dragStartHandler = function(d) {
 };
 
 
-infoburp.GraphController.prototype.addTemporalNode = function(x, y) {
+ib.GraphController.prototype.addTemporalNode = function(x, y) {
     /*
      * This function adds one circle on x y
      */
@@ -43,7 +43,7 @@ infoburp.GraphController.prototype.addTemporalNode = function(x, y) {
 };
 
 
-infoburp.GraphController.prototype.refreshTemporalState = function() {
+ib.GraphController.prototype.refreshTemporalState = function() {
 
     /*
      *  Refreshing view for temporary elements
@@ -74,7 +74,7 @@ infoburp.GraphController.prototype.refreshTemporalState = function() {
 };
 
 
-infoburp.GraphController.prototype.nodesDistances = function(x, y) {
+ib.GraphController.prototype.nodesDistances = function(x, y) {
 
     /*
      * This function calculates for all global_data.nodes objects distance to x,y and returns nearest node
@@ -113,7 +113,7 @@ infoburp.GraphController.prototype.nodesDistances = function(x, y) {
 
 
 
-infoburp.GraphController.prototype.distanceToTemporalNode = function(x, y) {
+ib.GraphController.prototype.distanceToTemporalNode = function(x, y) {
 
     return this.distanceToNode(x, y, this.temporalNodeArray[0]);
 };
@@ -121,7 +121,7 @@ infoburp.GraphController.prototype.distanceToTemporalNode = function(x, y) {
 
 
 
-infoburp.GraphController.prototype.distanceToNode = function(x, y, nodeData) {
+ib.GraphController.prototype.distanceToNode = function(x, y, nodeData) {
 
     X = x - nodeData.x;
     Y = y - nodeData.y;
@@ -133,7 +133,7 @@ infoburp.GraphController.prototype.distanceToNode = function(x, y, nodeData) {
 
 
 
-infoburp.GraphController.prototype.temporalTick = function(x,y) {
+ib.GraphController.prototype.temporalTick = function(x,y) {
 
     // Updating position for temporal node circle and  link line
     if (this.temporalNodeArray[0]) {
@@ -181,7 +181,7 @@ infoburp.GraphController.prototype.temporalTick = function(x,y) {
 
 
 
-infoburp.GraphController.prototype.removeTemporalNodeAndLink = function() {
+ib.GraphController.prototype.removeTemporalNodeAndLink = function() {
     // Dissapearing temporary circle
     this.svgVis.selectAll('circle.temporal_node')
         .transition()
@@ -217,7 +217,7 @@ infoburp.GraphController.prototype.removeTemporalNodeAndLink = function() {
 
 
 
-infoburp.GraphController.prototype.addTemporalLink = function(source,target) {
+ib.GraphController.prototype.addTemporalLink = function(source,target) {
 
     // This function adds one line between source and target expecting source and target has x y fields
 
@@ -235,7 +235,7 @@ infoburp.GraphController.prototype.addTemporalLink = function(source,target) {
 
 TEMPORARY_NODE_CIRCLE_RADIUS = 20;
 
-infoburp.GraphController.prototype.addNewLink = function(sourceData) {
+ib.GraphController.prototype.addNewLink = function(sourceData) {
 
     // If there are selected nodes we get first one and make a link to it
 
@@ -282,7 +282,7 @@ infoburp.GraphController.prototype.addNewLink = function(sourceData) {
 
 };
 
-infoburp.GraphController.prototype.addNewInferiorNode = function(sourceData,inferiorContent) {
+ib.GraphController.prototype.addNewInferiorNode = function(sourceData,inferiorContent) {
 
     var newNode = new nodetemplate({
 
@@ -304,7 +304,7 @@ infoburp.GraphController.prototype.addNewInferiorNode = function(sourceData,infe
 };
 
 
-infoburp.GraphController.prototype.addNewNode = function(sourceData,X,Y) {
+ib.GraphController.prototype.addNewNode = function(sourceData,X,Y) {
 
     if (this.distanceToTemporalNode(sourceData.x, sourceData.y) > NODERADIUS) {
 
@@ -331,7 +331,7 @@ infoburp.GraphController.prototype.addNewNode = function(sourceData,X,Y) {
 };
 
 
-infoburp.GraphController.prototype.selectNearestNode = function(sourceData,sourceEvent) {
+ib.GraphController.prototype.selectNearestNode = function(sourceData,sourceEvent) {
 
     //Calculating distances to nodes
 
@@ -371,7 +371,7 @@ infoburp.GraphController.prototype.selectNearestNode = function(sourceData,sourc
 };
 
 
-infoburp.GraphController.prototype.linkNotRedundant = function(sourceIndex,targetIndex) {
+ib.GraphController.prototype.linkNotRedundant = function(sourceIndex,targetIndex) {
 
     var testFunction = function(d) {
 

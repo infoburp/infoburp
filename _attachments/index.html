@@ -43,8 +43,8 @@
   <script src = "script/burp.js"></script>
   <script type="text/javascript" src="script/persistence/basic_persistence.js"></script> 
   <script type="text/javascript" src="script/heuristic.js"></script> 
-  <script type="text/javascript" src="script/node-runner.js"></script>   
-
+  <script type="text/javascript" src="script/infoburp.js"></script>	 
+  
   <!-- Google stylesheets need to be cleaned -->
   <link rel="stylesheet" href="script/google-closure/closure/goog/css/common.css">
   <link rel="stylesheet" href="script/google-closure/closure/goog/css/button.css">
@@ -72,7 +72,7 @@
 </head> 
 
 <html> 
-  <body style="overflow:hidden" bgcolor="#000000" onload="infoburp.startInterface()"> 
+  <body style="overflow:hidden" bgcolor="#000000" onload="ib.startInterface()"> 
     <!-- top bar --> 
     <div id="bar"> 
       <ul id="_bar"> 
@@ -151,9 +151,8 @@
   </tr>
 </table>
 
-<script type="text/javascript" src="script/infoburp.js"></script>	 
 
-<input type="button" id="run-node-button" onclick="run_node()" value="Run node"></input>
+
 
 <div id="run-node"></div>
 

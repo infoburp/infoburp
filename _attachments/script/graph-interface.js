@@ -4,9 +4,9 @@
  * Point in it's creating is to confine d3.js library usage to this object.
  */
 
-goog.provide('infoburp.GraphInterface');
+goog.provide('ib.GraphInterface');
 
-goog.require('infoburp.GraphController');
+goog.require('ib.GraphController');
 
 
 // Two helper functions refactor them consider moving to GraphController
@@ -37,7 +37,7 @@ function colorCircles(circlesSelection) {
 
 
 
-infoburp.GraphInterface = function(divObject, dataContainer) {
+ib.GraphInterface = function(divObject, dataContainer) {
 
 this.dataContainer = dataContainer;
 
@@ -56,7 +56,7 @@ this.graphController = null;
 
 
 
-infoburp.GraphInterface.prototype.initGraph = function() {
+ib.GraphInterface.prototype.initGraph = function() {
 
     var localGraphInterface = this;
 
@@ -80,7 +80,7 @@ infoburp.GraphInterface.prototype.initGraph = function() {
         .append('svg:g');
 
 
-    this.graphController = new infoburp.GraphController(this.vis);
+    this.graphController = new ib.GraphController(this.vis);
     var localGraphController = this.graphController;
 
     var empty_array = [];
@@ -178,7 +178,7 @@ infoburp.GraphInterface.prototype.initGraph = function() {
 
         if (d.selected) {
 
-            infoBurpController.startEdit(d);
+            ibController.startEdit(d);
         }
 
         // Refreshing svg after modifying data
@@ -203,7 +203,7 @@ infoburp.GraphInterface.prototype.initGraph = function() {
 
 };
 
-infoburp.GraphInterface.prototype.flushState = function() {
+ib.GraphInterface.prototype.flushState = function() {
 
     this.dataContainer.nodes.forEach(function(d,i) {
                                 d.selected = false;
@@ -216,7 +216,7 @@ infoburp.GraphInterface.prototype.flushState = function() {
 };
 
 
-infoburp.GraphInterface.prototype.restart = function() {
+ib.GraphInterface.prototype.restart = function() {
 
 
     // Normal links which would reuse pool of unused_links
@@ -285,7 +285,7 @@ infoburp.GraphInterface.prototype.restart = function() {
 };
 
 
-infoburp.GraphInterface.prototype.redrawClosure = function() {
+ib.GraphInterface.prototype.redrawClosure = function() {
 
     //var localVis=graph.vis;
 
@@ -300,7 +300,7 @@ infoburp.GraphInterface.prototype.redrawClosure = function() {
 };
 
 
-infoburp.GraphInterface.prototype.tickClosure = function() {
+ib.GraphInterface.prototype.tickClosure = function() {
 
     local_vis = this.vis;
 

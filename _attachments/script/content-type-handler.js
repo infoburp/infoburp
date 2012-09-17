@@ -1,28 +1,28 @@
-goog.provide('infoburp.Content.ContentTypeHandler');
-goog.provide('infoburp.Content.ContentTypeHandlersRegistry');
-goog.provide('infoburp.Content.HeuristicEngine');
+goog.provide('ib.ContentTypeHandler');
+goog.provide('ib.ContentTypeHandlersRegistry');
+goog.provide('ib.HeuristicEngine');
 
 
 
-infoburp.Content.HeuristicEngine = function() {
+ib.HeuristicEngine = function() {
 };
 
-var heuristicEngine = new infoburp.Content.HeuristicEngine();
+var heuristicEngine = new ib.HeuristicEngine();
 
-infoburp.Content.HeuristicEngine.prototype.testIfYTLink = function(txt) {
+ib.HeuristicEngine.prototype.testIfYTLink = function(txt) {
 
     var regex = /www\.youtube\.com\/watch\?v=(.{11})/;
 
     return txt.match(regex);
 };
 
-infoburp.Content.HeuristicEngine.prototype.testIfYTIframe = function(txt) {
+ib.HeuristicEngine.prototype.testIfYTIframe = function(txt) {
     var regex = /<iframe.+http\:\/\/www\.youtube\.com\/embed\/(.{11}).+iframe>/;
     return txt.match(regex);
     };
 
 
-infoburp.Content.HeuristicEngine.prototype.guessNodeType = function(inputText) {
+ib.HeuristicEngine.prototype.guessNodeType = function(inputText) {
 
 
     var id_array = this.testIfYTLink(inputText);
@@ -44,7 +44,7 @@ infoburp.Content.HeuristicEngine.prototype.guessNodeType = function(inputText) {
 
 };
 
-infoburp.Content.HeuristicEngine.prototype.getHyperLinkList = function(content) {
+ib.HeuristicEngine.prototype.getHyperLinkList = function(content) {
 
     var regex = /<a[^>]+href="(.[^">]+)"[^>]*>/;
 
@@ -61,11 +61,11 @@ infoburp.Content.HeuristicEngine.prototype.getHyperLinkList = function(content) 
 
 
 
-infoburp.Content.ContentTypeHandlersRegistry = function() {
+ib.ContentTypeHandlersRegistry = function() {
   this.registry = [];
 };
 
-infoburp.Content.ContentTypeHandlersRegistry.prototype.registerTypeHandler = function(typeHandler) {
+ib.ContentTypeHandlersRegistry.prototype.registerTypeHandler = function(typeHandler) {
 
     this.registry.push(typeHandler);
 
@@ -73,7 +73,7 @@ infoburp.Content.ContentTypeHandlersRegistry.prototype.registerTypeHandler = fun
 
 
 // TODO consider consistent renaming render/wrapper summary primary doesn't seems to be a good choice.
-infoburp.Content.ContentTypeHandlersRegistry.prototype.attachRender = function(d) {
+ib.ContentTypeHandlersRegistry.prototype.attachRender = function(d) {
 
    /*
     * This function tries to guess type of d.nodehtml content and then attach relevant wrapper
@@ -109,11 +109,11 @@ infoburp.Content.ContentTypeHandlersRegistry.prototype.attachRender = function(d
 
 };
 
-infoburp.Content.ContentTypeHandlersRegistry.prototype.defaultInit = function() {
+ib.ContentTypeHandlersRegistry.prototype.defaultInit = function() {
 
 
     // Todo refactor. Maybe set up global singleton. And move registration to dedicated source file
-    this.registerTypeHandler(new infoburp.Content.ContentTypeHandler('youtubecontent',
+    this.registerTypeHandler(new ib.ContentTypeHandler('youtubecontent',
                                                                      function youtubeclassifier(content) {
                                                                          //      console.log("content from youtube classifier",content);
                                                                          if (heuristicEngine.testIfYTLink(content) || heuristicEngine.testIfYTIframe(content)) {
@@ -133,7 +133,7 @@ infoburp.Content.ContentTypeHandlersRegistry.prototype.defaultInit = function() 
                                                                     ));
 
 
-    this.registerTypeHandler(new infoburp.Content.ContentTypeHandler('hyperlink',
+    this.registerTypeHandler(new ib.ContentTypeHandler('hyperlink',
 
                                                                      function hyperlinkClassifier(content) {
                                                                         return (heuristicEngine.getHyperLinkList(content)) ? true : false;
@@ -156,7 +156,7 @@ infoburp.Content.ContentTypeHandlersRegistry.prototype.defaultInit = function() 
 
 
     // Just simple handler for basic html it should be registered last as it classifier always returns true.
-    this.registerTypeHandler(new infoburp.Content.ContentTypeHandler('htmlContent',
+    this.registerTypeHandler(new ib.ContentTypeHandler('htmlContent',
 
                                     function(content) {
                                         return true;
@@ -176,7 +176,7 @@ infoburp.Content.ContentTypeHandlersRegistry.prototype.defaultInit = function() 
 
 
 
-infoburp.Content.ContentTypeHandler = function(typeName, typeClassifier, summaryRender, primaryRender, inferiorNodesRender) {
+ib.ContentTypeHandler = function(typeName, typeClassifier, summaryRender, primaryRender, inferiorNodesRender) {
 
         this.contentType = typeName;
 
@@ -191,7 +191,7 @@ infoburp.Content.ContentTypeHandler = function(typeName, typeClassifier, summary
 };
 
 
-infoburp.Content.ContentTypeHandler.prototype.wrapContent = function(content_to_wrap) {
+ib.ContentTypeHandler.prototype.wrapContent = function(content_to_wrap) {
 
 // TODO refactor namespace dance
 
@@ -228,7 +228,7 @@ YTH_THUMBNAIL_HEIGHT = 90;
 YTH_THUMBNAIL_WIDTH = 120;
 
 
-var contentTypeHandlersRegistry = new infoburp.Content.ContentTypeHandlersRegistry();
+var contentTypeHandlersRegistry = new ib.ContentTypeHandlersRegistry();
 
 
 var youtubeLinkHandler = function(div, content, generate_link) {
