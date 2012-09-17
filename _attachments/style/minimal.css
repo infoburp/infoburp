@@ -21,11 +21,11 @@ html, body {
 /*..............BAR */
 #bar {
 	width:100%;
-	height:32px;
+	height:7px;
 	left:0px;
 	top:0px;
 	position:fixed;
-	background:#007b02;
+	background:#002600;
 	z-index:2;
 
 }
@@ -56,20 +56,16 @@ html, body {
     z-index: 1;
 }
 /*..............LOGO */
+
+
 #logo {
-
-	background:url('/img/logo.png');
-	left:0px;
-	top:0px;
-	position:fixed;
+    width: 54px;
 }
-
-}
-#_logo {
-
-	margin-left:-52px;
-
-
+#logo img{
+    position: absolute;
+    left:0px;
+    top:0px;
+    z-index: 1;
 }
 /*..............WHUFFIE */
 #whuffie {
@@ -80,70 +76,37 @@ html, body {
 #empty {
 	width:0px;
 }
-/*..............SEARCH */
-#search {
-    
-}
-#_search {
-	font-size:18px;
-	font-family: "URW Gothic L",verdana;
-	vertical-align:middle;
-	border-radius:3px;
-	background:black;
-	border:3px solid #005b00;
-	box-shadow: 0px 0px 0px 1px #006e00;
-	color:#ffffff;
-	padding:0px 2px;
-	width:180px;
-	height:28px;
-	left:271px;
-	top:20px;
-	position:fixed;
-	font-weight:bold;
-}
-#_search:focus {
-	border:3px solid #c73;
-}
 /*..............SIGNIN */
 
-#ad {
-    width: 87px;
-}
-#_ad{
-    position: absolute;
-    right:61px;
-    top:0px;
-    z-index: 1;
-}
 #signin {
     width: 87px;
 }
 #signin img{
     position: absolute;
-    right:61px;
-    top:3px;
+    right:104px;
+    top:0px;
     z-index: 1;
 }
 
 
 #twitter {
-    width: 28px;
+    width: 42px;
 }
 #twitter img{
     position: absolute;
-    right:5px;
-    top:5px;
+    right:0px;
+    top:0px;
     z-index: 1;
 }
 
 
 #facebook {
-    width: 28px;
+    width: 48px;
 }
 #facebook img{
     position: absolute;
-    right:33px;
-    top:5px;
+    right:49px;
+    top:0px;
     z-index: 1;
 }
 
@@ -196,12 +159,6 @@ html, body {
 
 
 /*..............INFOBURP */
-
-#infoburp {
-	height:100%;
-	width:100%;
-}
-
 #searchbox {
 	width:160px;
 	border:solid 3px;
@@ -212,10 +169,6 @@ html, body {
 	margin-right:20px;
 	margin-top:10px;
 	vertical-align:middle
-}
-
-/* graph */
-#graph {
 }
 
 circle.node {
@@ -235,63 +188,42 @@ circle.selected_node {
 
 
 line.link {
-	stroke: #007b02;
-	stroke-opacity: 1;
-	stroke-width: 8.4px;
+  stroke: #007b02;
+  stroke-opacity: 1;
+  stroke-width: 8.4px;
 }
 line.temporal_link {
-	stroke: #ff7e00;
-	stroke-opacity: 1;
-	stroke-width: 8.4px;
+  stroke: #ff7e00;
+  stroke-opacity: 1;
+  stroke-width: 8.4px;
 }
 
 div.nodehtml{
-	height:100%;
-	width:100%;
-	text-align:center;
-	vertical-align:middle;
-	font-family:'URW Gothic L',verdana;
-	body {color:black;}
-	h1 {color:black;}
-	h2 {color:black;}
-	word-wrap:normal;
+
+height:100%;
+width:100%;
+text-align:center;
+vertical-align:middle;
+font-family:'URW Gothic L',verdana;
+body {color:black;}
+h1 {color:black;}
+h2 {color:black;}
+word-wrap:normal;
 }
 
 circle.temporal_node{
-	fill: #ff7e00;
-}
 
-
-
-/* middle bar */
-
-#middleBar {
-	background:url('../image/logo.png') center center no-repeat #007b02;
-	height:20px;
-}
-
-
-
-/* editor */
-
-#editor, #editor2 {
-	height:50%;
-}
-#toolbar, #toolbar2 {
-	width:51%;
-	height:40px;
-}
-#burpEdit, #burpEdit2 {
-	width:100%;
-	height:100%;
-	background:black;
-	color:white;
+fill: #ff7e00;
 }
 
 input.non-active-editor{
-	display:none;
+
+display:none;
+
 }
 
 input.active-editor{
-	display:none;
+
+display:none;
+
 }
