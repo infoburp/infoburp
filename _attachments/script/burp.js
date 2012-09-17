@@ -1,49 +1,79 @@
-goog.provide("infoburp.BurpController");
+goog.provide('ib.BurpController');
 
 
-// TODO refactor this function
-function initEditor(){
 
-      
+ib.BurpController = function() {
+
+    this.burpData = [];
+    this.inputObject = this.initEditor('fieldContents','burpEdit','toolbar','runNode');
+    this.inputObject2 = this.initEditor('fieldContents2','burpEdit2','toolbar2','runNode2');
+
+};
+
+
+
+
+
+
+ib.BurpController.prototype.initEditor = function initEditor(fieldContents,burpEdit,toolbar,runNode) {
+
+
   function updateFieldContents() {
-    var valedit=myField.getCleanContents();
-    goog.dom.getElement('fieldContents').value = valedit;
 
-    global_data.nodes.filter(function(d,i){
-      return d.selected;
-    }).forEach(function(d){
-      d.nodehtml=myField.getCleanContents();
-      infoburpContentTypeHandlerRegistry.attachRender(d);
-      d.html_need_refresh=true;
-      graphInterface.tickClosure()();
-    });
-    if (heuristicEngine.guessNodeType(valedit)=="ytvideo-link"){
-      //  console.log("Yes this is a youtube-link",testIfYTLink(valedit)[1]);
-      //  render_youtube_video_to_div(document.getElementById("run-node"),testIfYTLink(valedit)[1],400,400);
-    };  
-    global_data.nodes.filter(function(d,i){
-      return d.selected;
-    }).forEach(function(d){
-      //         console.log("We found this data of selected node and trying to render it",d);
-      d.contentWrapper.primary(document.getElementById("run-node"));
-    });
+
+      var valedit = baseField.getCleanContents();
+
+      console.log(valedit, 'cleancontents');
+
+      goog.dom.getElement(fieldContents).value = valedit;
+
+      global_data.nodes
+          .filter(function(d, i) {
+                      return d.selected;
+                  }).forEach(function(d) {
+
+                                 d.nodehtml = baseField.getCleanContents();
+                                 ibContentTypeHandlerRegistry.attachRender(d);
+                                 d.html_need_refresh = true;
+                                 graphInterface.tickClosure()();
+
+
+                             });
+
+      if (heuristicEngine.guessNodeType(valedit) == 'ytvideo-link') {
+
+          //    console.log("Yes this is a youtube-link",testIfYTLink(valedit)[1]);
+          //    render_youtube_video_to_div(document.getElementById("run-node"),testIfYTLink(valedit)[1],400,400);
+      }
+      global_data.nodes
+          .filter(function(d, i) {
+                      return d.selected;
+                  })
+          .forEach(function(d) {
+
+                       //                    console.log("We found this data of selected node and trying to render it",d);
+
+                       d.contentWrapper.primary(document.getElementById(runNode));
+
+                   });
   }
 
   // Create an editable field.
-  myField=new goog.editor.Field('burpEdit');
+
+  var baseField = new goog.editor.Field(burpEdit);
   // Create and register all of the editing plugins you want to use.
-  myField.registerPlugin(new goog.editor.plugins.BasicTextFormatter());
-  myField.registerPlugin(new goog.editor.plugins.RemoveFormatting());
-  myField.registerPlugin(new goog.editor.plugins.UndoRedo());
-  myField.registerPlugin(new goog.editor.plugins.ListTabHandler());
-  myField.registerPlugin(new goog.editor.plugins.SpacesTabHandler());
-  myField.registerPlugin(new goog.editor.plugins.EnterHandler());
-  myField.registerPlugin(new goog.editor.plugins.HeaderFormatter());
-  myField.registerPlugin(
+  baseField.registerPlugin(new goog.editor.plugins.BasicTextFormatter());
+  baseField.registerPlugin(new goog.editor.plugins.RemoveFormatting());
+  baseField.registerPlugin(new goog.editor.plugins.UndoRedo());
+  baseField.registerPlugin(new goog.editor.plugins.ListTabHandler());
+  baseField.registerPlugin(new goog.editor.plugins.SpacesTabHandler());
+  baseField.registerPlugin(new goog.editor.plugins.EnterHandler());
+  baseField.registerPlugin(new goog.editor.plugins.HeaderFormatter());
+  baseField.registerPlugin(
       new goog.editor.plugins.LoremIpsum('Click here to edit'));
-  myField.registerPlugin(
+  baseField.registerPlugin(
       new goog.editor.plugins.LinkDialogPlugin());
-  myField.registerPlugin(new goog.editor.plugins.LinkBubble());
+  baseField.registerPlugin(new goog.editor.plugins.LinkBubble());
 
   // Specify the buttons to add to the toolbar, using built in default buttons.
   var buttons = [
@@ -70,155 +100,61 @@ function initEditor(){
     goog.editor.Command.REMOVE_FORMAT
   ];
   var myToolbar = goog.ui.editor.DefaultToolbar.makeToolbar(buttons,
-      goog.dom.getElement('toolbar'));
+      goog.dom.getElement(toolbar));
 
   // Hook the toolbar into the field.
   var myToolbarController =
-      new goog.ui.editor.ToolbarController(myField, myToolbar);
+      new goog.ui.editor.ToolbarController(baseField, myToolbar);
 
   // Watch for field changes, to display below.
-  goog.events.listen(myField, goog.editor.Field.EventType.DELAYEDCHANGE,
+  goog.events.listen(baseField, goog.editor.Field.EventType.DELAYEDCHANGE,
       updateFieldContents);
 
-  myField.makeEditable();
+  baseField.makeEditable();
   updateFieldContents();
-}
 
-
-function initEditor2(){
-      
-  function updateFieldContents2() {
-    var valedit=myField2.getCleanContents();
-    goog.dom.getElement('fieldContents2').value = valedit;
-
-    global_data.nodes.filter(function(d,i){
-      return d.selected;
-    }).forEach(function(d){
-      d.nodehtml=myField2.getCleanContents();
-      infoburpContentTypeHandlerRegistry.attachRender(d);
-      d.html_need_refresh=true;
-      graphInterface.tickClosure()();
-    });
-    if (heuristicEngine.guessNodeType(valedit)=="ytvideo-link"){
-      //  console.log("Yes this is a youtube-link",testIfYTLink(valedit)[1]);
-      //  render_youtube_video_to_div(document.getElementById("run-node"),testIfYTLink(valedit)[1],400,400);
-    };  
-    global_data.nodes.filter(function(d,i){
-      return d.selected;
-    }).forEach(function(d){
-      //         console.log("We found this data of selected node and trying to render it",d);
-      d.contentWrapper.primary(document.getElementById("run-node2"));
-    });
-  }
-
-  // Create an editable field.
-  myField2=new goog.editor.Field('burpEdit2');
-  // Create and register all of the editing plugins you want to use.
-  myField2.registerPlugin(new goog.editor.plugins.BasicTextFormatter());
-  myField2.registerPlugin(new goog.editor.plugins.RemoveFormatting());
-  myField2.registerPlugin(new goog.editor.plugins.UndoRedo());
-  myField2.registerPlugin(new goog.editor.plugins.ListTabHandler());
-  myField2.registerPlugin(new goog.editor.plugins.SpacesTabHandler());
-  myField2.registerPlugin(new goog.editor.plugins.EnterHandler());
-  myField2.registerPlugin(new goog.editor.plugins.HeaderFormatter());
-  myField2.registerPlugin(
-      new goog.editor.plugins.LoremIpsum('Click here to edit'));
-  myField2.registerPlugin(
-      new goog.editor.plugins.LinkDialogPlugin());
-  myField2.registerPlugin(new goog.editor.plugins.LinkBubble());
-
-  // Specify the buttons to add to the toolbar, using built in default buttons.
-  var buttons = [
-    goog.editor.Command.BOLD,
-    goog.editor.Command.ITALIC,
-    goog.editor.Command.UNDERLINE,
-    goog.editor.Command.FONT_COLOR,
-    goog.editor.Command.BACKGROUND_COLOR,
-    goog.editor.Command.FONT_FACE,
-    goog.editor.Command.FONT_SIZE,
-    goog.editor.Command.LINK,
-    goog.editor.Command.UNDO,
-    goog.editor.Command.REDO,
-    goog.editor.Command.UNORDERED_LIST,
-    goog.editor.Command.ORDERED_LIST,
-    goog.editor.Command.INDENT,
-    goog.editor.Command.OUTDENT,
-    goog.editor.Command.JUSTIFY_LEFT,
-    goog.editor.Command.JUSTIFY_CENTER,
-    goog.editor.Command.JUSTIFY_RIGHT,
-    goog.editor.Command.SUBSCRIPT,
-    goog.editor.Command.SUPERSCRIPT,
-    goog.editor.Command.STRIKE_THROUGH,
-    goog.editor.Command.REMOVE_FORMAT
-  ];
-  var myToolbar2 = goog.ui.editor.DefaultToolbar.makeToolbar(buttons,
-      goog.dom.getElement('toolbar2'));
-
-  // Hook the toolbar into the field.
-  var myToolbarController2 =
-      new goog.ui.editor.ToolbarController(myField2, myToolbar2);
-
-  // Watch for field changes, to display below.
-  goog.events.listen(myField2, goog.editor.Field.EventType.DELAYEDCHANGE,
-      updateFieldContents2);
-
-  myField2.makeEditable();
-  updateFieldContents2();
-}
-
-
-
-
-
-infoburp.BurpController = function(inputField, inputField2){
-
-    this.burpData=[];
-    this.inputObject=inputField;
-    this.inputObject2=inputField2;
-    
+  return baseField;
 };
 
 
-infoburp.BurpController.prototype.nodeEditEndHandle=function(d){
-    
+
+
+ib.BurpController.prototype.nodeEditEndHandle = function(d) {
+
     var txt = this.inputObject.getCleanContents();
-    this.inputObject.setHtml("");
-    var txt = this.inputObject2.getCleanContents();
-    this.inputObject2.setHtml("");
-    
-    console.log("txt",txt);
-    
-    if (txt) {      
-    	d.nodehtml = txt;
+    this.inputObject.setHtml('');
+    this.inputObject2.setHtml('');
+
+    console.log('txt', txt);
+
+    if (txt) {
+        d.nodehtml = txt;
     }
-    
+
     // Trying to guess WAT is that and attach correct render
     infoburpContentTypeHandlerRegistry.attachRender(d);
-    
+
     // Marking node to be refreshed and deselecting it.
-    d.html_need_refresh=true;
-    d.selected=false;
-    
-    this.burpData=[];
-    
+    d.html_need_refresh = true;
+    d.selected = false;
+
+    this.burpData = [];
+
 };
 
 
-infoburp.BurpController.prototype.startEdit=function(originalData){
-        
-  	    // TODO remove this fast hack for resetting selected nodes.
-	    global_data.nodes.forEach(function(d){d.selected=false;});
-	    originalData.selected=true;
-             
-    (this.inputObject.isUneditable())? this.inputObject.makeEditable(): console.log("Trying to make editable already editable field");
-    (this.inputObject2.isUneditable())? this.inputObject2.makeEditable(): console.log("Trying to make editable already editable field");
-    
-    this.burpData=[{original_data:originalData}];
+ib.BurpController.prototype.startEdit = function(originalData) {
 
-    this.inputObject.setHtml(false,originalData.nodehtml);
+            // TODO remove this fast hack for resetting selected nodes.
+            global_data.nodes.forEach(function(d) {d.selected = false;});
+            originalData.selected = true;
+
+    (this.inputObject.isUneditable()) ? this.inputObject.makeEditable() : console.log('Trying to make editable already editable field');
+    (this.inputObject2.isUneditable()) ? this.inputObject2.makeEditable() : console.log('Trying to make editable already editable field');
+
+    this.burpData = [{original_data: originalData}];
+
+    this.inputObject.setHtml(false, originalData.nodehtml);
     this.inputObject2.setHtml(false,originalData.nodehtml);
-
 };
-
-
 
