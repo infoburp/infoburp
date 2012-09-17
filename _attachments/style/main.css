@@ -267,7 +267,7 @@ circle.temporal_node{
 
 #middleBar {
 	background:url('../image/logo.png') center center no-repeat #007b02;
-	height:34px;
+	height:20px;
 }
 
 
@@ -278,11 +278,12 @@ circle.temporal_node{
 	height:50%;
 }
 #toolbar, #toolbar2 {
-	width:101%;
+	width:51%;
+	height:40px;
 }
 #burpEdit, #burpEdit2 {
 	width:100%;
-	height:88%;
+	height:100%;
 	background:black;
 	color:white;
 }
