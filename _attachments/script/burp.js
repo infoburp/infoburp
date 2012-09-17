@@ -1,25 +1,38 @@
 goog.provide('ib.BurpController');
 
 
-// TODO refactor this function
-function initEditor() {
+
+ib.BurpController = function() {
+
+    this.burpData = [];
+    this.inputObject = this.initEditor('fieldContents','burpEdit','toolbar','runNode');
+    this.inputObject2 = this.initEditor('fieldContents2','burpEdit2','toolbar2','runNode2');
+
+};
+
+
+
+
+
+
+ib.BurpController.prototype.initEditor = function initEditor(fieldContents,burpEdit,toolbar,runNode) {
 
 
   function updateFieldContents() {
 
 
-      var valedit = myField.getCleanContents();
+      var valedit = baseField.getCleanContents();
 
       console.log(valedit, 'cleancontents');
 
-      goog.dom.getElement('fieldContents').value = valedit;
+      goog.dom.getElement(fieldContents).value = valedit;
 
       global_data.nodes
           .filter(function(d, i) {
                       return d.selected;
                   }).forEach(function(d) {
 
-                                 d.nodehtml = myField.getCleanContents();
+                                 d.nodehtml = baseField.getCleanContents();
                                  ibContentTypeHandlerRegistry.attachRender(d);
                                  d.html_need_refresh = true;
                                  graphInterface.tickClosure()();
@@ -40,27 +53,27 @@ function initEditor() {
 
                        //                    console.log("We found this data of selected node and trying to render it",d);
 
-                       d.contentWrapper.primary(document.getElementById('run-node'));
+                       d.contentWrapper.primary(document.getElementById(runNode));
 
                    });
   }
 
   // Create an editable field.
 
-  myField = new goog.editor.Field('burpEdit');
+  var baseField = new goog.editor.Field(burpEdit);
   // Create and register all of the editing plugins you want to use.
-  myField.registerPlugin(new goog.editor.plugins.BasicTextFormatter());
-  myField.registerPlugin(new goog.editor.plugins.RemoveFormatting());
-  myField.registerPlugin(new goog.editor.plugins.UndoRedo());
-  myField.registerPlugin(new goog.editor.plugins.ListTabHandler());
-  myField.registerPlugin(new goog.editor.plugins.SpacesTabHandler());
-  myField.registerPlugin(new goog.editor.plugins.EnterHandler());
-  myField.registerPlugin(new goog.editor.plugins.HeaderFormatter());
-  myField.registerPlugin(
+  baseField.registerPlugin(new goog.editor.plugins.BasicTextFormatter());
+  baseField.registerPlugin(new goog.editor.plugins.RemoveFormatting());
+  baseField.registerPlugin(new goog.editor.plugins.UndoRedo());
+  baseField.registerPlugin(new goog.editor.plugins.ListTabHandler());
+  baseField.registerPlugin(new goog.editor.plugins.SpacesTabHandler());
+  baseField.registerPlugin(new goog.editor.plugins.EnterHandler());
+  baseField.registerPlugin(new goog.editor.plugins.HeaderFormatter());
+  baseField.registerPlugin(
       new goog.editor.plugins.LoremIpsum('Click here to edit'));
-  myField.registerPlugin(
+  baseField.registerPlugin(
       new goog.editor.plugins.LinkDialogPlugin());
-  myField.registerPlugin(new goog.editor.plugins.LinkBubble());
+  baseField.registerPlugin(new goog.editor.plugins.LinkBubble());
 
   // Specify the buttons to add to the toolbar, using built in default buttons.
   var buttons = [
@@ -87,34 +100,30 @@ function initEditor() {
     goog.editor.Command.REMOVE_FORMAT
   ];
   var myToolbar = goog.ui.editor.DefaultToolbar.makeToolbar(buttons,
-      goog.dom.getElement('toolbar'));
+      goog.dom.getElement(toolbar));
 
   // Hook the toolbar into the field.
   var myToolbarController =
-      new goog.ui.editor.ToolbarController(myField, myToolbar);
+      new goog.ui.editor.ToolbarController(baseField, myToolbar);
 
   // Watch for field changes, to display below.
-  goog.events.listen(myField, goog.editor.Field.EventType.DELAYEDCHANGE,
+  goog.events.listen(baseField, goog.editor.Field.EventType.DELAYEDCHANGE,
       updateFieldContents);
 
-  myField.makeEditable();
+  baseField.makeEditable();
   updateFieldContents();
-}
 
-
-
-ib.BurpController = function(inputField) {
-
-    this.burpData = [];
-    this.inputObject = inputField;
-
+  return baseField;
 };
+
+
 
 
 ib.BurpController.prototype.nodeEditEndHandle = function(d) {
 
     var txt = this.inputObject.getCleanContents();
     this.inputObject.setHtml('');
+    this.inputObject2.setHtml('');
 
     console.log('txt', txt);
 
@@ -123,7 +132,7 @@ ib.BurpController.prototype.nodeEditEndHandle = function(d) {
     }
 
     // Trying to guess WAT is that and attach correct render
-    ibContentTypeHandlerRegistry.attachRender(d);
+    infoburpContentTypeHandlerRegistry.attachRender(d);
 
     // Marking node to be refreshed and deselecting it.
     d.html_need_refresh = true;
@@ -141,10 +150,11 @@ ib.BurpController.prototype.startEdit = function(originalData) {
             originalData.selected = true;
 
     (this.inputObject.isUneditable()) ? this.inputObject.makeEditable() : console.log('Trying to make editable already editable field');
+    (this.inputObject2.isUneditable()) ? this.inputObject2.makeEditable() : console.log('Trying to make editable already editable field');
 
     this.burpData = [{original_data: originalData}];
 
     this.inputObject.setHtml(false, originalData.nodehtml);
-
+    this.inputObject2.setHtml(false,originalData.nodehtml);
 };
 

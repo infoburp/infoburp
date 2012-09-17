@@ -178,7 +178,7 @@ ib.GraphInterface.prototype.initGraph = function() {
 
         if (d.selected) {
 
-            ibController.startEdit(d);
+            infoBurpController.startEdit(d);
         }
 
         // Refreshing svg after modifying data
@@ -306,7 +306,7 @@ ib.GraphInterface.prototype.tickClosure = function() {
 
     return function tick_fu() {
 
-        console.log(global_data.nodes[0].x, 'before');
+        //console.log(global_data.nodes[0].x, 'before');
 
         local_vis.selectAll('line.link')
             .call(linkCoordinatesSet);
@@ -342,6 +342,6 @@ ib.GraphInterface.prototype.tickClosure = function() {
 
         local_vis.selectAll('circle.node').call(colorCircles);
 
-        console.log(global_data.nodes[0].x, 'after');
+      //  console.log(global_data.nodes[0].x, 'after');
  };
 };

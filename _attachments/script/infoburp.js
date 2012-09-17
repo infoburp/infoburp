@@ -113,6 +113,7 @@ var infoburpContentTypeHandlerRegistry = null;
 var graphInterface = null;
 
 var myField = null;
+var myField2 = null;
 
 
 
@@ -120,10 +121,17 @@ ib.startInterface = function startInterface() {
 
     graphInterface = new ib.GraphInterface(document.getElementById('graph'), global_data);
 
-    initEditor();
-    myField.makeUneditable();
-    infoBurpController = new ib.BurpController(myField);
+    
+    infoBurpController = new ib.BurpController();
+    
 
+    
+    myField=infoBurpController.inputObject;
+    myField2=infoBurpController.inputObject;
+
+//    myField.makeUneditable();
+//    myField2.makeUneditable();
+    
     infoburpContentTypeHandlerRegistry = new ib.ContentTypeHandlersRegistry();
     infoburpContentTypeHandlerRegistry.defaultInit();
 
