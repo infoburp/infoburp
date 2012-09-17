@@ -23,7 +23,7 @@ goog.require('ib.GraphInterface');
 
 var linkstrength = 0.1;
 var charge = -2000;
-var gravity = 0.0001;
+var gravity = 0;
 var nodetemplate;
 
 nodetemplate = function(node_data) {
