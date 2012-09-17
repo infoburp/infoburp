@@ -218,6 +218,8 @@ infoburp.BurpController.prototype.startEdit=function(originalData){
     this.inputObject.setHtml(false,originalData.nodehtml);
     this.inputObject2.setHtml(false,originalData.nodehtml);
 
+    $('.editor').addClass('editing');
+
 };
 
 
