@@ -61,13 +61,13 @@ ib.History.prototype.newActiveNode = function(nodeData){
            
     }
 
-    // if only one node then paint it red
+    // if only one node then paint it yellow
  
     if (this.queue.getCount() == 1){
         
         nowSelected=this.queue.peek();
         
-        nowSelected.selectedAs='red';
+        nowSelected.selectedAs='yellow';
         nowSelected.selected=true;
         
     }
@@ -76,7 +76,7 @@ ib.History.prototype.newActiveNode = function(nodeData){
         
     nodeData.selected = true;
     
-    nodeData.selectedAs= 'yellow';
+    nodeData.selectedAs= 'red';
 
 
     this.queue.enqueue(nodeData);
