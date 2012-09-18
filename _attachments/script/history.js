@@ -34,8 +34,8 @@ function refreshDataForSelectedOfType(selectedType,baseField){
 
 ib.History.prototype.refreshData = function (){
 
-    refreshDataForSelectedOfType('yellow',this.primary);
-    refreshDataForSelectedOfType('red',this.secondary);
+    refreshDataForSelectedOfType('red',this.primary);
+    refreshDataForSelectedOfType('yellow',this.secondary);
 
 };
 
