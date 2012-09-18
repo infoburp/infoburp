@@ -53,7 +53,7 @@ ib.BurpController.prototype.initEditor = function initEditor(fieldContents,burpE
 
                    });
 
-    $('.editor').removeClass('editing');
+    $('#infoburp').removeClass('editing');
   }
 
   // Create an editable field.
@@ -155,6 +155,6 @@ ib.BurpController.prototype.startEdit = function(originalData) {
     this.inputObject.setHtml(false, originalData.nodehtml);
     this.inputObject2.setHtml(false,originalData.nodehtml);
 
-    $('.editor').addClass('editing');
+    $('#infoburp').addClass('editing');
 };
 

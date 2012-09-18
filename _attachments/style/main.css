@@ -88,24 +88,31 @@ circle.temporal_node{
 
 /* toolbar */
 
+#toolbarWrap {
+	display:none;
+}
+#infoburp.editing #toolbarWrap {
+	display:table-row;
+}
 #toolbar, #toolbar2 {
 	width:49%;
-	height:50px;
+	height:51px;
 }
-
 #toolbar .goog-toolbar, #toolbar2 .goog-toolbar {
 	height:100%;
-	display:block;
 }
 
 /* editor */
 
-#editor, #editor2 {
-	height:1px;
-	background:#007b02;
+#editorWrap {
+	display:none;
 }
-#editor.editing, #editor2.editing {
+#infoburp.editing #editorWrap {
+	display:table-row;
+}
+#editor, #editor2 {
 	height:40%;
+	background:#007b02;
 }
 #burpEdit, #burpEdit2 {
 	width:100%;
