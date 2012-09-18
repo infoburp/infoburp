@@ -155,21 +155,21 @@ ib.BurpController.prototype.startEdit = function(originalData) {
     this.inputObject.setHtml(false, originalData.nodehtml);
     this.inputObject2.setHtml(false,originalData.nodehtml);
 
-    $('#infoburp').addClass('editing');
-    $('#_middleBar').draggable({
-        axis: 'y',
-        start: function(e, ui){
-          $('#graph').attr('initialHeight', $('#graph').height());
-        },
-        drag: function(e, ui){
-          var amount = parseInt(ui.position.top);
-          var initial = parseInt($('#graph').attr('initialHeight'));
-          $('#graph').css('height', initial+amount);
-        },
-        stop: function(e, ui){
-          $(this).css('left', 0);
-          $(this).css('top', 0);
-        }
-    });
+  $('#infoburp').addClass('editing');
+  $('#_middleBar').draggable({
+      axis: 'y',
+      containment: 'window',
+      start: function(e, ui){
+        $('#editorWrap').attr('initialHeight', $('#editorWrap').height());
+      },
+      drag: function(e, ui){
+        var initial = parseInt($('#editorWrap').attr('initialHeight'));
+        var amount = parseInt(ui.position.top)*-1;
+        $('#editorWrap').css('height', initial+amount);
+      },
+      stop: function(e, ui){
+        $(this).css('left', 0);
+        $(this).css('top', 0);
+      }
+  });
 };
-
