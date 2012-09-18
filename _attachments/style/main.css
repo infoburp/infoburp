@@ -111,14 +111,14 @@ circle.temporal_node{
 	font-size:14px;
 	font-family: "URW Gothic L",verdana;
 	vertical-align:middle;
-	border-radius:3px;
+	border-radius:2px;
 	background:black;
-	border:3px solid #005b00;
+	border:2px solid #005b00;
 	box-shadow: 0px 0px 0px 1px #006e00;
 	color:#ffffff;
-	padding:0px 2px;
-	width:180px;
-	height:24px;
+
+	width:45%;
+	height:20px;
 	left:0px;
 	position:fixed;
 	font-weight:bold;
@@ -127,14 +127,14 @@ circle.temporal_node{
 	font-size:14px;
 	font-family: "URW Gothic L",verdana;
 	vertical-align:middle;
-	border-radius:3px;
+	border-radius:2px;
 	background:black;
-	border:3px solid #005b00;
+	border:2px solid #005b00;
 	box-shadow: 0px 0px 0px 1px #006e00;
 	color:#ffffff;
-	padding:0px 2px;
-	width:180px;
-	height:24px;
+
+	width:45%;
+	height:20px;
 	right:0px;
 	position:fixed;
 	font-weight:bold;
