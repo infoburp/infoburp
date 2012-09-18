@@ -31,7 +31,9 @@ nodetemplate = function(node_data) {
         nodehtml: node_data.nodehtml,
         html_need_refresh: true,
         editorActive: false,
-        selected: false
+        selected: false,
+        selectedAs:'green'
+        
     };
 
 }; // Making just {} makes awesome bug.
@@ -115,6 +117,7 @@ var graphInterface = null;
 var myField = null;
 var myField2 = null;
 
+var globalHistory=null;
 
 
 ib.startInterface = function startInterface() {
@@ -126,6 +129,8 @@ ib.startInterface = function startInterface() {
     
     myField=infoBurpController.inputObject;
     myField2=infoBurpController.inputObject;
+
+    globalHistory=new ib.History(myField,myField2);
 
 //    myField.makeUneditable();
 //    myField2.makeUneditable();

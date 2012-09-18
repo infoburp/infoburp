@@ -22,16 +22,24 @@ function linkCoordinatesSet(linkSelection) {
 function colorCircles(circlesSelection) {
 
     circlesSelection.attr('class', function(d) {
-                              if (d.selected) {
-
-                                  return 'node selected_node';
-
-                              }
-                              else {
-
-                                  return 'node unselected_node';
-                              }
+                              if (d.selectedAs==='yellow'){
+                                  
+                                  return 'node selected_node_yellow';
+                                      
+                              } else{
+                                  if (d.selectedAs==='red'){
+                                      return 'node selected_node_red';
+                                  }
+                                  else
+                                  {
+                                      return 'node unselected_node';
+                                  }
+                                  
+                              };
+                              
+ 
                           });
+    
 }
 
 
@@ -171,7 +179,10 @@ ib.GraphInterface.prototype.initGraph = function() {
             }
             else {
 
-                d.selected = true;
+                
+                globalHistory.newActiveNode(d);
+
+                
             }
         }
 
