@@ -1,0 +1,131 @@
+<!DOCTYPE html!>
+<!-- <html manifest="cache.manifest"> -->
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="viewport" content="user-scalable=no, width=device-width" />
+  <!-- favicon -->
+  <link rel="icon" type="image/ico" href="image/favicon.ico"> 
+  <!-- title --> 
+  <title>infoburp.com</title> 
+  <!-- content definition --> 
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/> 
+  <!-- css stylesheets -->	 
+  <!-- main stylesheet -->		 
+  <link type="text/css" rel="stylesheet" href="style/main.css"/> 
+  <!-- bootstrap stylesheet --> 
+
+  <!-- rdf store -->
+  <script src = "script/rdf_store.js"></script>
+  <!-- Loading google closure library -->
+  <script src = "script/google-closure-library/closure/goog/base.js"></script>
+
+  <!-- SWFObject library --> 
+  <script type="text/javascript" src="script/swfobject.js"></script>
+
+  <!-- prettify --> 
+  <link rel="stylesheet" type="text/css" href="style/prettify.css"></link> 
+
+  <!-- jquery -->
+  <script type="text/javascript" src="script/jquery-1.7.2.js"></script> 
+  <script type="text/javascript" src="script/jquery-ui-1.8.20.custom.js"></script> 
+
+  <!-- couchdb --> 
+  <script type="text/javascript" src="script/couch.js"></script> 
+
+  <!-- d3 --> 
+  <script type="text/javascript" src="script/d3.v2.js"></script> 
+
+  <!-- Main code -->
+
+  <script type="text/javascript" src="script/debug.js"></script> 
+  <script type="text/javascript" src="script/history.js"></script> 
+  <script src = "script/graph-controller.js"></script>
+  <script type="text/javascript" src="script/graph-interface.js"></script> 
+  <script type="text/javascript" src="script/content-type-handler.js"></script> 
+
+  <script src = "script/burp.js"></script>
+  <script type="text/javascript" src="script/persistence/basic_persistence.js"></script> 
+  <script type="text/javascript" src="script/heuristic.js"></script> 
+  
+  <!-- Google stylesheets need to be cleaned -->
+  <link rel="stylesheet" href="script/google-closure-library/closure/goog/css/common.css">
+  <link rel="stylesheet" href="script/google-closure-library/closure/goog/css/button.css">
+  <link rel="stylesheet" href="script/google-closure-library/closure/goog/css/dialog.css">
+  <link rel="stylesheet" href="script/google-closure-library/closure/goog/css/linkbutton.css">
+  <link rel="stylesheet" href="script/google-closure-library/closure/goog/css/menu.css">
+  <link rel="stylesheet" href="script/google-closure-library/closure/goog/css/menuitem.css">
+  <link rel="stylesheet" href="script/google-closure-library/closure/goog/css/menuseparator.css">
+  <link rel="stylesheet" href="script/google-closure-library/closure/goog/css/toolbar.css">
+  <link rel="stylesheet" href="script/google-closure-library/closure/goog/css/editor/bubble.css">
+  <link rel="stylesheet" href="script/google-closure-library/closure/goog/css/editor/dialog.css">
+  <link rel="stylesheet" href="script/google-closure-library/closure/goog/css/editor/linkdialog.css">
+  <link rel="stylesheet" href="script/google-closure-library/closure/goog/css/editortoolbar.css">
+
+  <style>
+    #editMe {
+      width: 600px;
+      height: 500px;
+      background-color: black;
+      border: 1px solid grey;
+    }
+  </style>
+
+  <script>
+ function BlockMove(event) {
+  // Tell Safari not to move the window.
+  event.preventDefault() ;
+ }
+</script>
+
+<link rel="apple-touch-icon" href="image/apple-touch-icon.png" />
+
+</head> 
+
+<html> 
+
+  <body style="overflow:hidden" bgcolor="#000000" onload="ib.startInterface()" ontouchmove="BlockMove(event);"> 
+    
+
+ 
+   
+    <!-- debugging code --> 
+    <!-- infoburp --> 
+    <!-- test --> 
+
+<table id="infoburp">
+  <tr>
+    <td colspan="2" id="graph"></td>
+  </tr>
+  <tr>
+    <td colspan="2" id="middleBar">
+      <div id="_middleBar"></div>
+    </td>
+  </tr>
+  <tr id="toolbarWrap">
+    <td id="toolbar"></td>
+    <td id="toolbar2"></td>
+  </tr>
+  <tr id="editorWrap">
+    <td id="editor" class="editor">
+      <iframe id="burpEdit"></iframe> 
+      <div id='fieldContents'></div>
+      <div id='run-node'></div>
+    </td>
+    <td id="editor2" class="editor">
+      <iframe id="burpEdit2"></iframe> 
+      <div id='fieldContents2'></div>
+      <div id='run-node2'></div>
+    </td>
+  </tr>
+</table>
+
+<div>
+  <div id="html"></div>
+</div>
+
+  <script type="text/javascript" src="script/infoburprdf.js"></script>  
+
+  </body> 
+</html> 
