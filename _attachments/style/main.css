@@ -55,9 +55,14 @@ circle.unselected_node{
   stroke: #007b02;
 }
 
-circle.selected_node {
+circle.selected_node_yellow {
     fill:white;
      stroke: #ff7e00;
+}
+
+circle.selected_node_red {
+    fill:white;
+     stroke: #ef0404;
 }
 
 line.link {

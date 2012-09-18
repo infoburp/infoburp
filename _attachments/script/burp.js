@@ -1,6 +1,6 @@
 goog.provide('ib.BurpController');
 
-
+goog.require('ib.History');
 
 ib.BurpController = function() {
 
@@ -12,49 +12,24 @@ ib.BurpController = function() {
 
 
 
+ib.BurpController.prototype.updateFieldContents =function(baseField) {
+    
+    localBaseField=baseField;
+    
+    return function(){    
+        var valedit = baseField.getCleanContents();
+        
+        console.log(valedit, 'cleancontents');
 
+        globalHistory.refreshData();
+        
+        $('#infoburp').removeClass('editing');};
+};
 
 
 ib.BurpController.prototype.initEditor = function initEditor(fieldContents,burpEdit,toolbar,runNode) {
 
-
-  function updateFieldContents() {
-
-      var valedit = baseField.getCleanContents();
-
-      console.log(valedit, 'cleancontents');
-
-      goog.dom.getElement(fieldContents).value = valedit;
-
-      global_data.nodes
-        .filter(function(d, i) {
-            return d.selected;
-         }).forEach(function(d) {
-             d.nodehtml = baseField.getCleanContents();
-             //infoburpContentTypeHandlerRegistry.attachRender(d);
-             //d.html_need_refresh = true;
-             //graphInterface.tickClosure()();
-          });
-
-      if (heuristicEngine.guessNodeType(valedit) == 'ytvideo-link') {
-
-          //    console.log("Yes this is a youtube-link",testIfYTLink(valedit)[1]);
-          //    render_youtube_video_to_div(document.getElementById("run-node"),testIfYTLink(valedit)[1],400,400);
-      }
-      global_data.nodes
-          .filter(function(d, i) {
-                      return d.selected;
-                  })
-          .forEach(function(d) {
-
-                       //                    console.log("We found this data of selected node and trying to render it",d);
-
-                       d.contentWrapper.primary(document.getElementById(runNode));
-
-                   });
-
-    $('#infoburp').removeClass('editing');
-  }
+  
 
   // Create an editable field.
 
@@ -106,10 +81,10 @@ ib.BurpController.prototype.initEditor = function initEditor(fieldContents,burpE
 
   // Watch for field changes, to display below.
   goog.events.listen(baseField, goog.editor.Field.EventType.DELAYEDCHANGE,
-      updateFieldContents);
+      this.updateFieldContents(baseField));
 
-  baseField.makeEditable();
-  updateFieldContents();
+  //baseField.makeEditable();
+  //this.updateFieldContents(baseField);
 
   return baseField;
 };

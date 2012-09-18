@@ -38,24 +38,32 @@ nodetemplate = function(node_data) {
 
 }; // Making just {} makes awesome bug.
 
+//https://github.com/antoniogarrote/rdfstore-js
+var rdfstore = require('rdfstore');
 
-DEBUG_DATASET = {
-                 nodes: [nodetemplate({
+rdfstore.create(function(store) {
+  store.execute('LOAD <http://dbpedia.org/resource/Tim_Berners-Lee> INTO GRAPH <http://example.org/people>', function() {
 
-                                        nodehtml: 'infoburp.com',
-                                        is_youtube_video: false,
-                                        youtube_id: ''
-                                    }
+    store.setPrefix('dbp', 'http://dbpedia.org/resource/');
 
-                       )
+    store.node(store.rdf.resolve('dbp:Tim_Berners-Lee'), "http://example.org/people", function(success, graph) {
 
+      var DEBUG_DATASET = graph.filter(store.rdf.filters.type(store.rdf.resolve("foaf:Person")));
 
-                ],
+      store.execute('PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\
+                     PREFIX foaf: <http://xmlns.com/foaf/0.1/>\
+                     PREFIX : <http://example.org/>\
+                     SELECT ?s FROM NAMED :people { GRAPH ?g { ?s rdf:type foaf:Person } }',
+                     function(success, results) {
 
-                links: []
+                       console.log(DEBUG_DATASET.toArray()[0].subject.valueOf() === results[0].s.value);
 
-        };
+                     });
 
+    });
+
+  });
+})
 
 linkingradius = 128; // Defines linking distance
 NODE_APPEARANCE_DURATION = 128; // ms Time for animation of new node appearance
@@ -86,7 +94,7 @@ if (COUCHDB) {
 }
 else {
 
-    global_data.nodes = DEBUG_DATASET.nodes;
+    global_data.nodes = DEBUG_DATASET.node;
 
 
     // Putting all nodes around center of svg.
