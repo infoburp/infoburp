@@ -38,6 +38,7 @@ nodetemplate = function(node_data) {
 
 }; // Making just {} makes awesome bug.
 
+//https://github.com/antoniogarrote/rdfstore-js
 var rdfstore = require('rdfstore');
 
 rdfstore.create(function(store) {
