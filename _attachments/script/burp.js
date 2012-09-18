@@ -36,23 +36,6 @@ ib.BurpController.prototype.initEditor = function initEditor(fieldContents,burpE
              //graphInterface.tickClosure()();
           });
 
-      if (heuristicEngine.guessNodeType(valedit) == 'ytvideo-link') {
-
-          //    console.log("Yes this is a youtube-link",testIfYTLink(valedit)[1]);
-          //    render_youtube_video_to_div(document.getElementById("run-node"),testIfYTLink(valedit)[1],400,400);
-      }
-      global_data.nodes
-          .filter(function(d, i) {
-                      return d.selected;
-                  })
-          .forEach(function(d) {
-
-                       //                    console.log("We found this data of selected node and trying to render it",d);
-
-                       d.contentWrapper.primary(document.getElementById(runNode));
-
-                   });
-
     $('#infoburp').removeClass('editing');
   }
 
