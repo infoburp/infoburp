@@ -93,7 +93,7 @@ if (COUCHDB) {
 }
 else {
 
-    global_data.nodes = DEBUG_DATASET.nodes;
+    global_data.nodes = DEBUG_DATASET.node;
 
 
     // Putting all nodes around center of svg.
