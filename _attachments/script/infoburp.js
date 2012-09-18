@@ -90,15 +90,15 @@ else {
     // Putting all nodes around center of svg.
 
     (function() {
-                 global_data.nodes.forEach(function(d) {
-                                               var Y = 300;//vis.node().viewportElement.clientHeight/2;
-                                               var X = 200;//vis.node().viewportElement.clientWidth/2;
-                                               d.x = X + Math.round(Math.random() * 10 - 5);
-                                               d.y = Y + Math.round(Math.random() * 10 - 5);
-                                               //console.log(X,Y,d,vis.node().viewportElement.clientWidth);
-                                           });
+        global_data.nodes.forEach(function(d) {
+           var Y = $('#graph').height()/2; //vis.node().viewportElement.clientHeight/2;
+           var X = $('#graph').width()/2; //vis.node().viewportElement.clientWidth/2;
+           d.x = X + Math.round(Math.random() * 10 - 5);
+           d.y = Y + Math.round(Math.random() * 10 - 5);
+           //console.log(X,Y,d,vis.node().viewportElement.clientWidth);
+       });
 
-                })();
+    })();
 
 
     global_data.links = DEBUG_DATASET.links;
