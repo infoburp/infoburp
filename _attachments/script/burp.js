@@ -156,5 +156,20 @@ ib.BurpController.prototype.startEdit = function(originalData) {
     this.inputObject2.setHtml(false,originalData.nodehtml);
 
     $('#infoburp').addClass('editing');
+    $('#_middleBar').draggable({
+        axis: 'y',
+        start: function(e, ui){
+          $('#graph').attr('initialHeight', $('#graph').height());
+        },
+        drag: function(e, ui){
+          var amount = parseInt(ui.position.top);
+          var initial = parseInt($('#graph').attr('initialHeight'));
+          $('#graph').css('height', initial+amount);
+        },
+        stop: function(e, ui){
+          $(this).css('left', 0);
+          $(this).css('top', 0);
+        }
+    });
 };
 

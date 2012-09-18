@@ -124,8 +124,6 @@ ib.startInterface = function startInterface() {
     
     infoBurpController = new ib.BurpController();
     
-
-    
     myField=infoBurpController.inputObject;
     myField2=infoBurpController.inputObject;
 
