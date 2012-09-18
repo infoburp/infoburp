@@ -117,7 +117,8 @@ circle.temporal_node{
 	box-shadow: 0px 0px 0px 1px #006e00;
 	color:#ffffff;
 
-	width:45%;
+	width:35%;
+	top:2px;
 	height:20px;
 	left:0px;
 	position:fixed;
@@ -133,7 +134,8 @@ circle.temporal_node{
 	box-shadow: 0px 0px 0px 1px #006e00;
 	color:#ffffff;
 
-	width:45%;
+	width:35%;
+	top:2px;
 	height:20px;
 	right:0px;
 	position:fixed;
