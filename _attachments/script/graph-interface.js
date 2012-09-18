@@ -76,6 +76,7 @@ ib.GraphInterface.prototype.initGraph = function() {
     this.vis = d3.select(this.renderDiv).append('svg')
         .on('click', function(e) {
 
+            infoBurpController.stopEdit();
                 if (!(d3.event.target.className == 'nodehtml')) {
 
                     localGraphInterface.flushState();

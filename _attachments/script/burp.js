@@ -23,7 +23,7 @@ ib.BurpController.prototype.updateFieldContents =function(baseField) {
 
         globalHistory.refreshData();
         
-        $('#infoburp').removeClass('editing');};
+      };
 };
 
 
@@ -133,6 +133,7 @@ ib.BurpController.prototype.startEdit = function(originalData) {
   $('#infoburp').addClass('editing');
   $('#_middleBar').draggable({
       axis: 'y',
+      disabled:false,
       containment: 'window',
       start: function(e, ui){
         $('#editorWrap').attr('initialHeight', $('#editorWrap').height());
@@ -146,5 +147,11 @@ ib.BurpController.prototype.startEdit = function(originalData) {
         $(this).css('left', 0);
         $(this).css('top', 0);
       }
+  });
+};
+ib.BurpController.prototype.stopEdit = function() {
+  $('#infoburp').removeClass('editing');
+  $('#_middleBar').draggable({
+      disabled:true
   });
 };
