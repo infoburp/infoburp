@@ -116,13 +116,13 @@
       <iframe id="burpEdit2"></iframe> 
       <script>
         $('#editor2textbar').submit(function() {
-  
+  $('#fieldContents2').fadeOut('slow').load('$('editor2textbar').val()').fadeIn("slow");
 });
-$('#fieldContents2').fadeOut('slow').load('$('editor2textbar').val()').fadeIn("slow");
-      </script>
-      
 
-      <div id='fieldContents2'><iframe src="$('editor2textbar').val()"></iframe></div>
+      </script>
+      <iframe src="$('editor2textbar').val()"></iframe>
+
+      <div id='fieldContents2'></div>
       <div id='run-node2'></div>
     </td>
   </tr>
