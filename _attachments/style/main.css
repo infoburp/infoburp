@@ -202,6 +202,13 @@ input.active-editor{
 	display:none;
 }
 
+#fieldContents {
+display:none;
+}
+#fieldContents2 {
+display:none;
+}
+
 /* run-node */
 
 #run-node, #run-node2 {
