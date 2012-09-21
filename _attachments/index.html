@@ -1,53 +1,53 @@
-<!DOCTYPE html!>
-<html manifest="cache.manifest">
-<head>
-  <script src = "script/yepnope.js"></script>
-  <script src = "script/modules.js"></script>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-  <meta name="viewport" content="user-scalable=no, width=device-width" />
-  <!-- favicon -->
-  <link rel="icon" type="image/ico" href="image/favicon.ico"> 
-  <link rel="apple-touch-icon" href="image/touch-icon-iphone.png" />
-<link rel="apple-touch-icon" sizes="72x72" href="image/touch-icon-ipad.png" />
-<link rel="apple-touch-icon" sizes="114x114" href="image/touch-icon-iphone4.png" />
-  <!-- title --> 
-  <title>infoburp.com</title> 
-  <!-- content definition --> 
-  <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/> 
-</head> 
-  <body style="overflow:hidden" bgcolor="#000000" onload="ib.startInterface()" ontouchmove="BlockMove(event);"> 
-  <!-- infoburp --> 
-  <table id="infoburp">
-    <tr>
-      <td colspan="2" id="graph"></td>
-    </tr>
-    <tr>
-      <td colspan="2" id="middleBar">
-        <div id="_middleBar"></div>
-        <input id="editor1textbar" value="editor1" /><input id="editor2textbar" value="editor2" />
-      </td>
-    </tr>
-    <tr id="toolbarWrap">
-      <td id="toolbar"></td>
-      <td id="toolbar2"></td>
-    </tr>
-    <tr id="editorWrap">
-      <td id="editor" class="editor">
-      <iframe id="burpEdit"></iframe> 
-      <div id='fieldContents'></div>
-      <div id='run-node'></div>
-    </td>
-    <td id="editor2">
-      <iframe id="burpEdit2"></iframe> 
-      <div id='fieldContents'></div>
-      <div id='run-node'></div>
-    </td>
-  </tr>
-</table>
-<div>
-  <div id="html"></div>
-</div>
-</body> 
-</html> 
+<!DOCTYPE html>
+  <html manifest="cache.manifest">
+    <head>
+        <!-- content definition --> 
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/> 
+      <!-- title --> 
+        <title>infoburp.com</title>
+      <!-- favicon -->
+        <link rel="icon" type="image/ico" href="image/favicon.ico"> 
+        <link rel="apple-touch-icon" href="image/touch-icon-iphone.png" />
+        <link rel="apple-touch-icon" sizes="72x72" href="image/touch-icon-ipad.png" />
+        <link rel="apple-touch-icon" sizes="114x114" href="image/touch-icon-iphone4.png" />
+      <!-- scriptloader -->
+        <script src = "script/yepnope.js"></script>
+        <script src = "script/modules.js"></script>
+      <!-- viewport setup -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+        <meta name="viewport" content="user-scalable=no, width=device-width" />
+    </head> 
+    <body style="overflow:hidden" bgcolor="#000000" onload="ib.startInterface()" ontouchmove="BlockMove(event);"> 
+      <!-- infoburp --> 
+        <table id="infoburp">
+          <tr>
+            <td colspan="2" id="graph"></td>
+          </tr>
+          <tr>
+            <td colspan="2" id="middleBar">
+              <div id="_middleBar"></div>
+              <input id="editor1textbar" value="editor1" /><input id="editor2textbar" value="editor2" />
+            </td>
+          </tr>
+          <tr id="toolbarWrap">
+            <td id="toolbar"></td>
+            <td id="toolbar2"></td>
+          </tr>
+          <tr id="editorWrap">
+            <td id="editor" class="editor">
+              <iframe id="burpEdit"></iframe> 
+              <div id='fieldContents'></div>
+              <div id='run-node'></div>
+            </td>
+            <td id="editor2">
+              <iframe id="burpEdit2"></iframe> 
+              <div id='fieldContents'></div>
+              <div id='run-node'></div>
+            </td>
+          </tr>
+        </table>
+        <div id="html"></div>
+    </body> 
+  </html> 
