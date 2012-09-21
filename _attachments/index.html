@@ -4,41 +4,41 @@
 <script src = "script/LAB.js"></script>
 <script>
    $LAB
-   .script("script/base.js")
-   .script("script/swfobject.js")
-   .script("script/jquery-1.7.2.js")
-   .script("script/jquery-ui-1.8.20.custom.js")
-   .script("script/couch.js")
-   .script("script/d3.v2.js")
-   .script("script/debug.js")
-   .script("script/history.js")
-   .script("script/graph-controller.js")
-   .script("script/graph-interface.js")
-   .script("script/content-type-handler.js")
-   .script("script/burp.js")
-   .script("script/persist.js")
-   .script("script/heuristic.js")
-   .script("script/app.js")
-   .script("script/filer.js")
-   .script("script/infoburp.js")
-   .script("script/jquery.js")
-   .script("script/jquery-qrcode.js")
-   .script("script/logger.js")
-   .script("script/manager.js")
-   .script("script/namespace.js")
-   .script("script/parser.js")
-   .script("script/qrcode.js")
-   .script("script/raphael.js")
-   .script("script/rdfstore_frontend.js")
-   .script("script/rdf_store.js")
-   .script("script/rdfvis.js")
-   .script("script/semko.js")
-   .script("script/socket.io.js")
-   .script("script/socket.js")
-   .script("script/static.js")
-   .script("script/store.js")
-   .script("script/transport.js")
-   .script("script/util.js");
+   .script("script/base.js").wait()
+   .script("script/swfobject.js").wait()
+   .script("script/jquery-1.7.2.js").wait()
+   .script("script/jquery-ui-1.8.20.custom.js").wait()
+   .script("script/couch.js").wait()
+   .script("script/d3.v2.js").wait()
+   .script("script/debug.js").wait()
+   .script("script/history.js").wait()
+   .script("script/graph-controller.js").wait()
+   .script("script/graph-interface.js").wait()  
+   .script("script/content-type-handler.js").wait()
+   .script("script/burp.js").wait()
+   .script("script/persist.js").wait()
+   .script("script/heuristic.js").wait()
+   .script("script/app.js").wait()
+   .script("script/filer.js").wait()
+   .script("script/infoburp.js").wait()
+   .script("script/jquery.js").wait()
+   .script("script/jquery-qrcode.js").wait()
+   .script("script/logger.js").wait()
+   .script("script/manager.js").wait()
+   .script("script/namespace.js").wait()
+   .script("script/parser.js").wait()
+   .script("script/qrcode.js").wait()
+   .script("script/raphael.js").wait()
+   .script("script/rdfstore_frontend.js").wait()
+   .script("script/rdf_store.js").wait()
+   .script("script/rdfvis.js").wait()
+   .script("script/semko.js").wait()
+   .script("script/socket.io.js").wait()
+   .script("script/socket.js").wait()
+   .script("script/static.js").wait()
+   .script("script/store.js").wait()
+   .script("script/transport.js").wait()
+   .script("script/util.js").wait();
  </script> <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
@@ -106,7 +106,7 @@
   <tr>
     <td colspan="2" id="middleBar">
       <div id="_middleBar"></div>
-      <input id="editor1textbar" value="editor1" /><input id="editor2textbar" value="http://en.wikipedia.org/wiki/Graph_theory" />
+      <input id="editor1textbar" value="editor1" /><input id="editor2textbar" value="editor2" />
     </td>
   </tr>
   <tr id="toolbarWrap">
@@ -120,8 +120,10 @@
       <div id='run-node'></div>
     </td>
     <td id="editor2">
-      <iframe id="burpEdit2" src="http://en.wikipedia.org/wiki/Graph_theory"></iframe> 
-     
+      <iframe id="burpEdit2"></iframe> 
+       <div id='fieldContents'></div>
+      <div id='run-node'></div>
+
     </td>
   </tr>
 </table>
