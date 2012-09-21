@@ -121,7 +121,7 @@ circle.temporal_node{
 	top:0px;
 	left:0px;
 }
-#editor1textbar {
+/*#editor1textbar {
 	font-size:14px;
 	font-family: "URW Gothic L",verdana;
 	vertical-align:middle;
@@ -138,7 +138,7 @@ circle.temporal_node{
 	position:absolute;
 	top:4px;
 	font-weight:bold;
-}
+}*/
 #editor2textbar {
 	font-size:14px;
 	font-family: "URW Gothic L",verdana;
@@ -192,6 +192,8 @@ circle.temporal_node{
 }
 #editor, #editor2 {
 	background:#007b02;
+		font-size:14px;
+	font-family: "URW Gothic L",verdana;
 }
 #burpEdit, #burpEdit2 {
 	width:100%;
