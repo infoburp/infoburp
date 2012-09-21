@@ -83,6 +83,9 @@ div.nodehtml{
 	vertical-align:middle;
 	font-family:'URW Gothic L',verdana;
 	word-wrap:normal;
+	display: +flex;
+	+justify-content: space-between;
+	+align-items: stretch;
 }
 
 body {color:black;}
