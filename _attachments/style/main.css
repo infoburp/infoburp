@@ -91,8 +91,7 @@ line.temporal_link {
 div.nodehtml{
 	height:100%;
 	width:100%;
-	text-align:center;
-	vertical-align:middle;
+	
 	font-family:'URW Gothic L',verdana;
 	word-wrap:normal;
 	display: +flex;
