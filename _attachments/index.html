@@ -60,13 +60,7 @@
   <link rel="stylesheet" href="script/google-closure-library/closure/goog/css/editor/dialog.css">
   <link rel="stylesheet" href="script/google-closure-library/closure/goog/css/editor/linkdialog.css">
   <link rel="stylesheet" href="script/google-closure-library/closure/goog/css/editortoolbar.css">
-<script> 
-var auto_refresh = setInterval(
-function()
-{
-$('#fieldContents2').fadeOut('slow').load('$('editor2textbar').val()').fadeIn("slow");
-}, 2000);
-</script>
+
   <style>
     #editMe {
       width: 600px;
@@ -120,6 +114,12 @@ $('#fieldContents2').fadeOut('slow').load('$('editor2textbar').val()').fadeIn("s
     </td>
     <td id="editor2" class="editor">
       <iframe id="burpEdit2"></iframe> 
+      <script>
+        $('#editor2textbar').submit(function() {
+  
+});
+$('#fieldContents2').fadeOut('slow').load('$('editor2textbar').val()').fadeIn("slow");
+      </script>
       <iframe src="$('editor2textbar').val()"></iframe>
 
       <div id='fieldContents2'></div>
