@@ -167,12 +167,19 @@ circle.temporal_node{
 #infoburp.editing #toolbarWrap {
 	display:table-row;
 }
-#toolbar, #toolbar2 {
+#toolbar {
 	width:49%;
 	height:51px;
 }
-#toolbar .goog-toolbar, #toolbar2 .goog-toolbar {
+ #toolbar2 {
+	width:49%;
+	height:0px;
+}
+#toolbar .goog-toolbar {
 	height:100%;
+}
+ #toolbar2 .goog-toolbar {
+	height:0%;
 }
 
 /* editor */
