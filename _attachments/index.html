@@ -34,14 +34,7 @@
          <link rel="stylesheet" href="style/dialog.css"></link> 
          <link rel="stylesheet" href="style/linkdialog.css"></link> 
          <link rel="stylesheet" href="style/editortoolbar.css"></link> 
-         <style>
-            #editMe {
-               width: 600px;
-               height: 500px;
-               background-color: black;
-               border: 1px solid grey;
-            }
-         </style>
+         <link rel="stylesheet" href="style/editme.css"></link>  
          <!-- google closure library -->
          <script type="text/javascript" src = "script/google-closure-library/closure/goog/base.js"></script>
          <!-- SWFObject library --> 
@@ -61,14 +54,8 @@
          <script type="text/javascript" src="script/content-type-handler.js"></script> 
          <script type="text/javascript" src="script/burp.js"></script>
          <script type="text/javascript" src="script/persistence/basic_persistence.js"></script> 
-         <script type="text/javascript" src="script/heuristic.js"></script> 
-         <script>
-            function BlockMove(event) {
-            // Tell Safari not to move the window.
-            event.preventDefault() ;
-            }
-         </script>
-         <link rel="apple-touch-icon" href="image/apple-touch-icon.png" />
+         <script type="text/javascript" src="script/heuristic.js"></script>
+         <script type="text/javascript" src="script/safari.js"></script> 
       </head> 
 <html>
       <body style="overflow:hidden" bgcolor="#000000" onload="ib.startInterface()" ontouchmove="BlockMove(event);"> 
