@@ -9,7 +9,7 @@ if (argv.h || argv.help) {
     "usage: http-server [path] [options]",
     "",
     "options:",
-    "  -p                 Port to use [8080]",
+    "  -p                 Port to use [80]",
     "  -a                 Address to use [0.0.0.0]",
     "  -i                 Display autoIndex [true]",
     "  -s --silent        Suppress log messages from output",
