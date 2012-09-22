@@ -18,7 +18,7 @@ if (argv.h || argv.help) {
   process.exit();
 }
 
-var port = argv.p || 8080,
+var port = argv.p || 80,
     host = argv.a || '0.0.0.0',
     log = (argv.s || argv.silent) ? (function () {}) : console.log;
 
