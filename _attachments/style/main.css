@@ -48,33 +48,21 @@ html, body {
 circle.node {
   stroke: #007b02;
   stroke-width: 8.4px;
-  	display: +flex;
-	+justify-content: space-between;
-	+align-items: stretch;
 }
 
 circle.unselected_node{
   fill:white;
   stroke: #007b02;
-  	display: +flex;
-	+justify-content: space-between;
-	+align-items: stretch;
 }
 
 circle.selected_node_yellow {
     fill:white;
      stroke: #ff7e00;
-     	display: +flex;
-	+justify-content: space-between;
-	+align-items: stretch;
 }
 
 circle.selected_node_red {
     fill:white;
      stroke: #ef0404;
-     	display: +flex;
-	+justify-content: space-between;
-	+align-items: stretch;
 }
 
 line.link {
@@ -91,12 +79,10 @@ line.temporal_link {
 div.nodehtml{
 	height:100%;
 	width:100%;
-	
+	text-align:center;
+	vertical-align:middle;
 	font-family:'URW Gothic L',verdana;
 	word-wrap:normal;
-	display: +flex;
-	+justify-content: space-between;
-	+align-items: stretch;
 }
 
 body {color:black;}
@@ -121,7 +107,7 @@ circle.temporal_node{
 	top:0px;
 	left:0px;
 }
-/*#editor1textbar {
+#editor1textbar {
 	font-size:14px;
 	font-family: "URW Gothic L",verdana;
 	vertical-align:middle;
@@ -132,13 +118,13 @@ circle.temporal_node{
 	color:#ffffff;
 
 	width:35%;
-	
+
 	height:20px;
 	left:0px;
 	position:absolute;
 	top:4px;
 	font-weight:bold;
-}*/
+}
 #editor2textbar {
 	font-size:14px;
 	font-family: "URW Gothic L",verdana;
@@ -150,7 +136,7 @@ circle.temporal_node{
 	color:#ffffff;
 
 	width:35%;
-	
+
 	height:20px;
 	right:0px;
 	position:absolute;
@@ -167,19 +153,12 @@ circle.temporal_node{
 #infoburp.editing #toolbarWrap {
 	display:table-row;
 }
-#toolbar {
+#toolbar, #toolbar2 {
 	width:49%;
 	height:51px;
 }
- #toolbar2 {
-	width:49%;
-	height:0px;
-}
-#toolbar .goog-toolbar {
+#toolbar .goog-toolbar, #toolbar2 .goog-toolbar {
 	height:100%;
-}
- #toolbar2 .goog-toolbar {
-	height:0%;
 }
 
 /* editor */
@@ -192,8 +171,6 @@ circle.temporal_node{
 }
 #editor, #editor2 {
 	background:#007b02;
-		font-size:14px;
-	font-family: "URW Gothic L",verdana;
 }
 #burpEdit, #burpEdit2 {
 	width:100%;
@@ -209,13 +186,6 @@ input.non-active-editor{
 
 input.active-editor{
 	display:none;
-}
-
-#fieldContents {
-display:none;
-}
-#fieldContents2 {
-display:none;
 }
 
 /* run-node */
