@@ -1850,7 +1850,6 @@ CACHE MANIFEST
 ./script/LABjs-eh/tests/testscript4.js
 ./script/LABjs-eh/tests/testscript5.js
 ./script/LABjs-eh/tests/testscript6.js
-./script/persistence/basic_persistence.js
 ./script/persistence/examples/basics.js
 ./script/socket.io/index.js
 ./script/socket.io/package.json
