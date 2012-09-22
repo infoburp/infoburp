@@ -11,8 +11,8 @@ var HTTPServer = exports.HTTPServer = function (options) {
   }
   else {
     try {
-      fs.lstatSync('./public');
-      this.root = './public';
+      fs.lstatSync('./site');
+      this.root = './site';
     }
     catch (err) {
       this.root = './';
