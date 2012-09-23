@@ -95,9 +95,10 @@ circle.temporal_node{
 	fill: #ff7e00;
 }
 
-logo {
+#logo {
 right: 1px;
 bottom: 1px;
+z-index: 2;
 }
 /* toolbar */
 
