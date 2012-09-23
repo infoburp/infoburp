@@ -42,7 +42,7 @@ nodetemplate = function(node_data) {
 DEBUG_DATASET = {
                  nodes: [nodetemplate({
 
-                                        nodehtml: 'infoburp.com',
+                                        nodehtml: '<img src = "image/logo.png" width="100%"></img>',
                                         is_youtube_video: false,
                                         youtube_id: ''
                                     }
