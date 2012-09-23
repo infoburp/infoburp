@@ -38,21 +38,14 @@
    "server"
  ],
  "dependencies" : {
-   "colors"   : "*",
-   "flatiron" : "0.1.x",
-   "optimist" : "0.2.x",
-   "union"    : "0.1.x",
-   "ecstatic" : "0.1.x",
-   "plates"   : "https://github.com/flatiron/plates/tarball/master"
+
  },
  "analyze": false,
  "devDependencies": {
-   "vows"    : "0.5.x",
-   "request" : "2.1.x"
+
  },
  "bundleDependencies": [
-   "union",
-   "ecstatic"
+
  ], 
  "license": "GPL",
  "engines": {
