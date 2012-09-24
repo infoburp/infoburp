@@ -40,7 +40,7 @@ html, body {
 	position: relative;
 }
 #infoburp.editing #graph {
-	height:60%;
+	height:80%;
 }
 #graph svg {
 	position: absolute;
@@ -64,7 +64,7 @@ circle.unselected_node{
 
 circle.selected_node_yellow {
 	fill:white;
-	stroke: #ff7e00;
+	stroke: #007b02;
 }
 
 circle.selected_node_red {
@@ -115,6 +115,7 @@ circle.temporal_node{
 	top:0px;
 	left:0px;
 }
+
 #editor1textbar {
 	font-size:14px;
 	font-family: "URW Gothic L",verdana;
@@ -132,6 +133,8 @@ circle.temporal_node{
 	position:absolute;
 	top:4px;
 	font-weight:bold;
+
+	display:none;
 }
 #editor2textbar {
 	font-size:14px;
@@ -150,6 +153,8 @@ circle.temporal_node{
 	position:absolute;
 	top:4px;
 	font-weight:bold;
+
+	display:none;
 }
 
 
@@ -161,11 +166,14 @@ circle.temporal_node{
 #infoburp.editing #toolbarWrap {
 	display:table-row;
 }
-#toolbar, #toolbar2 {
-	width:49%;
-	height:51px;
+#toolbar {
+	width:100%;
+	height:28px;
 }
-#toolbar .goog-toolbar, #toolbar2 .goog-toolbar {
+#toolbar2 {
+	display:none;
+}
+#toolbar .goog-toolbar {
 	height:100%;
 }
 
@@ -177,14 +185,14 @@ circle.temporal_node{
 #infoburp.editing #editorWrap {
 	display:table-row;
 }
-#editor, #editor2 {
+#editor {
 	background:#007b02;
 }
-#burpEdit, #burpEdit2 {
+#burpEdit {
 	width:100%;
 	height:100%;
-	background:black;
-	color:white;
+	background:white;
+	color:black;
 	border:0px solid black;
 }
 
