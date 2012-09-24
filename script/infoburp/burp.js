@@ -6,7 +6,7 @@ ib.BurpController = function() {
 
     this.burpData = [];
     this.inputObject = this.initEditor('fieldContents','burpEdit','toolbar','runNode');
-   // this.inputObject2 = this.initEditor('fieldContents2','burpEdit2','toolbar2','runNode2');
+    this.inputObject2 = this.initEditor('fieldContents2','burpEdit2','toolbar2','runNode2');
 
 };
 
