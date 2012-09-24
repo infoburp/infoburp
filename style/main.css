@@ -5,7 +5,7 @@ html, body {
 	color:green;
 	margin:0px;
 	padding:0px;
-	cursor:url('../cursor/open.hand.cur');
+	cursor:url('../cursor/open.hand.cur'),pointer;
 	color:white;
 	-webkit-touch-callout: none;
 	-webkit-user-select: none;
@@ -54,7 +54,7 @@ html, body {
 circle.node {
 	stroke: #007b02;
 	stroke-width: 8.4px;
-	cursor:url('../cursor/pointing.hand.cur');
+	cursor:url('../cursor/pointing.hand.cur'),pointer;
 }
 
 circle.unselected_node{
