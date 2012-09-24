@@ -6,7 +6,7 @@ ib.BurpController = function() {
 
     this.burpData = [];
     this.inputObject = this.initEditor('fieldContents','burpEdit','toolbar','runNode');
-    this.inputObject2 = this.initEditor('fieldContents2','burpEdit2','toolbar2','runNode2');
+   // this.inputObject2 = this.initEditor('fieldContents2','burpEdit2','toolbar2','runNode2');
 
 };
 
@@ -96,7 +96,7 @@ ib.BurpController.prototype.nodeEditEndHandle = function(d) {
 
     var txt = this.inputObject.getCleanContents();
     this.inputObject.setHtml('');
-    this.inputObject2.setHtml('');
+//    this.inputObject2.setHtml('');
 
     console.log('txt', txt);
 
@@ -123,12 +123,12 @@ ib.BurpController.prototype.startEdit = function(originalData) {
     originalData.selected = true;
 
     (this.inputObject.isUneditable()) ? this.inputObject.makeEditable() : console.log('Trying to make editable already editable field');
-    (this.inputObject2.isUneditable()) ? this.inputObject2.makeEditable() : console.log('Trying to make editable already editable field');
+  /*  (this.inputObject2.isUneditable()) ? this.inputObject2.makeEditable() : console.log('Trying to make editable already editable field');*/
 
     this.burpData = [{original_data: originalData}];
 
     this.inputObject.setHtml(false, originalData.nodehtml);
-    this.inputObject2.setHtml(false,originalData.nodehtml);
+ /*   this.inputObject2.setHtml(false,originalData.nodehtml);*/
 
   $('#infoburp').addClass('editing');
   $('#_middleBar').draggable({
