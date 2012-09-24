@@ -25,7 +25,7 @@ cd ~/
 
 git clone https://github.com/infoburp/infoburp.git
 
-cd infoburp/_attachments
+cd infoburp/
 
 python -m SimpleHTTPServer
 
