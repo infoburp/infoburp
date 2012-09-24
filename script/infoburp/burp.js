@@ -27,7 +27,7 @@ ib.BurpController.prototype.updateFieldContents =function(baseField) {
 };
 
 
-ib.BurpController.prototype.initEditor = function initEditor(fieldContents,burpEdit,toolbar,runNode) {
+ib.BurpController.prototype.initEditor = function initEditor(fieldContents,burpEdit,runNode) {
 
   
 
@@ -49,35 +49,35 @@ ib.BurpController.prototype.initEditor = function initEditor(fieldContents,burpE
   baseField.registerPlugin(new goog.editor.plugins.LinkBubble());
 
   // Specify the buttons to add to the toolbar, using built in default buttons.
-  var buttons = [
-    goog.editor.Command.BOLD,
-    goog.editor.Command.ITALIC,
-    goog.editor.Command.UNDERLINE,
-    goog.editor.Command.FONT_COLOR,
-    goog.editor.Command.BACKGROUND_COLOR,
-    goog.editor.Command.FONT_FACE,
-    goog.editor.Command.FONT_SIZE,
-    goog.editor.Command.LINK,
-    goog.editor.Command.UNDO,
-    goog.editor.Command.REDO,
-    goog.editor.Command.UNORDERED_LIST,
-    goog.editor.Command.ORDERED_LIST,
-    goog.editor.Command.INDENT,
-    goog.editor.Command.OUTDENT,
-    goog.editor.Command.JUSTIFY_LEFT,
-    goog.editor.Command.JUSTIFY_CENTER,
-    goog.editor.Command.JUSTIFY_RIGHT,
-    goog.editor.Command.SUBSCRIPT,
-    goog.editor.Command.SUPERSCRIPT,
-    goog.editor.Command.STRIKE_THROUGH,
-    goog.editor.Command.REMOVE_FORMAT
-  ];
-  var myToolbar = goog.ui.editor.DefaultToolbar.makeToolbar(buttons,
-      goog.dom.getElement(toolbar));
+ // var buttons = [
+  //  goog.editor.Command.ITALIC,
+ //   goog.editor.Command.BOLD
+    //goog.editor.Command.UNDERLINE,
+    //goog.editor.Command.FONT_COLOR,
+    //goog.editor.Command.BACKGROUND_COLOR,
+    //goog.editor.Command.FONT_FACE,
+    //goog.editor.Command.FONT_SIZE,
+    //goog.editor.Command.LINK,
+    //goog.editor.Command.UNDO,
+    //goog.editor.Command.REDO,
+    //goog.editor.Command.UNORDERED_LIST,
+    //goog.editor.Command.ORDERED_LIST,
+    //goog.editor.Command.INDENT,
+    //goog.editor.Command.OUTDENT,
+    //goog.editor.Command.JUSTIFY_LEFT,
+    //goog.editor.Command.JUSTIFY_CENTER,
+    //goog.editor.Command.JUSTIFY_RIGHT,
+    //goog.editor.Command.SUBSCRIPT,
+    //goog.editor.Command.SUPERSCRIPT,
+    //goog.editor.Command.STRIKE_THROUGH,
+    //goog.editor.Command.REMOVE_FORMAT
+//  ];
+ // var myToolbar = goog.ui.editor.DefaultToolbar.makeToolbar(buttons,
+ //     goog.dom.getElement(toolbar));
 
   // Hook the toolbar into the field.
-  var myToolbarController =
-      new goog.ui.editor.ToolbarController(baseField, myToolbar);
+//  var myToolbarController =
+ //     new goog.ui.editor.ToolbarController(baseField, myToolbar);
 
   // Watch for field changes, to display below.
   goog.events.listen(baseField, goog.editor.Field.EventType.DELAYEDCHANGE,
