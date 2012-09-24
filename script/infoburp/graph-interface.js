@@ -22,20 +22,15 @@ function linkCoordinatesSet(linkSelection) {
 function colorCircles(circlesSelection) {
 
     circlesSelection.attr('class', function(d) {
-                              if (d.selectedAs==='yellow'){
-                                  
-                                  return 'node selected_node_yellow';
-                                      
-                              } else{
+                              
                                   if (d.selectedAs==='red'){
                                       return 'node selected_node_red';
                                   }
-                                  else
-                                  {
+                                  else{
                                       return 'node unselected_node';
                                   }
                                   
-                              };
+                              ;
                               
  
                           });
@@ -67,16 +62,11 @@ this.graphController = null;
 ib.GraphInterface.prototype.initGraph = function() {
 
     var localGraphInterface = this;
-
-
-
-
-
-
     this.vis = d3.select(this.renderDiv).append('svg')
         .on('click', function(e) {
 
             infoBurpController.stopEdit();
+            localGraphInterface.flushState();
                 if (!(d3.event.target.className == 'nodehtml')) {
 
                     localGraphInterface.flushState();
@@ -340,8 +330,8 @@ ib.GraphInterface.prototype.tickClosure = function() {
 
                       d.contentWrapper.summary(this);
                       //marking that we refreshed this html
-                      d.html_need_refresh = false;
-
+                      d.html_need_refresh = true;
+   		      
                       if (d.inferiorNodeRender) {
 
                           d.inferiorNodeRender(d);

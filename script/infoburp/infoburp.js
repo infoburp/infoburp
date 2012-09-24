@@ -1,7 +1,5 @@
 goog.provide('ib');
 goog.provide('ib.startInterface');
-
-
 goog.require('goog.editor.Command');
 goog.require('goog.editor.Field');
 goog.require('goog.editor.plugins.BasicTextFormatter');
@@ -42,7 +40,7 @@ nodetemplate = function(node_data) {
 DEBUG_DATASET = {
                  nodes: [nodetemplate({
 
-                                        nodehtml: 'infoburp.com',
+                                        nodehtml: '<h2>O_O</h2>',
                                         is_youtube_video: false,
                                         youtube_id: ''
                                     }
@@ -57,7 +55,7 @@ DEBUG_DATASET = {
         };
 
 
-linkingradius = 128; // Defines linking distance
+linkingradius = 46; // Defines linking distance
 NODE_APPEARANCE_DURATION = 128; // ms Time for animation of new node appearance
 NODEINITRADIUS = 20;    // px Animation starts from that radius to noderadius
 NODERADIUS = 46;              // Node radius
