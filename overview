@@ -1,0 +1,25 @@
+=== Infoburp overview ===
+
+## Introduction ##
+
+This document outlines the main goals and features of the Infoburp project - an interactive Semantic Web tool. In essential, Infoburp allows:
+
+- To browse through data available in the Web;
+- To manipulate these data by various methods;
+- To contribute the user's own data interleaving with the Global infosphere;
+- To represent the results in a highly interactive and easy to use way.
+
+This can be best described by example.
+
+Being a fan of Dmitry Hvorostovsky opera singer, I'd like to know what concert halls and opera houses Dmitry has visited throughout last years. I want to plot them as locations on the world map. And maybe, link one location to another, to display the path of Dmitry's travels. How can I accomplish this?
+
+I can get world map from Wikipedia, Wolfram|Alpha, or Openstreetmap, and Hvorostovsky's travels are outlined in his Facebook page. But there isn't any clear way to interleave these data.
+
+Here comes Infoburp. Using this tool, one can solve such problem in several easy steps.
+
+1. Create a Facebook Connection block which links to Dmitry Hvorostovsky page and the list of his travels. Every item of this list is linked to a geographical location.
+2. Connect it to a OpenStreetMap block. The geographical locations data are displayed on world map, and it's just the result we were looking for.
+
+Another example. 
+
+
