@@ -91,10 +91,10 @@ else {
 
     (function() {
         global_data.nodes.forEach(function(d) {
-           var Y = $('#graph').height()/4; //vis.node().viewportElement.clientHeight/2;
+           var Y = $('#graph').height()/3; //vis.node().viewportElement.clientHeight/2;
            var X = $('#graph').width()/2; //vis.node().viewportElement.clientWidth/2;
-           d.x = X + Math.round(Math.random() * 10 - 5);
-           d.y = Y + Math.round(Math.random() * 10 - 5);
+           d.x = X //+ Math.round(Math.random() * 10 - 5);
+           d.y = Y //+ Math.round(Math.random() * 10 - 5);
            //console.log(X,Y,d,vis.node().viewportElement.clientWidth);
        });
 

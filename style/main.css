@@ -108,6 +108,8 @@ circle.temporal_node{
 
 #editorWrap {
 	display:none;
+	height:28px;
+	initialHeight:28px;
 }
 #infoburp.editing #editorWrap {
 	display:table-row;
