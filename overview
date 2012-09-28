@@ -1,13 +1,25 @@
-=== Infoburp overview ===
+=== infoburp overview ===
 
 ## Introduction ##
 
-This document outlines the main goals and features of the Infoburp project - an interactive Semantic Web tool. In essential, Infoburp allows:
+This document outlines the main goals and features of the infoburp project - an interactive Semantic Web tool. In essence, infoburp allows:
 
 - To browse through data available in the Web;
 - To manipulate these data by various methods;
 - To contribute the user's own data interleaving with the Global infosphere;
 - To represent the results in a highly interactive and easy to use way.
+- Everything is inside linked nodes.
+- Nodes can contain other nodes, links, data, repurposable widgets, like buttons, knobs, sliders and tick and textboxes, and others can contain visualisations, still other nodes contain headless js with the links denoting the data/program flow.
+- Every node has a URI. 
+- Any node can link to any other node it knows the URI for.
+- In this way we can "plumb" programs and data together and build interesting custom interfaces referencing the data available (the WWW), and easily share the resulting customised interface with anyone online in a single hyperlink(back onto the WWW).
+- Everything is editable, including the editors.
+- The whole thing is a wysiwiki, so viewing and editing are in the same interface, and saving is as far as possible done without user intervention.
+- Any thing on the WWW (i.e. with a URI), can be added as a node.
+- Every interface is contained inside it's own node, and every interface is editable, to change the way it edits other nodes.
+- The interface is a fractal, it contains at it's simplest level just one node, that contains all that infoburp is aware of, and larger numbers of nodes inside the master node nested and by topic and relationship.
+
+## Examples ##
 
 This can be best described by example.
 
@@ -20,21 +32,7 @@ Here comes Infoburp. Using this tool, one can solve such problem in several easy
 1. Create a Facebook Connection node which links to Dmitry Hvorostovsky page and the list of his travels. Every item of this list is linked to a geographical location.
 2. Connect it to a OpenStreetMap node. The geographical locations data are displayed on world map in a node, and it's just the result we were looking for.
 
-Nodes can contain other nodes, links, data, repurposable widgets, like buttons, knobs, sliders and tick and textboxes, and others can contain visualisations, still other nodes contain headless js with the links denoting the data/program flow.
 
-Every node has a URI. 
-
-Any node can link to any other node it knows the URI for.
-
-In this way we can "plumb" programs and data together and build interesting custom interfaces referencing the data available (the WWW), and easily share the resulting customised interface with anyone online in a single hyperlink(back onto the WWW).
-
-Everything is editable, including the editors.
-
-The whole thing is a wysiwiki, so viewing and editing are in the same interface, and saving is as far as possible done without user intervention.
-
-Any thing on the WWW (i.e. with a URI), can be added as a node.
-
-Every interface is contained inside it's own node, and every interface is editable, to change the way it edits other nodes.
 
 
 
