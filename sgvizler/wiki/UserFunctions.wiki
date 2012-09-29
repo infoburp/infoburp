@@ -1,0 +1,66 @@
+#summary How to create your own chart- or formatting function.
+
+It is quite easy to extend or create your own functions to visualize or format
+(or do something else? to) the query results which Sgvizler receives.
+
+The function constructor
+takes one argument: the html element to which the function should use
+to fill the query results with. The function's prototype object must
+have two values: {{{id}}} and a function {{{draw(data, chartOpt)}}}. 
+The value of {{{id}}} uniquely identifies the charttype
+(Google chart type ids are prefixed with 'g'. The types added to Sgvizler are prefixed with
+'s'.). (See [DesigningQueries#Available_chart_types available chart types] for existing functions and ids.)
+
+
+The function {{{draw(data, chartOpt)}}} does all the work. The
+argument {{{data}}} is a
+[http://code.google.com/apis/chart/interactive/docs/reference.html#DataTable google.visualization.DataTable] 
+containing the query results. The
+object has many functions to manipulate the table and get/put values,
+e.g. you can get its
+[http://code.google.com/apis/chart/interactive/docs/reference.html#dataparam JSON representation] 
+using {{{DataTable.toJSON()}}}, see the links for more information. The argument {{{chartOpt}}} is an object
+containing the option-value-pairs specified by the user,
+e.g. {{{dataMode=markers}}} of the chart type Map.
+
+Your function must be placed in {{{sgvizler.chart}}} in order
+to be discovered by Sgvizler.
+
+==Example==
+
+Below is the simple [DesigningQueries#List List chart type] function,
+which renders the query results as an HTML list, i.e., every row
+becomes a list item. The code is found in the file
+[http://sgvizler.googlecode.com/svn/trunk/src/chart/sList.js src/chart/sList.js],
+but it could have been located as this
+elsewhere, in your own javascript file or in a script element on your
+html page. The first line contains the constructor, the following
+lines the prototype object. The code should be not too difficult to follow; see 
+[http://code.google.com/apis/chart/interactive/docs/reference.html#DataTable google.visualization.DataTable] 
+for the method used on the {{{data}}} argument, {{{$}}} is a [http://jquery.com jQuery] object, which 
+has many convenience methods for putting and getting into the DOM.
+
+<code language="js">
+sgvizler.chart.List = function(container) {this.container = container;};
+sgvizler.chart.List.prototype = {
+    id:   "sList",
+    draw: function(data, chartOpt) {
+	var noColumns = data.getNumberOfColumns(),
+	    noRows = data.getNumberOfRows(),
+	    opt = $.extend({ list: 'ul', cellSep: ', ', rowPrefix: '', rowPostfix: '' }, chartOpt ),
+	    list = $(document.createElement(opt.list));
+
+	for(var r = 0; r < noRows; r++){
+	    var rowtext = opt.rowPrefix;
+	    for(var c = 0; c < noColumns; c++){
+		rowtext += data.getValue(r,c);
+		    if(c+1 !== noColumns){
+			rowtext += opt.cellSep; }}
+	    rowtext += opt.rowPostfix;
+	    list.append($(document.createElement('li')).html(rowtext));
+	}
+	$(this.container).empty();
+	$(this.container).append(list);
+    }
+};
+</code>
