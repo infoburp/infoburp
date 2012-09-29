@@ -38,7 +38,7 @@ Here comes infoburp. Using this tool, one can solve such problem in several easy
 <li>Connect it to a OpenStreetMap node. The geographical locations data are displayed on world map in a node, and it's just the result we were looking for.
 </ol>
 <h2>Development progress</h2>
-Now let's look at the development progress so far on infoburp in a series of screenshots and mockup images created over the last few months (in time order), and more live examples towards the end<br>
+Now let's look at the development progress so far on infoburp in a series of screenshots and mockup images created over the last few months (in time order except the little interactive bits which are quite new), and more live examples towards the end<br>
 above each image is the question that lead to considering the option depicted in the image.<br>
 
 <h3>What is?</h3>
@@ -49,9 +49,11 @@ infoburp is/will be an interactive/reactive mind mapper that runs in your web br
 <h3>What do a few nodes linked together look like?</h3><br>
 <img src="image/screen2.png" height=100% width=100%
   alt="screen"</img><br><br>
-<h3>Is click and drag a good node/link add method (yes)</h3><br>
+<h3>Is click and drag a good node/link add method (yes :)</h3><br>
 <img src="image/screen4.png" height=100% width=100%
   alt="screen"</img><br><br>
+<h3>(*interactive*, try adding a link by clicking and dragging on the node (O_O) )<h3>
+<iframe src = "index.html" height="480px" width = "480px"></iframe>
 <h3>How might the editor look? Where might things be on the screen?</h3><br>
 <img src="image/mockup1.png" height=100% width=100%
   alt="mockup"</img><br>
@@ -85,6 +87,8 @@ infoburp is/will be an interactive/reactive mind mapper that runs in your web br
 <h3>Can I make the interface nicer? What about using closure editor?</h3><br>
 <img src="image/screen11.png" height=100% width=100%
   alt="screen"</img><br>
+<h3>(*interactive*, try editing a node by clicking on it (O_O) so it goes red and editing the text in the white bar at the bottom)<h3>
+<iframe src = "index.html" height="480px" width = "480px"></iframe>
 <h3>Can infoburp be expanded in the future?</h3><br>
 <iframe src="http://blog.the-eg.com/2007/12/04/kevin-kelly/" height=100% width=100%></iframe><br>
 <h3>There is only one machine. The web is its OS. All screens look into the one. No bits will live outside the web. To share is to gain. Let the one read it. The one is us. -Kevin Kelly</h3><br>
@@ -130,6 +134,32 @@ Limiting factor - z-depth hack and temporal links. Is there a better way?<br>
 <h3>What about nodes that perform tasks? Can data flow around the graph?</h3><br>
 <img src="image/screen30.png" height=100% width=100%
   alt="screen"</img><br>
+/* An unary pure function node
+*/
+
+UnaryFunctionNode = atom.Class({
+    Extends: Node,
+    
+    // In addition to name, this node accepts a JavaScript function
+    initialize: function(name, func) {
+        this.parent(name);
+
+        this.func = func;
+    },
+
+    // Upon data receive, we update internal result cache and send result further
+    receive: function(data) {
+        this.result = this.func(data);
+        
+        for(var i = 0; i < this.output.length; ++i) {
+            this.output[i].push(this.result);
+        }
+    },
+
+    // Upon request, we send the result
+    send: function() {
+        return this.result;
+    },
 <h3>How might I search for new information? Can we put a SPARQL endpoint in a node?</h3><br>
 <img src="image/screen31.png" height=100% width=100%
   alt="screen"</img><br>
@@ -295,10 +325,12 @@ Limiting factor - z-depth hack and temporal links. Is there a better way?<br>
 <h3>Some of those visualisations in nodes to give an idea how it might look</h3><br>
 <img src="image/screenshot.png" height=100% width=100%
   alt="screen"</img><br>
-<h3>This is how infoburp works/looks on a netbook</h3><br>
+<h3>This is how infoburp works/looks on a netbook (interactive, try it right here:)</h3><br>
 <iframe src = "index.html" height="600px" width = "1024px"></iframe>
-<h3>This is how infoburp works/looks on an android phone</h3><br>
+<h3>This is how infoburp works/looks on an android phone(interactive, try it right here :)</h3><br>
 <iframe src = "index.html" height="854px" width = "480px"></iframe>
+<h3>This is how infoburp works/looks on an a stamp(interactive, try it right here :)</h3><br>
+<iframe src = "index.html" height="168px" width = "168x"></iframe>
 <h3>This is d3 js, totally awesome library that has helped enormously making infoburp demos</h3><br>
 <iframe src = "http://d3js.org" height=100% width=100%></iframe>
 <h3>This is where the code for infoburp lives (it is free, libre and open source)</h3>
@@ -307,6 +339,12 @@ Limiting factor - z-depth hack and temporal links. Is there a better way?<br>
 <iframe src = "https://c9.io/infoburp/infoburp" height=100% width=100%></iframe>
 <h1>
 <h3>Can infoburp talk sparql? (yes with work thanks to <a href="sgvizler.googlecode.com">sgvizler</a>). In this example you can see countries in nodes, sized by their population.</h3>
-<iframe src="http://sgvizler.googlecode.com/svn/release/0.5/example/exWorld7.html" height=100% width=100%></iframe>
-Thank you for reading :)</h1>
+<iframe src="http://sgvizler.googlecode.com/svn/release/0.5/example/exWorld7.html" height=100% width=100%></iframe><br>
+<!--<div id="sgvzl_example_query" 
+   data-sgvizler-endpoint="http://sws.ifi.uio.no/sparql/world" 
+   data-sgvizler-query="SELECT ?node ?parent ?size ?color WHERE{ { [rdfs:label ?node ] w:isCountryInRegion [rdfs:label ?parent] ; w:isCountryInRegion ?color ; w:isCountryInContinent [rdfs:label &quot;Asia&quot;] ; w:hasCountryPopulation ?size } UNION { [rdfs:label ?node] w:isRegionInContinent [rdfs:label &quot;Asia&quot;,?parent] ; w:isRegionInContinent ?color } } ORDER BY ?size" 
+   data-sgvizler-chart="dForceGraph" 
+   data-sgvizler-loglevel="2" 
+   style="width:800px; height:400px;"/>-->
+Thank you for reading and special thanks to all contributors :)</h1>
 </body></html>
