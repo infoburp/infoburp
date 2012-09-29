@@ -38,8 +38,11 @@ Here comes infoburp. Using this tool, one can solve such problem in several easy
 <li>Connect it to a OpenStreetMap node. The geographical locations data are displayed on world map in a node, and it's just the result we were looking for.
 </ol>
 <h2>Development progress</h2>
-Now let's look at the development progress so far on infoburp in a series of screenshots and mockup images created over the last few months (in time order).<br>
+Now let's look at the development progress so far on infoburp in a series of screenshots and mockup images created over the last few months (in time order), and more live examples towards the end<br>
 above each image is the question that lead to considering the option depicted in the image.<br>
+
+<h3>What is?</h3>
+infoburp is/will be an interactive/reactive mind mapper that runs in your web browser, and it's also my (gwolfendale@gmail.com), and a few other people's (join in on github by [fork]ing infoburp/infoburp) sandbox for playing with HTML,CSS and JS together with semantic technologies.
 <h3>Where do I put text? (In nodes)</h3><br>
 <img src="image/screen1.png"
   alt="screen"</img><br><br>
@@ -312,7 +315,7 @@ above each image is the question that lead to considering the option depicted in
 <h3>And you can hack on the code in this cool online ide</h3><br>
 <iframe src = "https://c9.io/infoburp/infoburp" height="600px" width = "1024px"></iframe>
 <h1>
-<h3>Can infoburp talk sparql? (yes with work)</h3>
+<h3>Can infoburp talk sparql? (yes with work thanks to <a href="sgvizler.googlecode.com">sgvizler</a>)</h3>
 <div id="sgvzl_example_query" 
    data-sgvizler-endpoint="http://sws.ifi.uio.no/sparql/world" 
    data-sgvizler-query="SELECT ?node ?parent ?size ?color WHERE{ { [rdfs:label ?node ] w:isCountryInRegion [rdfs:label ?parent] ; w:isCountryInRegion ?color ; w:isCountryInContinent [rdfs:label &quot;Asia&quot;] ; w:hasCountryPopulation ?size } UNION { [rdfs:label ?node] w:isRegionInContinent [rdfs:label &quot;Asia&quot;,?parent] ; w:isRegionInContinent ?color } } ORDER BY ?size" 
