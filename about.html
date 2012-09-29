@@ -1,4 +1,8 @@
-<html><body>
+<html><head><link rel="shortcut icon" href="http://sgvizler.googlecode.com/svn/www/favicon.ico" />
+    <link rel="stylesheet" type="text/css" href="http://sgvizler.googlecode.com/svn/www/sgvizler.css" />
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript" id="sgvzlr_script" src="http://sgvizler.googlecode.com/svn/release/0.5/sgvizler.js"></script></head><body>
 <link rel="stylesheet" href="style/about.css"></link> 
 <title>About infoburp..</title>
 
@@ -312,5 +316,13 @@ above each image is the question that lead to considering the option depicted in
 <h3>And you can hack on the code in this cool online ide</h3><br>
 <iframe src = "https://c9.io/infoburp/infoburp" height="600px" width = "1024px"></iframe>
 <h1>
+<h3>Can infoburp talk sparql? (yes with work)</h3>
+<div id="sgvzl_example_query" 
+   data-sgvizler-endpoint="http://sws.ifi.uio.no/sparql/world" 
+   data-sgvizler-query="SELECT ?node ?parent ?size ?color WHERE{ { [rdfs:label ?node ] w:isCountryInRegion [rdfs:label ?parent] ; w:isCountryInRegion ?color ; w:isCountryInContinent [rdfs:label &quot;Asia&quot;] ; w:hasCountryPopulation ?size } UNION { [rdfs:label ?node] w:isRegionInContinent [rdfs:label &quot;Asia&quot;,?parent] ; w:isRegionInContinent ?color } } ORDER BY ?size" 
+   data-sgvizler-chart="dForceGraph" 
+   data-sgvizler-loglevel="2" 
+   style="width:1024px; height:600px;"/>
+<iframe src="http://sgvizler.googlecode.com/svn/release/0.5/example/exWorld7.html" height=600px width=1024px></iframe>
 Thank you for reading :)</h1>
 </body></html>
