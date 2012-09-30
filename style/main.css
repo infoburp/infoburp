@@ -91,12 +91,12 @@ circle.temporal_node{
 /* middle bar */
 
 #middleBar {
-	height:18px;
+	height:10px;
 	position:relative;
 	background:lightgray;
 }
 #_middleBar {
-	height:18px;
+	height:10px;
 	width:100%;
 	position:absolute;
 	top:0px;
