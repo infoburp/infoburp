@@ -39,24 +39,24 @@ html, body {
 }
 
 circle.node {
-	stroke: white;
-	stroke-width: 10px;
+	stroke: lightgrey;
+	stroke-width: 8px;
 	cursor:url('../cursor/pointing.hand.cur'),pointer;
 }
 
 circle.unselected_node{
 	fill:white;
-	stroke: black;
+	stroke: lightgrey;
 }
 
 circle.selected_node_yellow {
 	fill:white;
-	stroke: black;
+	stroke: lightgrey;
 }
 
 circle.selected_node_red {
 	fill:white;
-	stroke: lightgrey;
+	stroke: darkgrey;
 }
 
 line.link {
@@ -91,12 +91,12 @@ circle.temporal_node{
 /* middle bar */
 
 #middleBar {
-	height:10px;
+	height:8px;
 	position:relative;
-	background:lightgray;
+	background:url('../image/logo4.png') 0px 0px no-repeat lightgray;
 }
 #_middleBar {
-	height:10px;
+	height:8px;
 	width:100%;
 	position:absolute;
 	top:0px;
@@ -114,7 +114,7 @@ circle.temporal_node{
 	display:table-row;
 }
 #editor {
-	background:#007b02;
+	background:black;
 }
 #burpEdit {
 	width:100%;
