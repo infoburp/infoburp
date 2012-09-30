@@ -2,7 +2,6 @@ html, body {
 	width:100%;
 	height:100%;
 	background:black;
-	color:green;
 	margin:0px;
 	padding:0px;
 	cursor:url('../cursor/open.hand.cur'),pointer;
@@ -40,35 +39,35 @@ html, body {
 }
 
 circle.node {
-	stroke: #007b02;
-	stroke-width: 8.4px;
+	stroke: white;
+	stroke-width: 10px;
 	cursor:url('../cursor/pointing.hand.cur'),pointer;
 }
 
 circle.unselected_node{
 	fill:white;
-	stroke: #007b02;
+	stroke: black;
 }
 
 circle.selected_node_yellow {
 	fill:white;
-	stroke: #007b02;
+	stroke: black;
 }
 
 circle.selected_node_red {
 	fill:white;
-	stroke: #ef0404;
+	stroke: lightgrey;
 }
 
 line.link {
-	stroke: #007b02;
+	stroke: lightgrey;
 	stroke-opacity: 1;
-	stroke-width: 8.4px;
+	stroke-width: 10px;
 }
 line.temporal_link {
-	stroke: #ff7e00;
+	stroke:darkgrey;
 	stroke-opacity: 1;
-	stroke-width: 8.4px;
+	stroke-width: 10px;
 }
 
 div.nodehtml{
@@ -92,12 +91,12 @@ circle.temporal_node{
 /* middle bar */
 
 #middleBar {
-	height:28px;
+	height:18px;
 	position:relative;
-	background:url('../image/logo2.png') 5px 5px no-repeat #007b02;
+	background:lightgray;
 }
 #_middleBar {
-	height:28px;
+	height:18px;
 	width:100%;
 	position:absolute;
 	top:0px;

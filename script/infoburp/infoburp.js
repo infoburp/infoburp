@@ -40,7 +40,7 @@ nodetemplate = function(node_data) {
 DEBUG_DATASET = {
                  nodes: [nodetemplate({
 
-                                        nodehtml: '<h2>O_O</h2>',
+                                        nodehtml: '<h1>?</h1>',
                                         is_youtube_video: false,
                                         youtube_id: ''
                                     }
