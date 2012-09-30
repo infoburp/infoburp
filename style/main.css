@@ -93,7 +93,7 @@ circle.temporal_node{
 #middleBar {
 	height:8px;
 	position:relative;
-	background:url('../image/logo4.png') 0px 0px no-repeat lightgray;
+	background:url('../image/logo4.png') 0px 0px no-repeat darkgrey;
 }
 #_middleBar {
 	height:8px;
