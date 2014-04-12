@@ -40,7 +40,7 @@ nodetemplate = function(node_data) {
 DEBUG_DATASET = {
                  nodes: [nodetemplate({
 
-                                        nodehtml: '<h2><image src="image/rogb.png"></image>O_O</h2>',
+                                        nodehtml: 'connect fail',
                                         is_youtube_video: false,
                                         youtube_id: ''
                                     }

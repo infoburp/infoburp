@@ -1,8 +1,6 @@
-
 <!DOCTYPE html>
 <!-- <html manifest="cache.manifest"> -->
 	<head>
-		<link type="text/css" rel="stylesheet" href="style/index.css"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="apple-mobile-web-app-capable" content="yes" />
 		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
@@ -10,40 +8,55 @@
 		 <!-- favicon -->
 		<link rel="icon" type="image/ico" href="image/favicon.ico"> 
 		<!-- title --> 
-		<title>because of why.</title> 
+		<title>infoburp.com</title> 
 		<!-- content definition --> 
 		<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/> 
+		<!-- main stylesheet -->		 
+		<link type="text/css" rel="stylesheet" href="style/main.css"/>
+		<!-- prettify -->
+		<link rel="stylesheet" type="text/css" href="style/prettify.css"></link>
+		<!-- google closure library -->
+		<script src = "script/google-closure-library/closure/goog/base.js"></script>		
 		<!-- jquery -->
 		<script type="text/javascript" src="script/jquery/jquery-1.7.2.js"></script>
 		<script type="text/javascript" src="script/jquery/jquery-ui-1.8.20.custom.js"></script>
 		<!-- d3 -->
 		<script type="text/javascript" src="script/d3/d3.v2.js"></script>
-		<!-- wats-on -->
-		<script type="text/javascript" src="script/infoburp/wats-on.js"></script>
-
+		<!-- Main code -->
+		<script type="text/javascript" src="script/infoburp/debug.js"></script>
+		<script type="text/javascript" src="script/infoburp/history.js"></script>
+		<script type="text/javascript" src="script/infoburp/graph-controller.js"></script>
+		<script type="text/javascript" src="script/infoburp/graph-interface.js"></script>
+		<script type="text/javascript" src="script/infoburp/content-type-handler.js"></script>
+		<script type="text/javascript" src="script/infoburp/burp.js"></script>
+		<script type="text/javascript" src="script/infoburp/persist.js"></script>
+		<script type="text/javascript" src="script/infoburp/heuristic.js"></script>
+		<script type="text/javascript" src="script/infoburp/safari.js"></script>
+		<link rel="apple-touch-icon" href="image/apple-touch-icon.png" />
 	</head> 
-	<body bgcolor="black" onload="" ontouchmove="BlockMove(event);"> 
- <!-- favicon -->
-		<link rel="icon" type="image/ico" href="image/favicon.ico"> 
-		<!-- title --> 
-		<title>infoburp.com</title> 
-		<!-- content definition --> 
-		<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/> 
-</head>
-<body>
-<iframe src="graph.html" width=98% height=460px ></iframe>
-<iframe src="pogs.html" width=98%   ></iframe>
-<iframe src="blurb.html" width=98%   ></iframe>
-<iframe src="https://c9.io/infoburp/infoburp" width= 98% height=460px 280px ></iframe>
-<iframe src="crumbs.html" width=98% height=460px></iframe>
-<iframe src="copyleft.html" width=98% height=460px></iframe>
-<iframe src="tweet.html" width=98% height=460px></iframe>
-<iframe src="http://sgvizler.googlecode.com/svn/release/0.5/example/exWorld7.html" width=98% height=460px></iframe>
-<iframe src="who.html" width=98% height=460px></iframe>
-<iframe src="what.html" width=98% height=460px></iframe>
-<iframe src="why.html" width=98% height=460px></iframe>
-<iframe src="where.html" width=98% height=460px></iframe>
-<iframe src="when.html" width=98% height=460px></iframe>
-<iframe src="how.html" width=98% height=460px></iframe>
-
-</body>
+	<body style="overflow:hidden" bgcolor="#000000" onload="ib.startInterface()" ontouchmove="BlockMove(event);"> 
+		<!-- infoburp --> 
+		<table id="infoburp">
+			<tr>
+				<td colspan="2" id="graph"></td>
+			</tr>
+			<tr>
+				<td colspan="2" id="middleBar">
+				<div id="_middleBar"></div>
+				</td>
+			</tr>
+			<tr id="editorWrap">
+				<td id="editor" class="editor">
+				<iframe id="burpEdit"></iframe> 
+				<div id='fieldContents'></div>
+				<div id='run-node'></div>
+				</td>
+				
+			</tr>
+		</table>
+		<div>
+			<div id="html"></div>
+		</div>
+		<script type="text/javascript" src="script/infoburp/infoburp.js"></script>  
+	</body> 
+</html> 
