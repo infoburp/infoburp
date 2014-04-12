@@ -1188,8 +1188,8 @@ Graffeine.graph.prototype.makeSvg = function() {
     Graffeine.graph.defs
         .append("svg:marker")
             .attr("id", "arrowhead")
-            .attr("markerWidth", 0)
-            .attr("markerHeight", 0)
+            .attr("markerWidth", 6)
+            .attr("markerHeight", 6)
             .attr("viewBox", "0 0 10 10")
             .attr("markerUnits", "strokeWidth")
             .attr("stroke", "#d35400")

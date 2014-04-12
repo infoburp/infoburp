@@ -38,27 +38,32 @@ body {
 }
 
 #graph {
-    width: 100%;
-    height: 100%;
+   
     margin: 0;
     text-align: center;
-position: absolute;
-	top: 0px;
-	left: 0px;
+
 }
 
 svg {
-    background: #FFFFFF;
+ width: 100%;
+    height: 100%;
+    background: #000000;
+position: absolute;
+	top: 0px;
+	left: 0px;
 }
 
 #menu {
     color: #003345;
     background: #ecf0f1;
     border: 1px solid #95a5a6;
-    float: left;
+   position: relative;
+	top: 0px;
+	right: 0px;
     font-family: courier;
     margin: 0;
     width: 300px;
+z-index:1000
 }
 
 #menu .info {
@@ -144,7 +149,7 @@ svg {
 **/
 
 .form-label, .form-input {
-    display: inline-block;
+    display: block;
 }
 
 .form-label {
@@ -184,7 +189,7 @@ svg {
 #node-edit-form {
     background: #FFFFFF;
     float: right;
-    margin-right: 130px;
+    margin-right: 0px;
 }
 
 #node-data {

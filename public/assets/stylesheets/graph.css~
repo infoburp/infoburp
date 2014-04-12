@@ -4,13 +4,13 @@ path.link {
 
 stroke: lightgrey;
 	stroke-opacity: 1;
-	stroke-width: 8px;
+	stroke-width: 10px;
 }
 
 path.connector {
   fill: none;
   stroke: #666;
-  stroke-width: 8px;
+  stroke-width: 4px;
   stroke-dasharray: 5,5;
 }
 
