@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta http-equiv="Content-type" content="text/html; charset=utf-8">
-        <title>Graffeine</title>
+        <title>infoburp</title>
         <link rel="stylesheet" media="all" href="/assets/stylesheets/graffeine.css" />
         <link rel="stylesheet" media="all" href="/assets/stylesheets/graph.css" />
         <link rel="stylesheet" media="all" href="/assets/stylesheets/font-awesome.css" />
@@ -39,12 +39,12 @@
                 
                 <div>
                     <div id="menu">
-                        <div class="section-label centered">neo4J</div>
+                        <div class="section-label centered">infoburp</div>
                         <div class="centered">
                             <button class="form-button width-100" id="graph-init">connect</button>
                         </div>
-                        <div class="section-label centered">vis</div>
-                        <div class="subsection-label centered">force</div>
+                        <div class="section-label centered">graph</div>
+                        <!--<div class="subsection-label centered">force</div>
                         <div class="centered">
                             <button class="form-button width-100" id="graph-force-start">start</button>
                             <button class="form-button width-100" id="graph-force-stop">stop</button>
@@ -63,7 +63,7 @@
                             <span class="item-label width-50">filter</span>
                             <span class="item-value width-100">orphans</span>
                             <span class="hang-right"><button class="form-button width-50" id="nodes-orphans">go</button></span>
-                        </div>
+                        </div>-->
                         <div class="subsection-label centered">find</div>
                         <div class="subsection">
                             <span class="item-label width-50">name</span>

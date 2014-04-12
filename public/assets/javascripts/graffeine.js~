@@ -1188,8 +1188,8 @@ Graffeine.graph.prototype.makeSvg = function() {
     Graffeine.graph.defs
         .append("svg:marker")
             .attr("id", "arrowhead")
-            .attr("markerWidth", 6)
-            .attr("markerHeight", 6)
+            .attr("markerWidth", 0)
+            .attr("markerHeight", 0)
             .attr("viewBox", "0 0 10 10")
             .attr("markerUnits", "strokeWidth")
             .attr("stroke", "#d35400")
@@ -1554,6 +1554,7 @@ Graffeine.ui.prototype.clearDrag = function() {
 Graffeine.ui.prototype.hideDialogs = function() {
     $(".dialog").hide();
 }
+
 /**
  *  register event handlers for various button clicks in ui
  *
@@ -2002,3 +2003,10 @@ Graffeine.eventHandler.prototype.deleteRelButtonClick = function(source, target,
     graph.command.send('rel-delete', { source: source, target: target, rel: rel});
     graph.ui.hideNodeMenu();
 };
+
+//auto click connect button after page load
+$("document").ready(function() {
+    setTimeout(function() {
+        $(graph-init).click();
+    },10);
+});

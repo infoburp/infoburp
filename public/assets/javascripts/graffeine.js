@@ -1,7 +1,12 @@
 /**
  *  Graph command manager 
 **/
-
+//auto click connect button after page load
+$("document").ready(function() {
+    setTimeout(function() {
+        $(graph-init).click();
+    },10);
+});
 Graffeine = Graffeine || {};
 
 Graffeine.command = function(graph) {
@@ -1554,6 +1559,7 @@ Graffeine.ui.prototype.clearDrag = function() {
 Graffeine.ui.prototype.hideDialogs = function() {
     $(".dialog").hide();
 }
+
 /**
  *  register event handlers for various button clicks in ui
  *
@@ -2002,3 +2008,5 @@ Graffeine.eventHandler.prototype.deleteRelButtonClick = function(source, target,
     graph.command.send('rel-delete', { source: source, target: target, rel: rel});
     graph.ui.hideNodeMenu();
 };
+
+
