@@ -1,1 +1,0 @@
-var db= new CouchDB('graph',{"X-Couch-Full-Commit":"false"})

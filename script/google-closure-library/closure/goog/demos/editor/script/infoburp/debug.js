@@ -1,1 +1,0 @@
-COUCHDB=false;
