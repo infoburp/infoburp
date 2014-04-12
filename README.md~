@@ -1,5 +1,11 @@
 
-infoburp
+#Graffeine
+
+Caffeinated Neo4J graph exploration
+
+![ScreenShot](https://raw.github.com/julianbrowne/graffeine-build/master/doc/config/images/screenshot-drwho.jpeg)
+
+###TL;DR
 
 Requires:
 
@@ -8,12 +14,15 @@ Requires:
 
 Install:
 
-    git clone https://github.com/infoburp/infoburp.git
+    git clone https://github.com/julianbrowne/graffeine
 
+    or 
+
+    npm install graffeine
 
 Run:
 
-	nodejs server.js                                                
+	node server                                                // npm start graffeine (coming soon)
 
 Use:
 
