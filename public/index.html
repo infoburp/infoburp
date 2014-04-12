@@ -1,62 +1,145 @@
 <!DOCTYPE html>
-<!-- <html manifest="cache.manifest"> -->
-	<head>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta name="apple-mobile-web-app-capable" content="yes" />
-		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
-		<meta name="viewport" content="user-scalable=no, width=device-width" />
-		 <!-- favicon -->
-		<link rel="icon" type="image/ico" href="assets/images/favicon.ico"> 
-		<!-- title --> 
-		<title>infoburp.com</title> 
-		<!-- content definition --> 
-		<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/> 
-		<!-- main stylesheet -->		 
-		<link type="text/css" rel="stylesheet" href="assets/stylesheets/main.css"/>
-		<!-- prettify -->
-		<link rel="stylesheet" type="text/css" href="assets/stylesheets/prettify.css"></link>
-		<!-- google closure library -->
-		<script src = "assets/javascripts/google-closure-library/closure/goog/base.js"></script>		
-		<!-- jquery -->
-		<script type="text/javascript" src="assets/javascripts/jquery/jquery-1.7.2.js"></script>
-		<script type="text/javascript" src="assets/javascripts/jquery/jquery-ui-1.8.20.custom.js"></script>
-		<!-- d3 -->
-		<script type="text/javascript" src="assets/javascripts/d3/d3.v2.js"></script>
-		<!-- Main code -->
-		<script type="text/javascript" src="assets/javascripts/infoburp/debug.js"></script>
-		<script type="text/javascript" src="assets/javascripts/infoburp/history.js"></script>
-		<script type="text/javascript" src="assets/javascripts/infoburp/graph-controller.js"></script>
-		<script type="text/javascript" src="assets/javascripts/infoburp/graph-interface.js"></script>
-		<script type="text/javascript" src="assets/javascripts/infoburp/content-type-handler.js"></script>
-		<script type="text/javascript" src="assets/javascripts/infoburp/burp.js"></script>
-		<script type="text/javascript" src="assets/javascripts/infoburp/persist.js"></script>
-		<script type="text/javascript" src="assets/javascripts/infoburp/heuristic.js"></script>
-		<script type="text/javascript" src="assets/javascripts/infoburp/safari.js"></script>
-		
-	</head> 
-	<body style="overflow:hidden" bgcolor="#000000" onload="ib.startInterface()" ontouchmove="BlockMove(event);"> 
-		<!-- infoburp --> 
-		<table id="infoburp">
-			<tr>
-				<td colspan="2" id="graph"></td>
-			</tr>
-			<tr>
-				<td colspan="2" id="middleBar">
-				<div id="_middleBar"></div>
-				</td>
-			</tr>
-			<tr id="editorWrap">
-				<td id="editor" class="editor">
-				<iframe id="burpEdit"></iframe> 
-				<div id='fieldContents'></div>
-				<div id='run-node'></div>
-				</td>
-				
-			</tr>
-		</table>
-		<div>
-			<div id="html"></div>
-		</div>
-		<script type="text/javascript" src="assets/javascripts/infoburp/infoburp.js"></script>  
-	</body> 
-</html> 
+<html>
+    <head>
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+        <title>Graffeine</title>
+        <link rel="stylesheet" media="all" href="/assets/stylesheets/graffeine.css" />
+        <link rel="stylesheet" media="all" href="/assets/stylesheets/graph.css" />
+        <link rel="stylesheet" media="all" href="/assets/stylesheets/font-awesome.css" />
+        <link rel="stylesheet" media="all" href="/assets/stylesheets/jquery-ui-1.10.2.custom.css" />
+        <link rel="stylesheet" media="all" href="/assets/stylesheets/jquery.svg.css">
+        <link rel="stylesheet" media="all" href="/assets/stylesheets/drwho.css">
+
+        <script src="/assets/javascripts/d3.v2.js"></script>
+        <script src="/assets/javascripts/jquery-1.9.1.js"></script>
+        <script src="/assets/javascripts/underscore.min.js"></script>
+        <script src="/assets/javascripts/jquery-ui-1.10.2.custom.js"></script>
+        <script src="/assets/javascripts/jquery.ui.touch-punch-0.2.2.js"></script>
+        <script src="/assets/javascripts/jquery.svg.js"></script>
+        <script src="/assets/javascripts/graffeine.js"></script>
+        <script src="/assets/conf/graffeine-conf.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+        <script>
+
+            var graph;
+
+            $(function() {                
+                graph  = new Graffeine.graph(Graffeine.conf);
+                graph.debug = true;
+                graph.command.init();   // start comms
+                graph.ui.init();        // start ui
+            });
+
+        </script>
+    </head>
+    <body>
+        <div id="container">
+            
+            <div id="console">
+                
+                <div>
+                    <div id="menu">
+                        <div class="section-label centered">neo4J</div>
+                        <div class="centered">
+                            <button class="form-button width-100" id="graph-init">connect</button>
+                        </div>
+                        <div class="section-label centered">vis</div>
+                        <div class="subsection-label centered">force</div>
+                        <div class="centered">
+                            <button class="form-button width-100" id="graph-force-start">start</button>
+                            <button class="form-button width-100" id="graph-force-stop">stop</button>
+                        </div>
+                        <div class="subsection-label centered">mode</div>
+                        <div class="centered">
+                            <button class="form-button width-100" id="graph-mode">replace</button>
+                        </div>
+                        <div class="subsection-label centered">fetch</div>
+                        <div class="subsection">
+                            <span class="item-label width-50">start</span>
+                            <input class="width-100" type="text" value="1" id="graph-start">
+                            <span class="hang-right"><button class="form-button width-50" id="graph-fetch">go</button></span>
+                        </div>
+                        <div class="subsection">
+                            <span class="item-label width-50">filter</span>
+                            <span class="item-value width-100">orphans</span>
+                            <span class="hang-right"><button class="form-button width-50" id="nodes-orphans">go</button></span>
+                        </div>
+                        <div class="subsection-label centered">find</div>
+                        <div class="subsection">
+                            <span class="item-label width-50">name</span>
+                            <input class="width-100" type="text" id="node-find-name">
+                        </div>
+                        <div class="subsection">
+                            <span class="item-label width-50">type</span>
+                            <select id="node-find-types-list"></select>
+                            <span class="hang-right"><button class="form-button width-50" id="node-find-button">go</button></span>
+                        </div>
+                        <div class="subsection-label centered">add</div>
+                        <div class="subsection">
+                            <span class="item-label width-50">type</span>
+                            <select id="node-add-new-types-list"></select> or 
+                            <input class="width-50" type="text" id="node-new-type" size="8">
+                        </div>
+                        <div class="subsection">
+                            <span class="item-label width-50">name</span>
+                            <input class="width-100" type="text" id="node-new-name" size="8">
+                            <span class="hang-right"><button class="form-button width-50" id="node-add">add</button></span>
+                        </div>
+                        <div class="section-label centered">node</div>
+                        <div id="node-edit-toggle">
+                            <form id="node-data"></form>
+                            <div class="centered">
+                                <button class="form-button" id="node-edit-update">update</button>
+                                <button class="form-button" id="node-edit-delete">delete</button>
+                                <button class="form-button" id="node-edit-duplicate">duplicate</button>
+                            </div>
+                        </div>
+                </div>
+
+                                    </div><!-- /menu -->
+                    <div id="graph">
+                    </div>
+                </div>
+            </div>
+
+            <!-- dialogs -->
+
+                <!-- new-relationship-dialog-form -->
+
+                <div class="dialog" id="new-relationship-dialog-form" title="Create new relationship">
+                    <form>
+                        <fieldset>
+                            <label id="new-relationship-dialog-source"></label><br/>
+                            <select id="new-relationship-dialog-options"></select> or
+                            <input type="text" size="10" name="new-relationship-dialog-name" id="new-relationship-dialog-name" /><br/>
+                            <label id="new-relationship-dialog-target"></label>
+                        </fieldset>
+                    </form>
+                </div>
+
+                <!-- node-hover-information-popup -->
+
+                <div class="tooltip" id="node-info" title="Node Info">
+                    <div class="form-ctrl-group">
+                        <div class="form-menu-heading">Node</div>
+                    </div>
+                    <div class="form-ctrl-group">
+                        <div id="node-rels">-</div>
+                    </div>
+                </div>
+
+                <!-- ???? -->
+
+                <div class="dialog" id="node-menu" title="Node Menu">
+                    <div class="form-ctrl-group">
+                        <div class="form-menu-heading">node</div>
+                    </div>
+                    <div class="form-ctrl-group">
+                        <div class="form-menu-heading">relationships</div>
+                        <div id="node-menu-rels"></div>
+                    </div>
+                </div>
+
+        </div><!-- /container -->
+    </body>
+</html>
