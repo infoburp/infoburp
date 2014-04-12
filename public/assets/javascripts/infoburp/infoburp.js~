@@ -40,7 +40,7 @@ nodetemplate = function(node_data) {
 DEBUG_DATASET = {
                  nodes: [nodetemplate({
 
-                                        nodehtml: 'connect fail',
+                                        nodehtml: 'connecting',
                                         is_youtube_video: false,
                                         youtube_id: ''
                                     }
