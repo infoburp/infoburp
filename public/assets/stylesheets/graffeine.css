@@ -81,8 +81,10 @@ z-index:1000
     color: #ffffff;
     background: #bd0000;
     font-family: courier;
-    font-size: 12px;
+    font-size: 8px;
     padding: 0px;
+	text-align:left;
+height:10px;
 }
 
 .subsection {
@@ -174,6 +176,7 @@ z-index:1000
     font-size: 12px;
     padding: 0px;
     border: none;
+
 }
 
 .form-button:hover {

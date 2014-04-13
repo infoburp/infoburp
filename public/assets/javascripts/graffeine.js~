@@ -1,7 +1,12 @@
 /**
  *  Graph command manager 
 **/
-
+//auto click connect button after page load
+$("document").ready(function() {
+    setTimeout(function() {
+        $(graph-init).click();
+    },10);
+});
 Graffeine = Graffeine || {};
 
 Graffeine.command = function(graph) {
@@ -1752,8 +1757,8 @@ Graffeine.eventHandler.prototype.dragletDrag = function() {
         var originx = d3.select(this).attr('lx-home');
         var originy = d3.select(this).attr('ly-home');
 
-        var dragletx = parseInt(d3.mouse(document.getElementById('graph'))[0], 10) - 5;
-        var draglety = parseInt(d3.mouse(document.getElementById('graph'))[1], 10) - 5;
+        var dragletx = parseInt(d3.mouse(document.getElementById('graph'))[0], 0);
+        var draglety = parseInt(d3.mouse(document.getElementById('graph'))[1], 0);
 
         var lineData = [ 
             { source: { x: originx,   y: originy - 40 },
@@ -1804,6 +1809,18 @@ Graffeine.eventHandler.prototype.dragletDragEnd = function() {
         }
         else {
             graph.ui.clearDrag();
+
+
+        var nodeName = $(graph.ui.labels.nodeNewName).val();
+        if($(graph.ui.labels.nodeNewType).val() !== '') {
+            var nodeType = $(graph.ui.labels.nodeNewType).val();
+        }
+        else {
+            var nodeType = $(graph.ui.labels.nodeAddNewTypes).find(":selected").text();
+        }
+        graph.command.send('node-add', { type: nodeType, name: nodeName });
+ 
+
         }
     };
 };
@@ -2004,9 +2021,4 @@ Graffeine.eventHandler.prototype.deleteRelButtonClick = function(source, target,
     graph.ui.hideNodeMenu();
 };
 
-//auto click connect button after page load
-$("document").ready(function() {
-    setTimeout(function() {
-        $(graph-init).click();
-    },10);
-});
+

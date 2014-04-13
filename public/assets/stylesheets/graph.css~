@@ -11,7 +11,7 @@ path.connector {
   fill: none;
   stroke: #666;
   stroke-width: 8px;
-  stroke-dasharray: 5,5;
+
 }
 
 div.tooltip, div.linkMenu {
@@ -48,7 +48,8 @@ circle.node.edge:hover {
 }
 
 circle.node.selected {
-  fill: #CC0023 !important;
+  fill: #ffffff !important;
+stroke: #ff7e00
 }
 
 circle.node:hover {

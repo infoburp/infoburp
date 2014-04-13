@@ -9,9 +9,9 @@ stroke: #007b00;
 
 path.connector {
   fill: none;
-  stroke: #666;
+  stroke: #ff7e00;
   stroke-width: 8px;
-  stroke-dasharray: 5,5;
+
 }
 
 div.tooltip, div.linkMenu {
