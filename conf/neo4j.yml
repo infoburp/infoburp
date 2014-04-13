@@ -1,5 +1,4 @@
-
 neo4j:
 
-    host: '54.80.139.210'
+    host: 'localhost'
     port: 7474
