@@ -39,16 +39,16 @@
                 
                 <div>
                     <div id="menu">
-                        <div class="section-label centered">infoburp</div>
+                        <div class="section-label centered"><img src="assets/images/logo.png"</img></div>
                         <div class="centered">
                             <button class="form-button width-100" id="graph-init">connect</button>
                         </div>
-                        <div class="section-label centered">graph</div>
+                        <div class="section-label centered">.</div>
                         <!--<div class="subsection-label centered">force</div>
                         <div class="centered">
                             <button class="form-button width-100" id="graph-force-start">start</button>
                             <button class="form-button width-100" id="graph-force-stop">stop</button>
-                        </div>
+                        </div>-->
                         <div class="subsection-label centered">mode</div>
                         <div class="centered">
                             <button class="form-button width-100" id="graph-mode">replace</button>
@@ -63,7 +63,7 @@
                             <span class="item-label width-50">filter</span>
                             <span class="item-value width-100">orphans</span>
                             <span class="hang-right"><button class="form-button width-50" id="nodes-orphans">go</button></span>
-                        </div>-->
+                        </div>
                         <div class="subsection-label centered">find</div>
                         <div class="subsection">
                             <span class="item-label width-50">name</span>

@@ -2,7 +2,7 @@
 path.link {
  
 
-stroke: lightgrey;
+stroke: #007b00;
 	stroke-opacity: 1;
 	stroke-width: 8px;
 }
@@ -30,8 +30,8 @@ div.tooltip, div.linkMenu {
 **/
 
 circle.node {
-  fill: #067195;
- stroke: lightgrey;
+  fill: #ffffff;
+ stroke: #007b00;
 	stroke-width: 8px;
 	cursor:url('../cursors/pointing.hand.cur'),pointer;
 }
@@ -48,11 +48,12 @@ circle.node.edge:hover {
 }
 
 circle.node.selected {
-  fill: #CC0023 !important;
+  fill: #ffffff !important;
+stroke: #ff7e00
 }
 
 circle.node:hover {
-  stroke: #003345 !important;
+  stroke: #ff7e00 !important;
   stroke-width: 8px !important;
   !stroke-dasharray: 2,2 !important;
 }
