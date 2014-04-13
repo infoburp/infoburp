@@ -39,11 +39,11 @@
                 
                 <div>
                     <div id="menu">
-                        <div class="section-label centered" align="left"><img src="assets/images/logo.png"</img></div>
+                        <div class="section-label left" align="left"><img src="assets/images/logo.png"</img></div>
                         <div class="centered">
                             <button class="form-button width-100" id="graph-init">connect</button>
                         </div>
-                        <div class="section-label left">graph</div>
+                        <div class="section-label centered">graph</div>
                         <!--<div class="subsection-label centered">force</div>
                         <div class="centered">
                             <button class="form-button width-100" id="graph-force-start">start</button>
