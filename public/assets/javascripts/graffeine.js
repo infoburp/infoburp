@@ -1063,9 +1063,9 @@ Graffeine.graph.prototype.drawNodes = function() {
         .append("svg:circle")
             .attr("id",    function(d) { return "node-tag-" + d.id; })
             .attr("class", "draglet")
-            .attr("r", 5)
+            .attr("r", 8)
             .attr("cx", 0)
-            .attr("cy", 40)
+            .attr("cy", 32)
             .call(dragCircle);
 
     this.refs.draglet.exit()
@@ -1810,7 +1810,7 @@ Graffeine.eventHandler.prototype.dragletDragEnd = function() {
         else {
             graph.ui.clearDrag();
 
-
+/*
         var nodeName = $(graph.ui.labels.nodeNewName).val();
         if($(graph.ui.labels.nodeNewType).val() !== '') {
             var nodeType = $(graph.ui.labels.nodeNewType).val();
@@ -1819,7 +1819,7 @@ Graffeine.eventHandler.prototype.dragletDragEnd = function() {
             var nodeType = $(graph.ui.labels.nodeAddNewTypes).find(":selected").text();
         }
         graph.command.send('node-add', { type: nodeType, name: nodeName });
- 
+ */
 
         }
     };

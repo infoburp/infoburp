@@ -43,7 +43,7 @@ circle.node.edge {
 }
 
 circle.node.edge:hover {
-  stroke: #003345 !important;
+  stroke: #ff7e00 !important;
   stroke-width: 3px !important;
 }
 
@@ -77,13 +77,14 @@ height: 0;
 **/
 
 circle.draglet {
-  fill: #003345;
-  stroke-width: 0;
+  fill: #ffffff;
+  stroke-width: 4px;
+stroke: #007b00;
 }
 
 circle.draglet:hover {
-  fill: #4EAE44;
-  stroke: #003345;
+  fill: #ffffff;
+  stroke: #ff7e00;
   stroke-width: 4px;
   stroke-dasharray: none;
 }
