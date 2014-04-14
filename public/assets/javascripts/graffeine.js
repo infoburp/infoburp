@@ -1761,8 +1761,8 @@ Graffeine.eventHandler.prototype.dragletDrag = function() {
         var draglety = parseInt(d3.mouse(document.getElementById('graph'))[1], 0);
 
         var lineData = [ 
-            { source: { x: originx,   y: originy - 40 },
-              target: { x: dragletx,  y: draglety     } }
+            { source: { x: originx,   y: originy },
+              target: { x: dragletx + 100,  y: draglety + 20     } }
         ];
 
         // draw the line

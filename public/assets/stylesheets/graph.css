@@ -5,13 +5,14 @@ path.link {
 stroke: #007b00;
 	stroke-opacity: 1;
 	stroke-width: 8px;
+
 }
 
 path.connector {
   fill: none;
   stroke: #ff7e00;
   stroke-width: 8px;
-
+z-index: -1;
 }
 
 div.tooltip, div.linkMenu {
@@ -34,6 +35,7 @@ circle.node {
  stroke: #007b00;
 	stroke-width: 8px;
 	cursor:url('../cursors/pointing.hand.cur'),pointer;
+z-index: 1;
 }
 
 circle.node.edge {
