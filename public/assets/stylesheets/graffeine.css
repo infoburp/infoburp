@@ -155,7 +155,9 @@ width: 84%;
 }
 
 .width-sixth {
-width: 15%
+width: 12%;
+height: 10px;
+top: 0px;
 }
 /**
  *  Form elements
@@ -183,16 +185,15 @@ width: 15%
 .form-button {
     color: #FFFFFF;
     background: #ff7e00;
-    font-family: courier;
-    font-size: 12px;
-    padding: 0px;
+    font-family: sans-serif;
+    font-size: 10px;
     border: none;
 
 }
 
 .form-button:hover {
-    color: #00328a;
-    background: #2980b9;
+    color: #FFFFFF;
+    background: #00328a;
 }
 
 .form-button:disabled {
