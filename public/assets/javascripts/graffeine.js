@@ -1843,9 +1843,9 @@ Graffeine.eventHandler.prototype.linkMouseover = function() {
             .style("opacity", .9);
 
         Graffeine.graph.tooltip.html(
-            "From : " + d.source.name + "<br/>" +
-            "To :   " + d.target.name + "<br/>" +
-            "Type : " + d.rel)
+            d.source.name + ">>" +
+            d.target.name +
+            " (" + d.rel + ")")
             .style("left", (d3.event.pageX + 10) + "px")
             .style("top", (d3.event.pageY - 28) + "px");
     };
