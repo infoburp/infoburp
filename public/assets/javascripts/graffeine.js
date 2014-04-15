@@ -664,13 +664,13 @@ Graffeine.util = {}
 Graffeine.util.objectToForm = function(data, opts) {
     var str = "";
     Object.keys(data).forEach(function(key){
-        str += '<div>';
+       // str += '<div>';
 //        str += '<label class="form-label">' + key + '</label>';
         if(opts[key] === undefined)
           str += Graffeine.util.jsToFormField(data[key], key, "", 14);
         else
           str += Graffeine.util.jsToFormField(opts[key].data, key, null, null, opts[key].selected, opts[key].user);
-        str += '</div>';
+        //str += '</div>';
     });
     return str;
 };
