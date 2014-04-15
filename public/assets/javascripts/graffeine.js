@@ -65,7 +65,9 @@ $('#graph-mode').text() === "replace") ? 'replace' : 'update';
         // join nodes
 
         this.recv('node-join', function (data) {
-            graph.addLink(data.source, data.target, data.rel);
+           // graph.addLink(data.source, data.target, data.rel);
+	    graph.addLink(data.source, data.target, "link");
+
             graph.refresh();
         }, true);
 
@@ -663,7 +665,7 @@ Graffeine.util.objectToForm = function(data, opts) {
     var str = "";
     Object.keys(data).forEach(function(key){
         str += '<div>';
-        str += '<label class="form-label">' + key + '</label>';
+//        str += '<label class="form-label">' + key + '</label>';
         if(opts[key] === undefined)
           str += Graffeine.util.jsToFormField(data[key], key, "", 14);
         else
@@ -746,7 +748,7 @@ Graffeine.util.jsToFormField = function(jsObj, name, id, size, sel, user) {
       break;
       
     case "array" :
-      var str = '<select name="' + name + '" jsontype="' + type + '" id="' + id + '">';
+      /*var str = '<select name="' + name + '" jsontype="' + type + '" id="' + id + '">';
       jsObj.forEach(function(opt){
         if(sel !== null && sel === opt)
           str += '<option selected value="' + opt + '">' + opt + '</option>';
@@ -755,10 +757,10 @@ Graffeine.util.jsToFormField = function(jsObj, name, id, size, sel, user) {
       });
       str += '</select>';
       if(user)
-      str += 'or <input type="text" jsontype="string" value="" size="10" name="' + name + '"/>';
+      //str += 'or <input type="text" jsontype="string" value="" size="10" name="' + name + '"/>';
       return str;
       break;
-
+*/
     case "boolean" :
       if(jsObj === true)
         return '<input type="checkbox" jsontype="' + type + '" name="' + name + '" id="' + id + '" checked />';
@@ -1884,7 +1886,7 @@ Graffeine.eventHandler.prototype.linkRightClick = function() {
 
 Graffeine.eventHandler.prototype.nodeClick = function() {
     return function(d, i) {
-document.getElementById('menu').style.height = "120px";
+document.getElementById('menu').style.height = "32px";
 
         d3.event.stopPropagation();
         graph.refs.force.stop();
