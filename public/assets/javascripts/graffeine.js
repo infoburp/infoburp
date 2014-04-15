@@ -1624,13 +1624,8 @@ Graffeine.ui.prototype.registerButtonClicks = function() {
     });
 
     $("#node-add").click(function(e) {
-        var nodeName = $(graph.ui.labels.nodeNewName).val();
-        if($(graph.ui.labels.nodeNewType).val() !== '') {
-            var nodeType = $(graph.ui.labels.nodeNewType).val();
-        }
-        else {
-            var nodeType = $(graph.ui.labels.nodeAddNewTypes).find(":selected").text();
-        }
+        var nodeName = '';
+        var nodeType = 'name';
         graph.command.send('node-add', { type: nodeType, name: nodeName });
     });
 
