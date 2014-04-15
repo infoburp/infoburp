@@ -1886,7 +1886,7 @@ Graffeine.eventHandler.prototype.linkRightClick = function() {
 
 Graffeine.eventHandler.prototype.nodeClick = function() {
     return function(d, i) {
-document.getElementById('menu').style.height = "32px";
+document.getElementById('menu').style.height = "100px";
 
         d3.event.stopPropagation();
         graph.refs.force.stop();

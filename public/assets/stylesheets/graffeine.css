@@ -184,7 +184,16 @@ top: 0px;
 .form-ctrl-group {
     border-bottom: 2px rgba(255,0,0,0.5);
 }
-
+textarea {
+    height: 90px;
+width: 100%;
+    border: 0px dark grey;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    font-size: 11px;
+  }
 .form-button {
     color: #FFFFFF;
     background: #ff7e00;
