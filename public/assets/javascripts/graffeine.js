@@ -4,7 +4,9 @@
 //auto click connect button after page load
 $("document").ready(function() {
     setTimeout(function() {
-        $(graph-init).click();
+        var start = $('#graph-start').val();
+        graph.command.send('graph-init', { });
+
     },10);
 });
 Graffeine = Graffeine || {};
@@ -44,7 +46,8 @@ Graffeine.command = function(graph) {
 
         this.recv('data-nodes', function (data) {
             graph.debugMesg("(data-nodes) processing");
-            var newVis = ($('#graph-mode').text() === "replace") ? 'replace' : 'update';
+            var newVis = (
+$('#graph-mode').text() === "replace") ? 'replace' : 'update';
             graph.updateMode = newVis;
             graph.addGraphData(data);
             graph.refresh();
