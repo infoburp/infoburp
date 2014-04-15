@@ -1884,6 +1884,8 @@ Graffeine.eventHandler.prototype.linkRightClick = function() {
 
 Graffeine.eventHandler.prototype.nodeClick = function() {
     return function(d, i) {
+document.getElementById('menu').style.height = "120px";
+
         d3.event.stopPropagation();
         graph.refs.force.stop();
         graph.ui.hideNodeInformation();
@@ -1997,6 +1999,7 @@ Graffeine.eventHandler.prototype.nodeRightClick = function() {
 
 Graffeine.eventHandler.prototype.svgClick = function() {
     return function(d, i) {
+document.getElementById('menu').style.height = "10px";
         graph.debugMesg("(svgClick) processing");
         graph.refs.force.stop();
         if(graph.state.selectedNode!==null) {
