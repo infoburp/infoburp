@@ -1806,8 +1806,10 @@ Graffeine.eventHandler.prototype.dragletDragEnd = function() {
             graph.ui.showNewRelationshipMenu(graph.state.sourceNode, graph.state.hoveredNode);
         }
         else {
-            graph.ui.clearDrag();
 
+            graph.ui.clearDrag();
+graph.command.send('node-add', { type: 'name', name: 'new' });
+graph.refresh();
 /*
         var nodeName = $(graph.ui.labels.nodeNewName).val();
         if($(graph.ui.labels.nodeNewType).val() !== '') {
