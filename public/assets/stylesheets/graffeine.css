@@ -209,8 +209,8 @@ width: 100%;
 }
 
 .form-button:disabled {
-    color: #7f8c8d;
-    background: #bdc3c7;
+    color: darkgrey;
+    background: darkgrey;
 }
 
 #node-edit-form {
