@@ -1162,7 +1162,12 @@ Graffeine.graph.prototype.makeSvg = function() {
         .append("svg:svg")
         .on('click', this.handler.svgClick(this))
         .attr("width",  this.width)
-        .attr("height", this.height);
+        .attr("height", this.height)
+.call(d3.behavior.zoom().scaleExtent([1, 8]).on("zoom", zoom));
+
+function zoom() {
+  svg.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+}
 
     //  tool tip place holder
 
