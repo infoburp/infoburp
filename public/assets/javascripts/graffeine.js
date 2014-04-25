@@ -1421,6 +1421,9 @@ Graffeine.ui.prototype.forceStop = function() {
 Graffeine.ui.prototype.showNodeEditForm = function(node) {
     graph.debugMesg("(showNodeEditForm) showing form for node " + node.id);
     $(this.identifiers.nodeEditableData).html(Graffeine.util.objectToForm(node.data, { type: { data: graph.data.nodeTypes, user: true, selected: node.type }}));
+   // $(this.identifiers.nodeEditableData).html('<input type="text" jsontype="string" name="name" id="editor" size="14" value="new" /><input type="checkbox" jsontype="array" name="type" id="" /> ');
+
+console.log (Graffeine.util.objectToForm(node.data, { type: { data: graph.data.nodeTypes, user: true, selected: node.type }}));
     this.disableActionButtons(false);
 };
 
@@ -1886,7 +1889,7 @@ Graffeine.eventHandler.prototype.linkRightClick = function() {
 
 Graffeine.eventHandler.prototype.nodeClick = function() {
     return function(d, i) {
-document.getElementById('menu').style.height = "24px";
+document.getElementById('menu').style.height = "182px";
 
         d3.event.stopPropagation();
         graph.refs.force.stop();
