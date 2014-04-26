@@ -1165,6 +1165,7 @@ Graffeine.graph.prototype.makeSvg = function() {
         .nodes(d3.values(this.data.nodes), function(node) { return node.id; })
         .links(this.data.links, function(link) { return link.source.id + "-" + link.target.id; })
         .size([this.width, this.height])
+
         .linkDistance(this.settings.linkDistance)
         .charge(this.settings.charge)
         .on("tick", Graffeine.force.tick(this));
