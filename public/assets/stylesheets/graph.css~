@@ -80,14 +80,14 @@ height: 0;
 
 circle.draglet {
   fill: #ffffff;
-  stroke-width: 8px;
+  stroke-width: 4px;
 stroke: #ff7e00;
 }
 
 circle.draglet:hover {
-  fill: #ff7e00;
+  fill: #007b00;
   stroke: #ff7e00;
-  stroke-width: 8px;
+  stroke-width: 4px;
   stroke-dasharray: none;
 }
 

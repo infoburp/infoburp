@@ -1068,9 +1068,9 @@ Graffeine.graph.prototype.drawNodes = function() {
         .append("svg:circle")
             .attr("id",    function(d) { return "node-tag-" + d.id; })
             .attr("class", "draglet")
-            .attr("r", 12)
+            .attr("r", 40)
             .attr("cx", 0)
-            .attr("cy", 32)
+            .attr("cy", 0)
             .call(dragCircle);
 
     this.refs.draglet.exit()

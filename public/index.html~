@@ -41,14 +41,21 @@
                         <div class="section-label left" align="left"><img src="assets/images/logo.png"</img>
 	                                <button class="form-button width-sixth" id="node-edit-update">update</button>
                                 <button class="form-button width-sixth" id="node-edit-delete">delete</button>
+                                <!--<button class="form-button width-sixth" id="node-edit-delete">play</button>
+                                <button class="form-button width-sixth" id="node-edit-delete">pause</button>
+                                <button class="form-button width-sixth" id="node-edit-delete">view</button>
+                                <button class="form-button width-sixth" id="node-edit-delete">html</button>
+                                <button class="form-button width-sixth" id="node-edit-delete">css</button>
+                                <button class="form-button width-sixth" id="node-edit-delete">js</button>-->
 <button style="visibility:hidden" class="form-button width-sixth" id="graph-mode">replace</button>
 
 </div>
-                            <form id="node-data"><div id="toolbar" style="display: none;">
+<div id="toolbar" style="display: none;">
     <a data-wysihtml5-command="bold" title="CTRL+B">bold</a> |
     <a data-wysihtml5-command="italic" title="CTRL+I">italic</a>
     <a data-wysihtml5-action="change_view">switch to html view</a>
-  </div></form>
+  </div>
+                            <form id="node-data"></form>
                 </div>
 
                                     </div><!-- /menu -->
@@ -59,7 +66,7 @@
 <script src="assets/javascripts/simple.js"></script>
 <script src="assets/javascripts/wysihtml5-0.4.0pre.js"></script>
 <script>
-  var editor = new wysihtml5.Editor("textarea", {
+  var editor = new wysihtml5.Editor("texteditor", {
     toolbar:        "toolbar",
     parserRules:    wysihtml5ParserRules,
     useLineBreaks:  false
