@@ -1,3 +1,13 @@
+
+            var graph;
+
+            $(function() {                
+                graph  = new Graffeine.graph(Graffeine.conf);
+                graph.debug = true;
+                graph.command.init();   // start comms
+                graph.ui.init();        // start ui
+            });
+
 /**
  *  Graph command manager 
 **/
@@ -1167,8 +1177,10 @@ Graffeine.graph.prototype.makeSvg = function() {
         .attr("height", this.height)
 .call(d3.behavior.zoom().scaleExtent([1, 8]).on("zoom", zoom));
 
+
+
 function zoom() {
-  svg.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+  graph.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
 }
 
     //  tool tip place holder
@@ -1797,6 +1809,7 @@ Graffeine.eventHandler.prototype.dragletDrag = function() {
     };
 };
 
+
 /**
  *  Handle drag-end on draglet
 **/
@@ -1846,11 +1859,11 @@ Graffeine.eventHandler.prototype.linkMouseover = function() {
             .style("opacity", .9);
 
         Graffeine.graph.tooltip.html(
-            d.source.name + ">>" +
-            d.target.name +
-            " (" + d.rel + ")")
-            .style("left", (d3.event.pageX + 10) + "px")
-            .style("top", (d3.event.pageY - 28) + "px");
+            d.source.name +
+            " (" + d.rel + ") " +
+            d.target.name)
+            .style("left", (d3.event.pageX) + "px")
+            .style("top", (d3.event.pageY) + "px");
     };
 };
 
