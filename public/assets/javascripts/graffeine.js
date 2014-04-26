@@ -1225,7 +1225,7 @@ function zoom() {
     var filter = Graffeine.graph.defs
         .append("svg:filter")
             .attr("id", "dropshadow")
-            .attr("height", "130%");
+            .attr("height", "180%");
 
     filter.append("svg:feGaussianBlur")
         .attr("in", "SourceAlpha")
