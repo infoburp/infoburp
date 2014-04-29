@@ -2055,3 +2055,10 @@ var newObj = Graffeine.util.formToObject('node-data');
         	graph.command.send('node-update', { id: nodeId, data: newObj });
     }
 
+//search button
+    $(this.buttons.nodeFind).click(function(e) {
+        var name = $(graph.ui.labels.nodeFindName).val();
+        var type = $(graph.ui.labels.nodeFindTypes).find(":selected").text();
+        graph.debugMesg("(click:node:find) finding node : " + name + " of type " + type);
+        graph.command.send('node-find', { name: name, type: type });
+    });
