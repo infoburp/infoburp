@@ -1,4 +1,4 @@
 neo4j:
 
-    host: '54.80.139.210'
+    host: 'bender'
     port: 7474
