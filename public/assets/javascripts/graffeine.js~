@@ -15,8 +15,8 @@
 $("document").ready(function() {
     setTimeout(function() {
         var start = $('#graph-start').val();
-        graph.command.send('graph-init', { });
-
+        //graph.command.send('graph-init', { });
+        graph.command.send('graph-fetch', { start: 0 });
     },10);
 });
 Graffeine = Graffeine || {};
@@ -1596,6 +1596,7 @@ Graffeine.ui.prototype.registerButtonClicks = function() {
     $("#graph-init").click(function(e) {
         var start = $('#graph-start').val();
         graph.command.send('graph-init', { });
+
     });
 
     $("#graph-fetch").click(function(e) {
