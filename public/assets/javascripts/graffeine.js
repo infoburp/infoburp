@@ -750,7 +750,7 @@ Graffeine.util.jsToFormField = function(jsObj, name, id, size, sel, user) {
   
   switch(type) {
     case "string" :
-      return '<input type="text" jsontype="' + type + '" name="' + name + '" id="textarea"  onchange="nodechanged();" onpaste="this.onchange();" oninput="this.onchange();" size="' + size + '" value="' + jsObj +'" />';
+      return '<textarea jsontype="' + type + '" name="' + name + '" id="textarea"  onchange="nodechanged();" onpaste="this.onchange();" oninput="this.onchange();" size="' + size + '" value="' + jsObj +'" />';
       break;
     
     case "number" :
