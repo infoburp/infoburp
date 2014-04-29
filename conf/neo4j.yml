@@ -1,4 +1,4 @@
 neo4j:
 
-    host: 'bender'
+    host: 'ec2-50-16-141-128.compute-1.amazonaws.com'
     port: 7474
