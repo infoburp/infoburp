@@ -1,4 +1,3 @@
-
 infoburp
 
 Requires:
@@ -195,4 +194,4 @@ Connect browser to server port
 
 Yes please. This started as a lunchtime play and then grew too fast and then swamped me. I've cleaned it up in phases but the code is still really quite messy (very in some places). It needs tests, some serious refactoring (marked in a few places in the code) and quite a bit of elegance added. But it will get there eventually.
 
-Feel free to drop me a line via julianbrowne.com with questions, features requests, suggestions, offers of help etc.
+Feel free to drop me a line gwolfendale<at>gmail.com with questions, features requests, suggestions, offers of help etc.
