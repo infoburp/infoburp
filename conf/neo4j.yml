@@ -1,4 +1,4 @@
 neo4j:
 
-    host: 'ec2-50-16-141-128.compute-1.amazonaws.com'
+    host: 'localhost'
     port: 7474
