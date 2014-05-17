@@ -26,5 +26,5 @@ Graffeine.conf.graphSettings = {
 };
 
 Graffeine.conf.core = {
-    host: 'http://ec2-50-16-141-128.compute-1.amazonaws.com'    // where the node.js server be at
+    host: 'localhost'    // where the node.js server be at
 };
