@@ -1,10 +1,13 @@
-infoburp
-
 For Impatient People
 ====================
 
-wget https://raw.githubusercontent.com/infoburp/infoburp/master/setup.sh && sudo sh setup.sh
-browse to http://localhost:8004
+    wget https://raw.githubusercontent.com/infoburp/infoburp/master/setup.sh && sudo sh setup.sh
+    browse to http://localhost:8004
+    
+I can't see any nodes!?!
+========================
+
+    add a node to neo4j using the web ui to begin http://localhost:7474
 
 Requires
 ========

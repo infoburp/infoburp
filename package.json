@@ -1,9 +1,9 @@
 {
   "name": "infoburp",
-  "version": "0.0.1",
-  "description": "Neo4J Graph Chan",
+  "version": "0.0.4",
+  "description": "Neo4J Graph Thing",
   "contributors": [
-    "Julian Browne"
+    "Julian Browne", "Graeme Wolfendale"
   ],
   "homepage": "https://github.com/infoburp/infoburp",
   "repository": {
@@ -16,7 +16,7 @@
     "admin",
     "graph"
   ],
-  "author": "Graeme Wolfendale",
+  "author": "Julian Browne and Graeme Wolfendale",
   "scripts": {
     "start": "node server.js"
   },
