@@ -339,11 +339,11 @@ polygon.arrowhead {
 circle.draglet {
   fill: #ffffff;
   stroke-width: 8px;
-  stroke: #ff7e00;
+  stroke: #007b00;
 }
 
 circle.draglet:hover {
-  fill: #ff7e00;
+  fill: #ffffff;
   stroke: #ff7e00;
   stroke-width: 8px;
   stroke-dasharray: none;

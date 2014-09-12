@@ -1,12 +1,11 @@
+var graph;
 
-            var graph;
-
-            $(function() {
-                graph  = new infoburp.graph(infoburp.conf);
-                graph.debug = true;
-                graph.command.init();   // start comms
-                graph.ui.init();        // start ui
-            });
+$(function() {
+    graph  = new infoburp.graph(infoburp.conf);
+    graph.debug = true;
+    graph.command.init();   // start comms
+    graph.ui.init();        // start ui
+});
 
 /**
  *  Graph command manager
@@ -56,8 +55,7 @@ infoburp.command = function(graph) {
 
         this.recv('data-nodes', function (data) {
             graph.debugMesg("(data-nodes) processing");
-            var newVis = (
-$('#graph-mode').text() === "replace") ? 'replace' : 'update';
+            var newVis = ($('#graph-mode').text() === "replace") ? 'replace' : 'update';
             graph.updateMode = newVis;
             graph.addGraphData(data);
             graph.refresh();
@@ -120,7 +118,6 @@ $('#graph-mode').text() === "replace") ? 'replace' : 'update';
             graph.removeLink(data.source, data.target, data.rel);
             graph.refresh();
         }, true);
-
     };
 };
 /**
@@ -148,11 +145,13 @@ infoburp.force.tick = function(graph) {
                     console.log(d.source);
                     throw "tick data error";
                 }
+
                 if(d.target.x === undefined || d.target.x === null) {
                     console.log("(force.tick) d.target - data error :");
                     console.log(d.target);
                     throw "tick data error";
                 }
+
                 var dx = d.target.x - d.source.x;
                 var dy = d.target.y - d.source.y;
 
@@ -160,16 +159,16 @@ infoburp.force.tick = function(graph) {
                     //var dr = Math.sqrt(dx * dx + dy * dy);
                     //return "M" + d.source.x + "," + d.source.y + "A" + dr + "," + dr + " 0 1,1 " + d.target.x + "," + d.target.y;
                     return "M" + d.source.x + "," + d.source.y + "A40,40 40 1,1 " + (d.target.x + 1) + "," + (d.target.y + 1);
-                }
-                else {
+                
+                } else {
                     var midx = d.source.x + ((d.target.x - d.source.x) / 2.3);
                     var midy = d.source.y + ((d.target.y - d.source.y) / 2.3);
 
                     return "M" + d.source.x + "," + d.source.y +
                            "L" + midx + "," + midy +
                            "L" + d.target.x + "," + d.target.y;
+                
                 }
-
             });
 
         graph.refs.circle
@@ -275,8 +274,6 @@ infoburp.graph = function(config) {
         if(this.debug)
             console.log("DEBUG : " + mesg);
     };
-
-
 };
 
 /**
@@ -307,7 +304,6 @@ infoburp.graph.prototype.refresh  = function() {
 
     this.refs.force
         .start();
-
 };
 
 /**
@@ -346,9 +342,7 @@ infoburp.graph.prototype.addGraphData = function(graphData) {
 
     this.debugMesg("(addGraphData) There are " + d3.values(this.data.nodes).length + " nodes in the graph");
     this.debugMesg("(addGraphData) There are " + this.data.links.length + " links in the graph");
-
     this.ui.disableGraphActionButtons(false);
-
 };
 
 /**
@@ -990,7 +984,7 @@ infoburp.graph.prototype.drawLabels = function() {
 
     this.refs.text.exit()
         .remove();
-
+/*
     this.debugMesg("(drawLabels) drawing icons");
 
     this.refs.icon = this.refs.icon
@@ -1006,7 +1000,7 @@ infoburp.graph.prototype.drawLabels = function() {
             .text(function(node) { return node.icon; });
 
     this.refs.icon.exit()
-        .remove();
+        .remove();*/
 
 };/**
  *  Add a placeholder for svg circle (node) elements
