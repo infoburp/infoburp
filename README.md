@@ -1,8 +1,8 @@
 For Impatient People
 ====================
 
-wget https://raw.githubusercontent.com/infoburp/infoburp/master/setup.sh && sudo sh setup.sh
-browse to http://localhost:8004
+    wget https://raw.githubusercontent.com/infoburp/infoburp/master/setup.sh && sudo sh setup.sh
+    browse to http://localhost:8004
 
 Requires
 ========
