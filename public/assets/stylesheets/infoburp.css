@@ -59,7 +59,7 @@ svg {
 
 #menu {
   color: #000000;
-  background: #000000;
+  background: transparent;
   position: absolute;
 	top: 0px;
 	left: 0px;
@@ -85,7 +85,7 @@ svg {
 
 .section-label {
   color: #ffffff;
-  background: #000000;
+  background: transparent;
   font-family: sans-serif;
   font-size: 8px;
   height:10px;
