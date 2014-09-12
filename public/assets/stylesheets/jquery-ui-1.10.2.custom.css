@@ -499,7 +499,7 @@ button.ui-button::-moz-focus-inner {
 	border: 0;
 	padding: .5em 1em;
 	background: none;
-	overflow: auto;
+	height: 100%;
 }
 .ui-dialog .ui-dialog-buttonpane {
 	text-align: left;
@@ -790,6 +790,7 @@ body .ui-tooltip {
 		 width:30% !important;
   top: 10px !important;
   left: 0px !important;
+  height: 100% !important;
 }
 .ui-widget .ui-widget {
 	font-size: 1em;
@@ -803,8 +804,8 @@ body .ui-tooltip {
 }
 .ui-widget-content {
 	border: opx solid #7e7783;
-	background: #3d3644 url(images/ui-bg_gloss-wave_30_3d3644_500x100.png) 50% top repeat-x;
-	color: #ffffff;
+	background: #ffffff;
+	color: #000000;
 }
 .ui-widget-content a {
 	color: #ffffff;

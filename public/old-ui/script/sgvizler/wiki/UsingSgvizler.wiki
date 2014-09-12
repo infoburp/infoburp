@@ -1,0 +1,66 @@
+#summary Explains the two main ways of using Sgvizler.
+
+There are three intended ways to use Sgvizler. 
+The first is to write queries and store them in {{{<div>}}} elements
+using attributes Sgvizler recognizes. These queries are read and
+executed on page load and the results are displayed in the same
+{{{<div>}}} element.
+The second is to setup a query form webpage where users can write and
+execute their own queries and view the results formatted as different
+types of charts and maps.
+The third is to explicity call Sgvizler's javascript functions.
+
+The two first are described below.
+
+==Query stored in {{{<div>}}}==
+
+Add {{{<div>}}} elements of the following format to your webpage:
+
+<code language="html">
+<div id="sgvzl_example1"
+     data-sgvizler-endpoint="http://sws.ifi.uio.no/sparql/npd"
+     data-sgvizler-query="SELECT ?class (count(?instance) AS ?noOfInstances)
+			  WHERE{ ?instance a ?class }
+			  GROUP BY ?class
+			  ORDER BY ?class"
+     data-sgvizler-chart="gPieChart"
+     data-sgvizler-loglevel="0"
+     data-sgvizler-chart-options="is3D=true|title=Number of instances"
+     style="width:800px; height:400px;"></div>
+</code>
+
+Explanation of attributes:
+|| *Name* || *"Format"* || *Description* ||
+|| {{{id}}} || string || Required. The identifier for the {{{<div>}}} element. Necessary for Sgvizler to locate where to put the chart. The value must be unique to all elements on the same page. ||
+|| {{{data-sgvizler-endpoint}}} || URL || URL to SPARQL endpoint. ||
+|| {{{data-sgvizler-endpoint_output}}} || {{{json}}}, {{{jsonp}}}, {{{xml}}} || The format Sgvizler shall ask the endpoint to return query results as. Default is {{{json}}}. ||
+|| {{{data-sgvizler-rdf}}} || URL(s) || List of URLs to RDF files. The list must be separated by {{{|}}}-characters, and the configured SPARQL endpoint must allow FROMs in the query. ||
+|| {{{data-sgvizler-query}}} || query string || Required. The SPARQL SELECT query specifying a query result to fit the chosen diagram. See DesigningQueries for more details. ||
+|| {{{data-sgvizler-chart}}} || chart id || The chart type to draw. Possible values are found in the id column in the table a DesigningQueries. Default value is gLineChart. || 
+|| {{{data-sgvizler-loglevel}}} || {{{0}}}, {{{1}}} or {{{2}}} || To what extent Sgvizler shall give feedback to the user. The default value is 2. || 
+|| || 0 || No feedback. If all is well, i.e. you have connection to your endpoint, the query is in the correct format and so on, then the chart is displayed. If not, then no error message is printed on the page. ||
+|| || 1 || Some feedback. The {{{<div>}}} element will read _Loading..._ until the chart is displayed, and _Error._ if an error is caught. ||
+|| || 2 || "Full" feedback. The same amount is as given when using the query form is printed in the {{{<div>}}} element, except the final message since this is overwritten by the chart. ||
+|| {{{data-sgvizler-chart-options}}} || string || List of options which are sent to the {{{draw()}}} function of the given chart type. Each option is given as {{{option=value}}} and each option-value-pair is separated with a vertical bar, e.g. {{{option1=value1|option2=value2}}}. If you are using a Google chart type you should consult the page they have for that chart type for the available options and permissible values. If your using a different chart type, you should find options and values on this page and/or in the file [http://sgvizler.googlecode.com/svn/trunk/sgvizler.visualization.js sgvizler.visualization.js]. ||
+|| {{{style}}} || css || This is just the normal way of adding css style to your elements, but {{{width}}} and {{{height}}} will also be picked up by Sgvizler to determine the size of the chart. The default values are respectively 800px and 400px. || 
+|| {{{data-sgvizler-endpoint_query_url}}} || part of URL  || Part of URL to append to SPARQL endpoint URL such that (URL to SPARQL endpoint) + (this variable) + (query) = (query results (in a web browser)). Default is {{{?output=text&amp;query=}}}. ||
+|| {{{data-sgvizler-validator_query_url}}} || URL || URL to some SPARQL validator such that (this variable) + (query) = (validation results for query). Default value is {{{http://www.sparql.org/query-validator?languageSyntax=SPARQL&amp;outputFormat=sparql&amp;linenumbers=true&amp;query=}}}.||
+
+Using {{{data-sgvizler-rdf}}} is really just a shorthand way of
+telling Sgvizler to include a list of {{{FROM}}}s in the query. The
+configured endpoint reads the listed RDF files and executes the query
+on them; this means that the files must be accessible to the endpoint
+and the endpoint must be setup to allow {{{FROM}}} in queries.
+
+==Query Form==
+
+This form closely resembles the query forms of
+[http://www.sparql.org/query.html SPARQLer] and
+[http://dbpedia.org/snorql/ Snorql]. The form is found here: 
+[http://sgvizler.googlecode.com/svn/release/0.5/sgvizler.html sgvizler.html]
+Write the query in the textarea,
+including necessary prefix declarations. In addition, it is
+possible to select different chart types in a drop-down menu and to
+specify the size of the resulting chart. The query result set format
+must fit the chosen chart type. More details are given in UserFunctions.
+

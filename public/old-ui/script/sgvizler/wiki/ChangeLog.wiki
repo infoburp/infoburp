@@ -1,0 +1,83 @@
+#summary Version history of Sgvizler.
+
+== Version 0.5.1 ==
+
+ Released: 25. May 2012.
+
+ * New graph chart: {{{rdGraph}}} using the Dracula !JavaScript visualization library, and {{{sTable}}}.
+ * Major unlinting of code; using JSLint and JSHint.
+ * Issues fixed: issue 10
+
+== Version 0.5.0 ==
+
+ * Support for JSONP. This makes Sgvizler compatible with all reasonably new browsers, however, the SPARQL endpoint must return query results as JSONP, but many do.
+ * New graph chart: {{{dForceGraph}}} using the D3 !JavaScript visualization library.
+ * New Google charts added: Bubble Chart, Stepped Area Chart, new Geo Chart
+ * Refactoring of code.
+ * Breaking version due to renaming of public variables.
+ * Issues fixed: issue 2, issue 8, issue 23, issue 28, issue 30, issue 31, issue 25
+
+== Version 0.4.0 ==
+
+ * Breaking version due to renaming of public variables. html attributes are best lower-case.
+ * Test on major browsers, more information on wiki pages.
+ * Better loading of "child" scripts and stylesheets.
+
+== Version 0.3.5 ==
+
+ * Fixing bug in parser: non empty gcells when some scells are missing.
+ * Fixing bug: order of attributes in div should not matter.
+
+== Version 0.3.4 ==
+
+ * Fixing issue 22: error in XML parser broke IE support.
+ * Fixing issue 20: adding support for Opera by removing lint.
+
+== Version 0.3.3 ==
+
+ * Accepts RDF files as data source.
+ * Added two more charts: Sparkline and Gauge.
+ * Sends proper headers.
+ * Bugfix: issue 3 smarter datatype computation.
+ * Bugfix: issue 17 with Map+ chart.
+ * Lots of live examples.
+ * Download of CORS enabled Joseki available.
+
+== Version 0.3.2 ==
+
+ * Bugfix: issue 4.
+ * Moving project to googlecode.
+
+== Version 0.3.1 ==
+
+ * Bugfix. Did not handle queries with OPTIONALs.
+ * Improved formatting of Map+ charts.
+
+== Version 0.3.0 ==
+
+ * "More" support for endpoint on different origin. Works now with IE 8?
+ * Support for user-defined chart functions.
+ * Added two user functions: Map+ and List.
+ * _Update_: two more functions: Definition List and Text.
+ * Restructured code, so many function names and settings have changed.
+
+== Version 0.2.2 ==
+
+ * Support for SPARQL results in XML format added.
+ * Fixing bug when drawing !GeoMap and Map.
+
+== Version 0.2.1 ==
+
+ * Fixing bug in JSON parser.
+ * Namespaces are replaced with their prefix when data is displayed.
+
+== Version 0.2.0 ==
+
+ * Introducing the possibility of using {{{<div>}}}.
+ * Adding table type "chart", which makes sense to use with the {{{<div>}}}-way.
+ * Replacing use of the prototype javascript framework with jQuery.
+ * Using slightly more involved element ids to not step on toes.
+
+== Version 0.1.0 ==
+
+First release. Draws all of Google's major chart types. Supports only JSON.
