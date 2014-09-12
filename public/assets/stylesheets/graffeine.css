@@ -41,7 +41,7 @@ display:block; float:left;font-size:16px;
 }
 
 #graph {
-   
+
     margin: 0;
     text-align: center;
 width: 80%;
@@ -58,7 +58,7 @@ position: absolute;
 
 #menu {
     color: #000000;
-    background: #ffffff;
+    background: #000000;
 
    position: absolute;
 	top: 0px;
@@ -179,12 +179,12 @@ height: 10px;
 .form-label {
     width: 45px;
     text-align: right;
-  
+
 }
 
 .form-label + .form-input {
     width: 190px;
- 
+
 }
 #node-edit-update {
 padding: 0px 0px 0px 0px;
@@ -242,7 +242,7 @@ margin: 0 auto;
 }
 
 .dialog-button {
-    
+
 }
 
 /**
@@ -262,7 +262,7 @@ margin: 0 auto;
 
 
 path.link {
- 
+
 
 stroke: #007b00;
 	stroke-opacity: 1;
@@ -364,13 +364,13 @@ text.node-label {
 }
 
 text.node-icon {
-  
+
   font-size: 11px;
   pointer-events: none;
 }
 
 span.rel-icon {
- 
+
   font-size: 14px;
 }
 
@@ -379,4 +379,3 @@ text.shadow {
   stroke-width: 3px;
   stroke-opacity: .8;
 }
-
