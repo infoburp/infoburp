@@ -1,82 +1,64 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta http-equiv="Content-type" content="text/html; charset=utf-8">
-        <title>infoburp</title>
-	<link rel="icon" type="image/ico" href="assets/images/favicon.ico"> 
-        <link rel="stylesheet" media="all" href="/assets/stylesheets/graffeine.css" />        
-        <link rel="stylesheet" media="all" href="/assets/stylesheets/jquery-ui-1.10.2.custom.css" />
-       
-        <script src="/assets/javascripts/d3.v2.js"></script>
-        <script src="/assets/javascripts/jquery-1.9.1.js"></script>
-        <script src="/assets/javascripts/underscore.min.js"></script>
-        <script src="/assets/javascripts/jquery-ui-1.10.2.custom.js"></script>
-        <script src="/assets/javascripts/jquery.ui.touch-punch-0.2.2.js"></script>
-        <script src="/assets/javascripts/jquery.svg.js"></script>
-        <script src="/assets/javascripts/graffeine.js"></script>
-        <script src="/assets/conf/graffeine-conf.js"></script>
-        <script src="/socket.io/socket.io.js"></script>
-    </head>
-    <body>
-        <div id="container">
-            <div id="console">
-                <div>
-                    <div id="menu">
-                        <div class="section-label left" align="left"><img src="assets/images/logo.png" id="logo"></img><br><br>
-	                          <!--      <button class="form-button width-sixth" id="node-edit-update">update</button>
-                                <button class="form-button width-sixth" id="node-edit-delete">delete</button>-->
-   <!--<div class="subsection-label centered">find</div>
-                        <div class="subsection">
-                            <span class="item-label width-50">name</span>
-                            <input class="width-100" type="text" id="node-find-name">
-                        </div>
-                        <div class="subsection">
-                            <span class="item-label width-50">type</span>
-                            <select id="node-find-types-list"></select>
-                            <span class="hang-right"><button class="form-button width-50" id="node-find-button">go</button></span>
-                        </div>-->
-<button style="visibility:hidden" class="form-button width-sixth" id="graph-mode">replace</button>
-</div>
-
- <!-- dialogs -->
-
-                <!-- new-relationship-dialog-form -->
-
-                <div class="dialog" id="new-relationship-dialog-form" title="new relationship">
-                    <form>
-                        <fieldset>
-                            <label id="new-relationship-dialog-source"></label><br/>
-                            <select id="new-relationship-dialog-options"></select> 
-<label id="new-relationship-dialog-target"></label><br/><br/>or new relationship type
-                            <input type="text" size="16" name="new-relationship-dialog-name" id="new-relationship-dialog-name" /><br/>
-                            <label id="new-relationship-dialog-target"></label>
-                        </fieldset>
-                    </form>
-                </div>
-
-      
-
-                <!-- node right click menu -->
-
-                <div id="node-menu" title="edit relationships">
-                    <div>
-                        <div>node</div>
-                    </div>
-                    <div>
-                        <div>relationships</div>
-                        <div id="node-menu-rels"></div>
-                    </div>
-                </div>
-                            <form id="node-data"></form>
-                </div>
-
-                                    </div><!-- /menu -->
-                    <div id="graph">
-                    </div>
-                </div>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>infoburp</title>
+    <link rel="icon" type="image/ico" href="assets/images/favicon.ico">
+    <link rel="stylesheet" media="all" href="/assets/stylesheets/graffeine.css" />
+    <link rel="stylesheet" media="all" href="/assets/stylesheets/jquery-ui-1.10.2.custom.css" />
+    <script src="/assets/javascripts/d3.v2.js"></script>
+    <script src="/assets/javascripts/jquery-1.9.1.js"></script>
+    <script src="/assets/javascripts/underscore.min.js"></script>
+    <script src="/assets/javascripts/jquery-ui-1.10.2.custom.js"></script>
+    <script src="/assets/javascripts/jquery.ui.touch-punch-0.2.2.js"></script>
+    <script src="/assets/javascripts/jquery.svg.js"></script>
+    <script src="/assets/javascripts/graffeine.js"></script>
+    <script src="/assets/conf/graffeine-conf.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+  </head>
+  <body>
+    <div id="container">
+      <div id="console">
+        <div>
+          <div id="menu">
+            <div class="section-label left" align="left"><img src="assets/images/logo.png" id="logo"></img>
+              <br>
+              <br>
+              <button style="visibility:hidden" class="form-button width-sixth" id="graph-mode">replace</button>
             </div>
-           
-
+            <!-- dialogs -->
+            <!-- new-relationship-dialog-form -->
+            <div class="dialog" id="new-relationship-dialog-form" title="new relationship">
+              <form>
+                <fieldset>
+                  <label id="new-relationship-dialog-source"></label><br/>
+                  <select id="new-relationship-dialog-options"></select>
+                  <label id="new-relationship-dialog-target"></label><br/><br/>or new relationship type
+                  <input type="text" size="16" name="new-relationship-dialog-name" id="new-relationship-dialog-name" /><br/>
+                  <label id="new-relationship-dialog-target"></label>
+                </fieldset>
+              </form>
+            </div>
+            <!-- node right click menu -->
+            <div id="node-menu" title="edit relationships">
+              <div>
+                <div>node
+                </div>
+              </div>
+              <div>
+                <div>relationships
+                </div>
+                <div id="node-menu-rels">
+                </div>
+              </div>
+            </div>
+            <form id="node-data"></form>
+          </div>
         </div>
-    </body>
+        <!-- /menu -->
+        <div id="graph">
+        </div>
+      </div>
+    </div>
+  </body>
 </html>
