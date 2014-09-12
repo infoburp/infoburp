@@ -2018,6 +2018,8 @@ document.getElementById('menu').style.height = "10px";
             graph.ui.updateWithConsoleNodeId();
             graph.unselectNode();
             graph.ui.clearNodeMenuData();
+                graph.ui.hideNodeMenu();
+
         }
     };
 };

@@ -786,6 +786,9 @@ body .ui-tooltip {
 .ui-widget {
 	font-family: Lucida Grande,Lucida Sans,Arial,sans-serif;
 	font-size: 1.1em;
+		 width:30% !important;
+  top: 10px !important;
+  left: 0px !important;
 }
 .ui-widget .ui-widget {
 	font-size: 1em;

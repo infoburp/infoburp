@@ -1,28 +1,40 @@
 infoburp
 
-Requires:
+For Impatient People
+====================
+
+wget https://raw.githubusercontent.com/infoburp/infoburp/master/setup.sh && sudo sh setup.sh
+browse to http://localhost:8004
+
+Requires
+========
 
     node.js     v0.10.* (also tested on 0.8.*, 0.9.*)
     neo4j       V1.9 | v2.0
 
-Install:
+Install
+=======
 
     git clone https://github.com/infoburp/infoburp.git
 
 
-Run:
+Run
+===
 
-	nodejs server.js                                                
+	cd infoburp && nodejs server.js                                                
 
-Use:
+Use
+===
 
     http://localhost:8004
 	
-###Background
+Background
+==========
 
 Graph databases are amazing things. They should be the easiest of all persistence technologies to understand because they think like us - concepts connected together (Alice knows Bob) where the connections themselves can have meaning (Alice has known Bob since Tuesday) and yet in my experience that's actually not always the case. infoburp was born because I didn't feel any of the other visualisation tools for Neo4J were quite simple enough. They got in the way when all I wanted to do was add a node (Alice), then another (Bob), and then feel all that graph loveliness coming through when I connected them and extended their relationships. I felt there was a missing tool that allows the easy explaining of graphs, exploring of graphs, and above all seeing them. infoburp is an initial attempt at this. It won't ever be a suitable tool for admin tasks on production systems but it could work for small systems, spikes, demos, and generally helping spread the graph awesomeness.
 
-###What is it?
+What is it?
+===========
 
 infoburp plugs into Neo4J and renders nodes and relationships as an interactive D3 SVG graph so you can add, edit, delete and connect nodes. It's not quite as easy as a whiteboard and a pen but it's close and all interactions are persisted in Neo4J.
 
@@ -34,7 +46,8 @@ It's by no means phpmyadmin for Neo4J yet, but one day it could be (maybe).
 
 ![ScreenShot](https://raw.github.com/julianbrowne/infoburp-build/master/doc/config/images/screenshot-alice-bob.jpeg)
 
-###Catches?
+Catches?
+========
 
 The schema-less nature of nodes and relationships in Neo4J makes it harder to model them visually without prior knowledge. infoburp turns neo4j nodes and relationships into "GraffNodes" which have a name and a type. These fields are either from a name and type fields in the source graph or inferred from other fields. For example, Jim Webber's famous [Dr Who](https://github.com/jimwebber/neo4j-tutorial) graph does not use 'type' fields instead nodes are of the form:
 
@@ -46,16 +59,18 @@ Types are not critical to infoburp though, they're just useful for applying CSS 
 
 The graph.yml file in {infoburp_home}/conf has other settings to determine which fields do what.
 
-![ScreenShot](https://raw.github.com/julianbrowne/infoburp-build/master/doc/config/images/screenshot-draglet.jpeg)
+![ScreenShot](https://raw.github.com/julianbrowne/graffeine-build/master/doc/config/images/screenshot-draglet.jpeg)
 
-###Ingredients
+Ingredients
+===========
 
 On the server:
 
 	neo4j				(built with v1.9 and v2.0)
 	node.js				(built with v0.8.25)
 
-On the client (all bundled):
+On the client (all bundled)
+===========================
 
 	D3					(on screen animation and interactions)
 	JQuery				(ui management)
@@ -67,7 +82,8 @@ Tested on latest FF and Chrome browsers. Not sure about others.
 
 ![ScreenShot](https://raw.github.com/julianbrowne/infoburp-build/master/doc/config/images/screenshot-relationship.jpeg)
 
-###Install and run
+Install and run
+===============
 
 Fetch source off github
 
@@ -75,10 +91,10 @@ Fetch source off github
 
 or  
 
-
 	npm install infoburp
 
-###Configure
+Configure
+=========
 
 (proper write-up coming soon - most of it is obvious if you rummage around the source)
 
@@ -134,7 +150,7 @@ Fields to look for in Neo4J nodes to use as the "type" in the UI. infoburp will 
 
 Some graphs don't have anything approximating to a type field. There are two choices in this case (1) leave the type as 'default' or (2) tell infoburp to use the field key used for the name as the type (as explained in the Rose Tyler example above).
 
-![ScreenShot](https://raw.github.com/julianbrowne/infoburp-build/master/doc/config/images/screenshot-styled.jpeg)
+![ScreenShot](https://raw.github.com/julianbrowne/graffeine-build/master/doc/config/images/screenshot-styled.jpeg)
 
 	graph.useCssStyle (true|false)
 
@@ -157,14 +173,15 @@ Then any of these can be overridden, for example:
         	style:
             	fill: '#16a085'
 
-###Start
+Start
+=====
+    nodejs server.js
 
-    node server
-
-Connect browser to server port
+Connect browser to server port (default 8004)
 
 
-###Menu Usage
+Menu Usage
+==========
 
 ![ScreenShot](https://raw.github.com/julianbrowne/infoburp-build/master/doc/config/images/screenshot-menu.jpeg)
 
@@ -178,7 +195,8 @@ Connect browser to server port
 
 ![ScreenShot](https://raw.github.com/julianbrowne/infoburp-build/master/doc/config/images/screenshot-self.jpeg)
 
-###Mouse Action
+Mouse Action
+============
 
 **Select Node** - click it  
 **Unselect Node** - click another or anywhere in the SVG area  
@@ -190,8 +208,39 @@ Connect browser to server port
 
 ![ScreenShot](https://raw.github.com/julianbrowne/infoburp-build/master/doc/config/images/screenshot-help.jpeg)
 
-###Help?
+Help?
+=====
 
-Yes please. This started as a lunchtime play and then grew too fast and then swamped me. I've cleaned it up in phases but the code is still really quite messy (very in some places). It needs tests, some serious refactoring (marked in a few places in the code) and quite a bit of elegance added. But it will get there eventually.
+I forked this from graffeine
+
+https://github.com/julianbrowne/graffeine 
+
+What would be a neat thing to add?
+
+-combine this with noflo (flow based programming in javascript)
+
+	https://github.com/noflo/noflo
+
+-add websockets and/or webrtc communication
+
+-make the interface more fluid
+	
+	add zooming
+	add intuitive methods for node and link deletion
+ 	add node grouping (collapsible groups)
+ 	add background dragging to move about the graph
+ 	add intelligent node loading algorithm (continuously load the most relevant nodes so it feels like the whole graph is visible)
+ 	add multiuser realtime editing/collaboration
+ 	add search (based on edit distance)
+ 	add improved node placement algorithm (low edit distance = closer together)
+
+-add per user graphs
+
+-add graph sharing (2 or more graphs combined/merged into one)
+
+
+
+Pull requests welcomed.
 
 Feel free to drop me a line gwolfendale<at>gmail.com with questions, features requests, suggestions, offers of help etc.
+
