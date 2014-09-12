@@ -1,5 +1,3 @@
-infoburp
-
 For Impatient People
 ====================
 
