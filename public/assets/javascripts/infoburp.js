@@ -159,7 +159,7 @@ infoburp.force.tick = function(graph) {
                     //var dr = Math.sqrt(dx * dx + dy * dy);
                     //return "M" + d.source.x + "," + d.source.y + "A" + dr + "," + dr + " 0 1,1 " + d.target.x + "," + d.target.y;
                     return "M" + d.source.x + "," + d.source.y + "A40,40 40 1,1 " + (d.target.x + 1) + "," + (d.target.y + 1);
-                
+
                 } else {
                     var midx = d.source.x + ((d.target.x - d.source.x) / 2.3);
                     var midy = d.source.y + ((d.target.y - d.source.y) / 2.3);
@@ -167,7 +167,7 @@ infoburp.force.tick = function(graph) {
                     return "M" + d.source.x + "," + d.source.y +
                            "L" + midx + "," + midy +
                            "L" + d.target.x + "," + d.target.y;
-                
+
                 }
             });
 
@@ -1072,9 +1072,9 @@ infoburp.graph.prototype.drawNodes = function() {
         .append("svg:circle")
             .attr("id",    function(d) { return "node-tag-" + d.id; })
             .attr("class", "draglet")
-            .attr("r", 12)
+            .attr("r", 8)
             .attr("cx", 0)
-            .attr("cy", 32)
+            .attr("cy", 24)
             .call(dragCircle);
 
     this.refs.draglet.exit()
@@ -1489,11 +1489,6 @@ infoburp.ui.prototype.showNodeMenu = function(node) {
     var table  = $('<table></table>');
     rels.forEach(function(rel){
         var row = $('<tr></tr>');
-        var c1  = $('<td></td>');
-        var spn = $('<span></span>', {
-            text: rel.source.getName() + ' -> ' + rel.rel + ' -> ' + rel.target.getName(),
-        }).addClass("node-menu-rel-name");
-        c1.append(spn).appendTo(row);
         var c2  = $('<td></td>');
         var btn = $('<button/>', {
             text: '',
@@ -1502,6 +1497,12 @@ infoburp.ui.prototype.showNodeMenu = function(node) {
             }
         }).addClass('dialog-button');
         c2.append(btn).appendTo(row);
+        var c1  = $('<td></td>');
+        var spn = $('<span></span>', {
+            text: rel.source.getName() + ' -> ' + rel.rel + ' -> ' + rel.target.getName(),
+        }).addClass("node-menu-rel-name");
+        c1.append(spn).appendTo(row);
+
         table.append(row);
     });
     $(this.labels.nodeMenuRels).html(table);
@@ -1556,7 +1557,7 @@ infoburp.ui.prototype.showNewRelationshipMenu = function(nodeSource, nodeTarget)
             .text(rel));
     });
     $(graph.ui.identifiers.relDialog).dialog("open");
-    $(graph.ui.buttons.dialogButtons).blur();
+    $(graph.ui.buttons.dialogButtons).show();
 };
 
 /**
@@ -1576,7 +1577,7 @@ infoburp.ui.prototype.clearDrag = function() {
 }
 
 infoburp.ui.prototype.hideDialogs = function() {
-    $(".dialog").hide();
+    //$(".dialog").hide();
 }
 
 /**
@@ -1738,7 +1739,7 @@ infoburp.eventHandler.prototype.dragletDragStart = function() {
         // position origin of connector path
 
         var l1x = d.x;
-        var l1y = d.y + 35;
+        var l1y = d.y;
 
         d3.select(this)
             .attr('lx-home', l1x)
@@ -1775,8 +1776,8 @@ infoburp.eventHandler.prototype.dragletDrag = function() {
         var draglety = parseInt(d3.mouse(document.getElementById('graph'))[1], 0);
 
         var lineData = [
-            { source: { x: originx,   y: originy },
-              target: { x: dragletx + 100,  y: draglety + 20     } }
+            { source: { x: originx,   y: originy +48},
+              target: { x: dragletx -409,  y: draglety + 24    } }
         ];
 
         // draw the line
@@ -1850,7 +1851,7 @@ infoburp.eventHandler.prototype.linkMouseover = function() {
         graph.debugMesg("(linkMouseover) processing");
         infoburp.graph.tooltip.transition()
             .duration(200)
-            .style("opacity", .9);
+            .style("opacity", 1);
 
         infoburp.graph.tooltip.html(
             d.source.name +
@@ -1923,6 +1924,19 @@ infoburp.eventHandler.prototype.nodeClick = function() {
                 graph.ui.updateWithConsoleNodeId();
                 graph.ui.clearNodeMenuData();
             }
+                        graph.ui.showNodeMenu(d);
+        graph.ui.showNodeInformation(d);
+
+           graph.ui.showNodeInformation(d);
+        d3.event.stopPropagation();
+        d3.event.preventDefault();
+        graph.refs.force.stop();
+        graph.ui.showNodeMenu(d);
+                        graph.ui.markNodeAsUnselected(graph.state.selectedNode.elem);
+                graph.selectNode(d, this);
+                graph.ui.markNodeAsSelected(this);
+                graph.ui.updateWithConsoleNodeId(d);
+                graph.ui.showNodeEditForm(d);
         }
     };
 };
@@ -1948,7 +1962,7 @@ infoburp.eventHandler.prototype.nodeMouseover = function() {
         var r = d3.select(this).attr('r');
         d3.select(this)
             .transition()
-            .attr('r', infoburp.conf.graphSettings.circleRadius + 5)
+            .attr('r', infoburp.conf.graphSettings.circleRadius - 4)
             .ease("elastic");
 
         if(graph.state.sourceNode !== null) {
@@ -1997,11 +2011,16 @@ infoburp.eventHandler.prototype.nodeMouseout = function() {
 infoburp.eventHandler.prototype.nodeRightClick = function() {
     return function(d, i) {
         graph.debugMesg("(nodeRightClick) processing");
-        graph.ui.hideNodeInformation();
+        graph.ui.showNodeInformation(d);
         d3.event.stopPropagation();
         d3.event.preventDefault();
         graph.refs.force.stop();
         graph.ui.showNodeMenu(d);
+                        graph.ui.markNodeAsUnselected(graph.state.selectedNode.elem);
+                graph.selectNode(d, this);
+                graph.ui.markNodeAsSelected(this);
+                graph.ui.updateWithConsoleNodeId(d);
+                graph.ui.showNodeEditForm(d);
     };
 };
 /**
@@ -2010,7 +2029,7 @@ infoburp.eventHandler.prototype.nodeRightClick = function() {
 
 infoburp.eventHandler.prototype.svgClick = function() {
     return function(d, i) {
-document.getElementById('menu').style.height = "10px";
+//document.getElementById('menu').style.height = "10px";
         graph.debugMesg("(svgClick) processing");
         graph.refs.force.stop();
         if(graph.state.selectedNode!==null) {
@@ -2020,6 +2039,7 @@ document.getElementById('menu').style.height = "10px";
             graph.ui.clearNodeMenuData();
 
         }
+
     };
 };
 /**

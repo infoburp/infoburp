@@ -157,7 +157,6 @@
 .ui-selectable-helper {
 	position: absolute;
 	z-index: 100;
-	border: 1px dotted black;
 }
 .ui-accordion .ui-accordion-header {
 	display: block;
@@ -467,13 +466,12 @@ button.ui-button::-moz-focus-inner {
 }
 .ui-dialog {
 	position: absolute;
-	top: 0;
-	left: 0;
-	padding: .2em;
-	outline: 0;
+	left: 0px;
+	outline: 0px;
+	border:0px;
+	z-index: inherit;
 }
 .ui-dialog .ui-dialog-titlebar {
-	padding: .4em 1em;
 	position: relative;
 	display:none;
 }
@@ -497,7 +495,6 @@ button.ui-button::-moz-focus-inner {
 .ui-dialog .ui-dialog-content {
 	position: relative;
 	border: 0;
-	padding: .5em 1em;
 	background: none;
 	height: 100%;
 }
@@ -803,16 +800,14 @@ body .ui-tooltip {
 	font-size: 1em;
 }
 .ui-widget-content {
-	border: opx solid #7e7783;
-	background: #ffffff;
+	
 	color: #000000;
 }
 .ui-widget-content a {
 	color: #ffffff;
 }
 .ui-widget-header {
-	border: 1px solid #231d2b;
-	background: #30273a url(images/ui-bg_highlight-soft_25_30273a_1x100.png) 50% 50% repeat-x;
+	background: #30273a;
 	color: #ffffff;
 	font-weight: bold;
 }
@@ -825,8 +820,7 @@ body .ui-tooltip {
 .ui-state-default,
 .ui-widget-content .ui-state-default,
 .ui-widget-header .ui-state-default {
-	border: 1px solid #dcd9de;
-	background: #dcd9de url(images/ui-bg_highlight-soft_100_dcd9de_1x100.png) 50% 50% repeat-x;
+	background: #dcd9de;
 	font-weight: bold;
 	color: #665874;
 }
@@ -842,8 +836,7 @@ body .ui-tooltip {
 .ui-state-focus,
 .ui-widget-content .ui-state-focus,
 .ui-widget-header .ui-state-focus {
-	border: 1px solid #d1c5d8;
-	background: #eae6ea url(images/ui-bg_highlight-soft_100_eae6ea_1x100.png) 50% 50% repeat-x;
+	background: #eae6ea;
 	font-weight: bold;
 	color: #734d99;
 }
@@ -857,8 +850,7 @@ body .ui-tooltip {
 .ui-state-active,
 .ui-widget-content .ui-state-active,
 .ui-widget-header .ui-state-active {
-	border: 1px solid #7e7783;
-	background: #5f5964 url(images/ui-bg_highlight-soft_45_5f5964_1x100.png) 50% 50% repeat-x;
+	background: #5f5964;
 	font-weight: bold;
 	color: #ffffff;
 }
@@ -874,7 +866,6 @@ body .ui-tooltip {
 .ui-state-highlight,
 .ui-widget-content .ui-state-highlight,
 .ui-widget-header .ui-state-highlight {
-	border: 1px solid #ffdb1f;
 	background: #fafafa url(images/ui-bg_flat_55_fafafa_40x100.png) 50% 50% repeat-x;
 	color: #333333;
 }
@@ -886,7 +877,6 @@ body .ui-tooltip {
 .ui-state-error,
 .ui-widget-content .ui-state-error,
 .ui-widget-header .ui-state-error {
-	border: 1px solid #994d53;
 	background: #994d53 url(images/ui-bg_flat_55_994d53_40x100.png) 50% 50% repeat-x;
 	color: #ffffff;
 }

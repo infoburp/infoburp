@@ -9,10 +9,11 @@ body {
 
 #textarea {
   height: 100%;
-   float:left;font-size:16px;
-   position: absolute;
+   text-align:center;font-size:16px;
+   position: relative;
    overflow:auto;
    width: 100% !important;
+
 }
 
 #container {
@@ -52,17 +53,17 @@ body {
 }
 
 svg {
- width: 100%;
+ width: 70%;
  height: 100%;
  background: #000000;
  position: absolute;
  top: 0px;
- left: 0px;
+ left: 30%;
 }
 
 #menu {
   color: #000000;
-  background: transparent;
+  background: white;
   position: absolute;
 	top: 0px;
 	left: 0px;
@@ -76,20 +77,36 @@ svg {
 #menu .info {
   color: #000000;
   background: #000000;
-  border-right: 1px solid #BABCBC;
-  margin-right: 2px;
 }
 
+#node-menu-rels {
+position: relative !important;
+
+width: 100%;
+}
 #node-menu {
-  width:20%;
+  position:relative !important;
+  width:100%;
 }
 /**
  *  labels and tags
 **/
+#new-relationship-dialog-options{
+  z-index:inherit;
+  display:block !important;
+    background: white;
 
+}
+#new-relationship-dialog-form{
+  position:absolute !important;
+  top:2px;
+z-index: 9999;
+  background: white;
+  border:0px white;
+}
 .section-label {
   color: #ffffff;
-  background: transparent;
+  background: black;
   font-family: sans-serif;
   font-size: 8px;
   height:10px;
@@ -103,7 +120,7 @@ svg {
   color: #ffffff;
   background: #ff7e00;
   font-family: sans-serif;
-  font-size: 12px;
+  font-size: 8px;
   padding: 0px;
 }
 
@@ -111,17 +128,16 @@ svg {
   color: #ffffff;
   background: #ff7e00;
   font-family: sans-serif;
-  font-size: 12px;
+  font-size: 8px;
   padding: 0px;
   margin: 2px 0 2px 2px;
 }
 
 .item-value, input, select{
   color: #000000;
-  border: 0px gray;
   background: #FFFFFF;
   font-family: sans-serif;
-  font-size: 12px;
+  font-size: 8px;
   padding: 0px;
 }
 
@@ -193,17 +209,12 @@ svg {
 }
 
 .form-ctrl-group {
-  border-bottom: 2px rgba(255,0,0,0.5);
 }
 
 textarea {
   height: 80%;
   width: 100%;
-  border: 0px dark grey;
-  box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  -ms-box-sizing: border-box;
-  -moz-box-sizing: border-box;
+
   font-size: 11px;
 }
 
@@ -212,7 +223,6 @@ textarea {
   background: #ff7e00;
   font-family: sans-serif;
   font-size: 9px;
-  border: none;
 }
 
 .form-button:hover {
@@ -235,18 +245,23 @@ textarea {
   margin: 0 auto;
   font-size: 16px;
   font-family: sans-serif;
-  position: absolute;
-  top: 10px;
+  position: relative !important;
   left:0px !important;
   width: 100% !important;
 }
 
 .dialog {
-  font-family: sans-serif;
+  margin: 0 auto;
   font-size: 16px;
+  font-family: sans-serif;
+  position: relative !important;
+  left:0px !important;
+  width: 100% !important;
 }
 
 .dialog-button {
+  z-index: inherit;
+  display: block !important;
 }
 
 /**
@@ -266,7 +281,7 @@ textarea {
 
 
 path.link {
-  stroke: #007b00;
+  stroke: #57B22A;
 	stroke-opacity: 1;
 	stroke-width: 8px;
 }
@@ -278,14 +293,15 @@ path.connector {
   z-index: -1;
 }
 
+.node-label{
+  font: x-small sans-serif !important;
+  color: grey !important;
+}
 div.tooltip, div.linkMenu {
   position: absolute;
   text-align: left;
   padding: 5px;
-  font: 12px sans-serif;
-  background: lightsteelblue;
-  border: 0px;
-  border-radius: 8px;
+  font: 8px sans-serif;
   pointer-events: none;
 }
 
@@ -295,21 +311,20 @@ div.tooltip, div.linkMenu {
 
 circle.node {
   fill: #ffffff;
-  stroke: #007b00;
+  stroke: #ff7e00;
 	stroke-width: 8px;
 	cursor:url('../cursors/pointing.hand.cur'),pointer;
   z-index: 1;
 }
 
 circle.node.edge {
-  stroke-width: 3px !important;
+  stroke-width: 8px !important;
   stroke: #57B22A !important;
-  stroke-dasharray: 10,5;
 }
 
 circle.node.edge:hover {
   stroke: #ff7e00 !important;
-  stroke-width: 3px !important;
+  stroke-width: 8px !important;
 }
 
 circle.node.selected {
@@ -320,7 +335,7 @@ circle.node.selected {
 circle.node:hover {
   stroke: #ff7e00 !important;
   stroke-width: 8px !important;
-  !stroke-dasharray: 2,2 !important;
+  
 }
 
 circle.node.joiner {
@@ -345,7 +360,7 @@ polygon.arrowhead {
 circle.draglet {
   fill: #ffffff;
   stroke-width: 8px;
-  stroke: #007b00;
+  stroke: #57B22A;
 }
 
 circle.draglet:hover {
@@ -360,7 +375,7 @@ text {
   pointer-events: none;
 }
 
-text.node-label {
+text.label {
   font: 16px sans-serif;
   pointer-events: none;
 }
@@ -375,7 +390,7 @@ span.rel-icon {
 }
 
 text.shadow {
-  stroke: #fff;
-  stroke-width: 3px;
-  stroke-opacity: .8;
+  stroke: #007b00;
+  stroke-width: 0px;
+  stroke-opacity: 0;
 }
