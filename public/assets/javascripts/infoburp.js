@@ -1477,7 +1477,7 @@ infoburp.ui.prototype.showNodeInformation = function(node) {
 };
 
 infoburp.ui.prototype.hideNodeInformation = function() {
-    $(this.identifiers.nodeInfoRels).html("");
+    //$(this.identifiers.nodeInfoRels).html("");
     d3.select(this.identifiers.nodeInfo).transition().duration(0).style("opacity", 0);
 };
 
@@ -1511,7 +1511,7 @@ infoburp.ui.prototype.showNodeMenu = function(node) {
 }
 
 infoburp.ui.prototype.hideNodeMenu = function() {
-    $(this.labels.nodeMenuRels).html("");
+    //$(this.labels.nodeMenuRels).html("");
     $(this.identifiers.nodeMenu).dialog("close");
 }
 
@@ -1916,18 +1916,10 @@ infoburp.eventHandler.prototype.nodeClick = function() {
                 graph.ui.markNodeAsSelected(this);
                 graph.ui.updateWithConsoleNodeId(d);
                 graph.ui.showNodeEditForm(d);
-            }
-            else {
-                graph.debugMesg("(click) remove selected node");
-                graph.ui.markNodeAsUnselected(this);
-                graph.unselectNode();
-                graph.ui.updateWithConsoleNodeId();
-                graph.ui.clearNodeMenuData();
-            }
-                        graph.ui.showNodeMenu(d);
+                                        graph.ui.showNodeMenu(d);
         graph.ui.showNodeInformation(d);
 
-           graph.ui.showNodeInformation(d);
+        graph.ui.showNodeInformation(d);
         d3.event.stopPropagation();
         d3.event.preventDefault();
         graph.refs.force.stop();
@@ -1937,6 +1929,9 @@ infoburp.eventHandler.prototype.nodeClick = function() {
                 graph.ui.markNodeAsSelected(this);
                 graph.ui.updateWithConsoleNodeId(d);
                 graph.ui.showNodeEditForm(d);
+            }
+
+
         }
     };
 };
@@ -2010,17 +2005,8 @@ infoburp.eventHandler.prototype.nodeMouseout = function() {
 
 infoburp.eventHandler.prototype.nodeRightClick = function() {
     return function(d, i) {
-        graph.debugMesg("(nodeRightClick) processing");
-        graph.ui.showNodeInformation(d);
-        d3.event.stopPropagation();
-        d3.event.preventDefault();
-        graph.refs.force.stop();
-        graph.ui.showNodeMenu(d);
-                        graph.ui.markNodeAsUnselected(graph.state.selectedNode.elem);
-                graph.selectNode(d, this);
-                graph.ui.markNodeAsSelected(this);
-                graph.ui.updateWithConsoleNodeId(d);
-                graph.ui.showNodeEditForm(d);
+
+
     };
 };
 /**

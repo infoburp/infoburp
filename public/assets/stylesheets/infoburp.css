@@ -97,11 +97,20 @@ width: 100%;
     background: white;
 
 }
+button{
+    z-index: 9002;
+  background: white !important;
+  width:42px !important;
+}
+fieldset{
+    z-index: 9001;
+  background: white !important;
+}
 #new-relationship-dialog-form{
   position:absolute !important;
-  top:2px;
-z-index: 9999;
-  background: white;
+  top:3px;
+  z-index: 9000;
+  background: white !important;
   border:0px white;
 }
 .section-label {
@@ -242,12 +251,11 @@ textarea {
 }
 
 #node-data {
-  margin: 0 auto;
   font-size: 16px;
   font-family: sans-serif;
   position: relative !important;
   left:0px !important;
-  width: 100% !important;
+  width:99%;
 }
 
 .dialog {
@@ -262,6 +270,7 @@ textarea {
 .dialog-button {
   z-index: inherit;
   display: block !important;
+  width: 42% !important;
 }
 
 /**

@@ -8842,7 +8842,7 @@ $.widget( "ui.dialog", {
 		autoOpen: true,
 		buttons: [],
 		closeOnEscape: true,
-		closeText: "close",
+		closeText: "✖",
 		dialogClass: "",
 		draggable: true,
 		hide: null,
@@ -9144,7 +9144,7 @@ $.widget( "ui.dialog", {
 
 		this.uiDialogTitlebarClose = $("<button></button>")
 			.button({
-				label: this.options.closeText,
+				label: "✖",
 				icons: {
 					primary: "ui-icon-closethick"
 				},
@@ -9383,7 +9383,7 @@ $.widget( "ui.dialog", {
 		if ( key === "closeText" ) {
 			this.uiDialogTitlebarClose.button({
 				// Ensure that we always pass a string
-				label: "" + value
+				label: "✖"
 			});
 		}
 

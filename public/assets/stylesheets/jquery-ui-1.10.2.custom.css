@@ -227,8 +227,8 @@ button.ui-button-icons-only {
 
 /* button text element */
 .ui-button .ui-button-text {
-	display: block;
 	line-height: normal;
+	text-align: center;
 }
 .ui-button-text-only .ui-button-text {
 	padding: .4em 1em;
@@ -499,18 +499,18 @@ button.ui-button::-moz-focus-inner {
 	height: 100%;
 }
 .ui-dialog .ui-dialog-buttonpane {
-	text-align: left;
-	border-width: 1px 0 0 0;
+	text-align: right;
 	background-image: none;
-	margin-top: .5em;
-	padding: .3em 1em .5em .4em;
+	position:absolute;
+	top:0px;
+	right:7px;
 }
 .ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {
 	float: right;
 }
 .ui-dialog .ui-dialog-buttonpane button {
-	margin: .5em .4em .5em 0;
 	cursor: pointer;
+	text-align: left;
 }
 .ui-dialog .ui-resizable-se {
 	width: 12px;
