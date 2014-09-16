@@ -245,5 +245,5 @@ What would be a neat thing to add?
 
 Pull requests welcomed.
 
-Feel free to drop me a line gwolfendale<at>gmail.com with questions, features requests, suggestions, offers of help etc.
+Feel free to drop me a line gwolfendale@gmail.com with questions, features requests, suggestions, offers of help etc.
 
