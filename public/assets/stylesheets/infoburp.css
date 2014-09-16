@@ -69,7 +69,7 @@ svg {
 	left: 0px;
   font-family: sans-serif;
   margin: 0;
-  width: 30%;
+  width: 44%;
   height: 100%;
   z-index:1000
 }
@@ -270,7 +270,6 @@ textarea {
 .dialog-button {
   z-index: inherit;
   display: block !important;
-  width: 42% !important;
 }
 
 /**

@@ -1310,7 +1310,7 @@ infoburp.ui.prototype.dialogs = function() {
                 var menuSelected = $("#new-relationship-dialog-options").val();
                 var newRelType   = (userEntered === "") ? menuSelected : userEntered;
                 graph.handler.newRelSelected(newRelType);
-                graph.ui.clearDrag();
+                graph.ui.clear();
                 $(this).dialog("close");
             },
             close: function() {
@@ -1490,13 +1490,14 @@ infoburp.ui.prototype.showNodeMenu = function(node) {
     rels.forEach(function(rel){
         var row = $('<tr></tr>');
         var c2  = $('<td></td>');
-        var btn = $('<button/>', {
+        var btn = $('<button />', {
             text: '',
             click: function(e) {
                 graph.handler.deleteRelButtonClick(rel.source.id, rel.target.id, rel.rel);
             }
         }).addClass('dialog-button');
         c2.append(btn).appendTo(row);
+        btn.width("128px")
         var c1  = $('<td></td>');
         var spn = $('<span></span>', {
             text: rel.source.getName() + ' -> ' + rel.rel + ' -> ' + rel.target.getName(),
@@ -1720,7 +1721,8 @@ infoburp.eventHandler = function(graph) {
 **/
 
 infoburp.eventHandler.prototype.dragletDragStart = function() {
-    return function(d, i) {
+
+  return function(d, i) {
         d3.event.sourceEvent.stopPropagation();
         d3.select(this).attr('pointer-events', 'none');
         graph.refs.force.stop();
@@ -1739,7 +1741,7 @@ infoburp.eventHandler.prototype.dragletDragStart = function() {
         // position origin of connector path
 
         var l1x = d.x;
-        var l1y = d.y;
+        var l1y = d.y + 35;
 
         d3.select(this)
             .attr('lx-home', l1x)

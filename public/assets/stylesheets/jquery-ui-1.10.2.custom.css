@@ -502,7 +502,7 @@ button.ui-button::-moz-focus-inner {
 	text-align: right;
 	background-image: none;
 	position:absolute;
-	top:0px;
+	top:-5px;
 	right:7px;
 }
 .ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {
@@ -510,7 +510,6 @@ button.ui-button::-moz-focus-inner {
 }
 .ui-dialog .ui-dialog-buttonpane button {
 	cursor: pointer;
-	text-align: left;
 }
 .ui-dialog .ui-resizable-se {
 	width: 12px;
@@ -784,20 +783,23 @@ body .ui-tooltip {
 .ui-widget {
 	font-family: Lucida Grande,Lucida Sans,Arial,sans-serif;
 	font-size: 1.1em;
-		 width:30% !important;
   top: 10px !important;
   left: 0px !important;
   height: 100% !important;
 }
 .ui-widget .ui-widget {
-	font-size: 1em;
+	font-size: 0.5em;
 }
 .ui-widget input,
 .ui-widget select,
-.ui-widget textarea,
+
 .ui-widget button {
 	font-family: Lucida Grande,Lucida Sans,Arial,sans-serif;
 	font-size: 1em;
+}
+.ui-widget textarea{
+	position: absolute;
+	top: 7px;	
 }
 .ui-widget-content {
 	
@@ -820,9 +822,7 @@ body .ui-tooltip {
 .ui-state-default,
 .ui-widget-content .ui-state-default,
 .ui-widget-header .ui-state-default {
-	background: #dcd9de;
 	font-weight: bold;
-	color: #665874;
 }
 .ui-state-default a,
 .ui-state-default a:link,
